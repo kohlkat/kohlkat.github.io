@@ -2,6 +2,7 @@
 const nextConfig = {
   output: "export",
   poweredByHeader: false,
+  trailingSlash: true,
   turbopack: {
     root: process.cwd(),
   },

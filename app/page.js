@@ -1,3 +1,5 @@
+import { siteUrl } from "../lib/site";
+
 const currentCapabilities = [
   {
     number: "01",
@@ -46,6 +48,96 @@ const principles = [
     text: "The prototype cannot issue physical CNC or robot commands.",
   },
 ];
+
+const audiences = [
+  {
+    title: "Precision manufacturers",
+    body: "Explore a reviewable planning approach for complex CNC work without handing physical authority to the software.",
+  },
+  {
+    title: "Manufacturing engineers and CNC programmers",
+    body: "Connect setups, workingsteps, evidence, and approval decisions in one accountable planning thread.",
+  },
+  {
+    title: "Applications, tooling, and machine teams",
+    body: "Bring machine capability and process evidence into clearer technical conversations around plan feasibility.",
+  },
+  {
+    title: "Research and design partners",
+    body: "Evaluate the assurance model, challenge its boundaries, and help shape non-actuating shadow pilots.",
+  },
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${siteUrl}#organization`,
+      name: "SAGE Suite",
+      url: siteUrl,
+      logo: `${siteUrl}icon.svg`,
+      description:
+        "An assurance-first manufacturing intelligence project for evidence-linked CNC process planning.",
+      founder: {
+        "@id": `${siteUrl}#founder`,
+      },
+      sameAs: [
+        "https://github.com/kohlkat",
+        "https://www.linkedin.com/in/david-kohler22",
+      ],
+    },
+    {
+      "@type": "Person",
+      "@id": `${siteUrl}#founder`,
+      name: "David Kohler",
+      url: "https://www.linkedin.com/in/david-kohler22",
+      sameAs: [
+        "https://github.com/kohlkat",
+        "https://www.linkedin.com/in/david-kohler22",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}#website`,
+      name: "SAGE Suite",
+      url: siteUrl,
+      description:
+        "The public project hub for SAGE Suite manufacturing intelligence.",
+      inLanguage: "en-US",
+      publisher: {
+        "@id": `${siteUrl}#organization`,
+      },
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": `${siteUrl}#software`,
+      name: "SAGE Suite",
+      url: siteUrl,
+      applicationCategory: "BusinessApplication",
+      operatingSystem: "Platform-independent",
+      description:
+        "A functional, advisory prototype for typed, evidence-linked CNC process planning with independent checks and human approval.",
+      creator: {
+        "@id": `${siteUrl}#founder`,
+      },
+      isPartOf: {
+        "@id": `${siteUrl}#website`,
+      },
+      featureList: [
+        "Typed process plans",
+        "Evidence-linked reasoning",
+        "Explicit simulated and observed evidence labels",
+        "Fail-closed human approval",
+      ],
+    },
+  ],
+};
+
+const structuredDataJson = JSON.stringify(structuredData).replace(
+  /</g,
+  "\\u003c",
+);
 
 function SageMark() {
   return (
@@ -134,6 +226,10 @@ function ProcessMap() {
 export default function Home() {
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: structuredDataJson }}
+      />
       <header className="site-header">
         <a className="brand" href="#top" aria-label="SAGE Suite home">
           <SageMark />
@@ -144,6 +240,7 @@ export default function Home() {
         </a>
         <nav aria-label="Main navigation">
           <a href="#platform">Platform</a>
+          <a href="#audiences">Who it serves</a>
           <a href="#boundaries">Trust boundary</a>
           <a href="#roadmap">Roadmap</a>
         </nav>
@@ -240,6 +337,31 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="audience-section" id="audiences">
+        <div className="section-heading">
+          <div>
+            <div className="section-kicker">Project hub</div>
+            <h2>
+              Built for the people who plan, verify, and improve CNC work.
+            </h2>
+          </div>
+          <p>
+            This is the public home for SAGE Suite—not a campaign page for one
+            program. Follow what exists now, what comes next, and where outside
+            perspective can improve the work.
+          </p>
+        </div>
+        <div className="audience-grid">
+          {audiences.map((audience, index) => (
+            <article className="audience-card" key={audience.title}>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <h3>{audience.title}</h3>
+              <p>{audience.body}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section className="boundary-section" id="boundaries">
         <div className="boundary-panel">
           <div className="boundary-intro">
@@ -312,6 +434,14 @@ export default function Home() {
             Start a conversation
             <ArrowIcon />
           </a>
+          <a
+            className="founder-link"
+            href="https://www.linkedin.com/in/david-kohler22"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Founder: David Kohler
+          </a>
           <span>Pittsburgh, Pennsylvania</span>
         </div>
       </section>
@@ -328,7 +458,11 @@ export default function Home() {
           Assurance-first manufacturing intelligence. Prototype · Advisory
           only · No machine command authority.
         </p>
-        <span>© 2026 SAGE Suite</span>
+        <div className="footer-links">
+          <a href="/privacy/">Privacy</a>
+          <a href="https://github.com/kohlkat">GitHub</a>
+          <span>© 2026 SAGE Suite</span>
+        </div>
       </footer>
     </main>
   );

@@ -1,0 +1,20 @@
+import { siteOrigin } from "../lib/site";
+
+export const dynamic = "force-static";
+
+export default function sitemap() {
+  return [
+    {
+      url: `${siteOrigin}/`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 1,
+    },
+    {
+      url: `${siteOrigin}/privacy/`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.2,
+    },
+  ];
+}
