@@ -1,6 +1,7 @@
 import "./globals.css";
 
 export const metadata = {
+  metadataBase: new URL("https://kohlkat.github.io"),
   title: {
     default: "SAGE Suite | Assurance-First Manufacturing Intelligence",
     template: "%s | SAGE Suite",

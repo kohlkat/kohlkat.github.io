@@ -9,6 +9,11 @@ npm install
 npm run dev
 ```
 
+## Deployment
+
+Pushes to `main` build a static Next.js export and deploy it to
+`https://kohlkat.github.io` through GitHub Pages.
+
 ## Truth boundary
 
 - Current prototype capabilities and roadmap items are labeled separately.
