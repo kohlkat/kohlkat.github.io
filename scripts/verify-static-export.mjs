@@ -90,6 +90,48 @@ if (verificationToken) {
   );
 }
 
+function isTrustedGtagLoaderUrl(candidate) {
+  try {
+    const url = new URL(candidate);
+    const loaderId = url.searchParams.get("id");
+
+    return (
+      url.origin === "https://www.googletagmanager.com" &&
+      url.pathname === "/gtag/js" &&
+      url.searchParams.size === 1 &&
+      typeof loaderId === "string" &&
+      loaderId.length > 0 &&
+      url.hash === ""
+    );
+  } catch {
+    return false;
+  }
+}
+
+function bundleHasTrustedGtagLoader(javascript) {
+  const absoluteUrls = javascript.match(/https:\/\/[^\s"'`\\]+/g) ?? [];
+  return absoluteUrls.some(isTrustedGtagLoaderUrl);
+}
+
+assert(
+  isTrustedGtagLoaderUrl(
+    "https://www.googletagmanager.com/gtag/js?id=G-TEST1234",
+  ),
+  "Trusted gtag loader URL validation rejected the intended endpoint.",
+);
+assert(
+  !isTrustedGtagLoaderUrl(
+    "https://evil-googletagmanager.com/gtag/js?id=G-TEST1234",
+  ),
+  "Trusted gtag loader URL validation accepted a host-prefix attack.",
+);
+assert(
+  !isTrustedGtagLoaderUrl(
+    "https://www.googletagmanager.com.evil.example/gtag/js?id=G-TEST1234",
+  ),
+  "Trusted gtag loader URL validation accepted a host-suffix attack.",
+);
+
 const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim();
 if (measurementId) {
   assert(
@@ -108,7 +150,7 @@ if (measurementId) {
     .join("\n");
   assert(
     javascript.includes(measurementId) &&
-      javascript.includes("googletagmanager.com"),
+      bundleHasTrustedGtagLoader(javascript),
     "Configured GA4 measurement ID is missing from the client bundle.",
   );
 }
