@@ -8,9 +8,11 @@ const configuredOrigin =
 const siteOrigin = new URL(configuredOrigin).origin;
 const requiredFiles = [
   "index.html",
+  "evidence/index.html",
   "simulation/index.html",
   "privacy/index.html",
   "404.html",
+  ".well-known/tdmrep.json",
   "icon.svg",
   "llms.txt",
   "manifest.webmanifest",
@@ -70,15 +72,21 @@ for (const relativePath of requiredFiles) {
 }
 
 const home = read("index.html");
+const evidence = read("evidence/index.html");
 const simulation = read("simulation/index.html");
 const privacy = read("privacy/index.html");
 const robots = read("robots.txt");
 const sitemap = read("sitemap.xml");
 const llms = read("llms.txt");
+const tdmReservation = JSON.parse(read(".well-known/tdmrep.json"));
 
 assert(
   home.includes(`rel="canonical" href="${siteOrigin}/"`),
   "Homepage canonical does not match NEXT_PUBLIC_SITE_URL.",
+);
+assert(
+  evidence.includes(`rel="canonical" href="${siteOrigin}/evidence/"`),
+  "Evidence-guide canonical does not match NEXT_PUBLIC_SITE_URL.",
 );
 assert(
   privacy.includes(`rel="canonical" href="${siteOrigin}/privacy/"`),
@@ -105,10 +113,36 @@ assert(
   "Expected public simulation Dataset JSON-LD is missing.",
 );
 assert(
-  home.includes('href="/simulation/"') &&
-    home.includes("120 simulated samples") &&
+  home.includes('href="/evidence/"') &&
+    home.includes("SAGE in 60 seconds") &&
+    home.includes("Five software checks") &&
+    home.includes("cannot run the machine") &&
     home.includes("public-demo threshold"),
-  "Homepage does not surface the concrete public simulation evidence.",
+  "Homepage does not provide the newcomer path, five-check overview, or public simulation boundary.",
+);
+assert(
+  evidence.includes("Five assurance kernels") &&
+    evidence.includes("Public description boundary") &&
+    evidence.includes("Open the five-source research ledger") &&
+    evidence.includes("These datasets did not all train one publicly auditable model checkpoint") &&
+    evidence.includes("Bosch CNC") &&
+    evidence.includes("AI4I 2020") &&
+    evidence.includes("NASA Milling") &&
+    evidence.includes("NUAA / Uniwear") &&
+    evidence.includes("PHM 2010") &&
+    evidence.includes("Held-out") &&
+    evidence.includes("NRMSE") &&
+    evidence.includes("R²") &&
+    evidence.includes("Rights review") &&
+    evidence.includes("No machine control"),
+  "Evidence guide is missing kernels, supporting dataset context, glossary terms, or authority boundaries.",
+);
+assert(
+  evidence.includes("0.563") &&
+    evidence.includes("0.680") &&
+    evidence.includes("0.752") &&
+    evidence.includes("not anomaly-detection accuracy"),
+  "Bosch open-data result or its non-overclaim boundary is missing.",
 );
 assert(
   simulation.includes("120 one-second SIMULATED") &&
@@ -127,8 +161,92 @@ assert(
   robots.includes(`Sitemap: ${siteOrigin}/sitemap.xml`),
   "robots.txt sitemap URL does not match the canonical origin.",
 );
+const robotsGroups = robots
+  .trim()
+  .split(/\r?\n\r?\n/)
+  .map((group) => group.split(/\r?\n/).map((line) => line.trim()));
+const robotsGroupFor = (userAgent) =>
+  robotsGroups.find((group) =>
+    group.includes(`User-Agent: ${userAgent}`),
+  );
+const policyAllows = [
+  "Allow: /robots.txt",
+  "Allow: /.well-known/tdmrep.json",
+  "Allow: /llms.txt",
+];
+
+for (const userAgent of [
+  "Googlebot",
+  "Google-InspectionTool",
+  "Bingbot",
+  "DuckDuckBot",
+  "facebookexternalhit",
+  "Twitterbot",
+  "LinkedInBot",
+]) {
+  const group = robotsGroupFor(userAgent);
+  assert(
+    group?.includes("Allow: /") && !group.includes("Disallow: /"),
+    `Conventional crawler is not explicitly allowed: ${userAgent}.`,
+  );
+}
+
+for (const userAgent of [
+  "GPTBot",
+  "OAI-SearchBot",
+  "ChatGPT-User",
+  "ClaudeBot",
+  "Claude-SearchBot",
+  "Claude-User",
+  "Google-Extended",
+  "Applebot-Extended",
+  "PerplexityBot",
+  "CCBot",
+  "Meta-ExternalAgent",
+  "Bytespider",
+  "ia_archiver",
+  "archive.org_bot",
+  "ArchiveBot",
+  "Heritrix",
+]) {
+  const group = robotsGroupFor(userAgent);
+  assert(
+    group?.includes("Disallow: /") &&
+      policyAllows.every((directive) => group.includes(directive)),
+    `AI/archive crawler is not explicitly denied: ${userAgent}.`,
+  );
+}
+
+const wildcardGroup = robotsGroupFor("*");
+assert(
+  wildcardGroup?.includes("Disallow: /") &&
+    policyAllows.every((directive) => wildcardGroup.includes(directive)),
+  "robots.txt must deny unknown cooperative crawlers while exposing policy files.",
+);
+assert(
+  Array.isArray(tdmReservation) &&
+    tdmReservation.length === 1 &&
+    tdmReservation[0]?.location === "/" &&
+    tdmReservation[0]?.["tdm-reservation"] === 1 &&
+    Object.keys(tdmReservation[0]).length === 2,
+  "The site-wide TDM rights reservation is missing or malformed.",
+);
+for (const page of [home, evidence, simulation, privacy]) {
+  assert(
+    page.includes("index, follow, noarchive, nocache"),
+    "A public page is missing the no-cache/no-archive indexing directive.",
+  );
+}
+assert(
+  privacy.includes('id="automated-access"') &&
+    privacy.includes("reserves text-and-data-mining rights") &&
+    privacy.includes("/.well-known/tdmrep.json") &&
+    privacy.includes("cannot stop a crawler that ignores published rules"),
+  "The visible automated-access policy is missing or overstates enforcement.",
+);
 assert(
   sitemap.includes(`<loc>${siteOrigin}/</loc>`) &&
+    sitemap.includes(`<loc>${siteOrigin}/evidence/</loc>`) &&
     sitemap.includes(`<loc>${siteOrigin}/privacy/</loc>`) &&
     sitemap.includes(`<loc>${siteOrigin}/simulation/</loc>`),
   "sitemap.xml URLs do not match the canonical origin.",
@@ -138,13 +256,19 @@ assert(
   "llms.txt canonical URL does not match the canonical origin.",
 );
 assert(
-  llms.includes(`${siteOrigin}/simulation/`) &&
-    llms.includes("120 one-second SIMULATED") &&
-    llms.includes("zero observed samples"),
-  "llms.txt does not describe the public simulation truth boundary.",
+  llms.includes(`${siteOrigin}/robots.txt`) &&
+    llms.includes(`${siteOrigin}/.well-known/tdmrep.json`) &&
+    llms.includes(`${siteOrigin}/privacy/#automated-access`) &&
+    llms.includes("not authorized without") &&
+    llms.includes("not an alternate copy of the site") &&
+    !llms.includes("Five assurance kernels") &&
+    !llms.includes("120 one-second SIMULATED"),
+  "llms.txt must remain a minimal automated-access policy rather than a site mirror.",
 );
 assert(
-  !home.includes("\uFFFD") && !privacy.includes("\uFFFD"),
+  !home.includes("\uFFFD") &&
+    !evidence.includes("\uFFFD") &&
+    !privacy.includes("\uFFFD"),
   "Replacement characters were found in exported HTML.",
 );
 
@@ -387,11 +511,13 @@ for (const line of checksumLines) {
 
 const publicText = [
   home,
+  evidence,
   simulation,
   privacy,
   robots,
   sitemap,
   llms,
+  JSON.stringify(tdmReservation),
   simulationJsonText,
   simulationCsvText,
 ].join("\n");
@@ -435,6 +561,18 @@ const privateMarkerPatterns = [
   {
     label: "numbered internal codename",
     pattern: /\b[A-Z]{4,}-\d{3}\b/,
+  },
+  {
+    label: "private Python module path",
+    pattern: /\b(?:control|contract|sim)[\\/][a-z][a-z0-9_-]*\.py\b/i,
+  },
+  {
+    label: "confidential engineering record language",
+    pattern: /\bconfidential engineering working record\b/i,
+  },
+  {
+    label: "numbered legal claim reference",
+    pattern: /\bclaims?\s+\d+(?:\s*[,–-]\s*\d+)*\b/i,
   },
 ];
 

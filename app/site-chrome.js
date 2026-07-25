@@ -31,14 +31,15 @@ export function SiteHeader() {
         </span>
       </a>
       <nav className="desktop-nav" aria-label="Main navigation">
-        <a href="/#platform">Platform</a>
-        <a href="/simulation/">Simulation evidence</a>
-        <a href="/#boundaries">Trust boundary</a>
+        <a href="/#start">Start here</a>
+        <a href="/#kernels">Five checks</a>
+        <a href="/evidence/">Evidence guide</a>
+        <a href="/simulation/">Data explorer</a>
         <a href="/#roadmap">Roadmap</a>
       </nav>
       <nav className="mobile-nav" aria-label="Compact navigation">
         <a href="/#top">Home</a>
-        <a href="/simulation/">Evidence</a>
+        <a href="/evidence/">Evidence</a>
       </nav>
       <a className="header-cta" href="/#contact">
         Design partners
@@ -63,8 +64,9 @@ export function SiteFooter() {
         demo threshold ≠ production policy.
       </p>
       <div className="footer-links">
+        <a href="/evidence/">Evidence guide</a>
         <a href="/simulation/">Simulation</a>
-        <a href="/privacy/">Privacy</a>
+        <a href="/privacy/">Privacy &amp; crawler policy</a>
         <a href="https://github.com/kohlkat">GitHub</a>
         <span>© 2026 SAGE Suite</span>
       </div>

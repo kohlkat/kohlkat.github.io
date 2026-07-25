@@ -12,6 +12,56 @@
   margin: 0 auto;
 }
 
+.glossarySection {
+  width: min(1380px, calc(100% - 64px));
+  margin: 0 auto;
+  padding: 118px 0;
+  border-top: 1px solid var(--line);
+}
+
+.glossaryGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  overflow: hidden;
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  background: var(--line);
+}
+
+.glossaryGrid > div {
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.68);
+}
+
+.glossaryGrid dt {
+  margin-bottom: 9px;
+  font-size: 16px;
+  font-weight: 750;
+}
+
+.glossaryGrid dd {
+  margin: 0;
+  color: var(--slate);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.glossaryLink {
+  display: inline-flex;
+  gap: 9px;
+  align-items: center;
+  margin-top: 23px;
+  color: #0b7773;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.glossaryLink svg {
+  width: 17px;
+}
+
 .hero {
   display: grid;
   min-height: 650px;
@@ -731,6 +781,7 @@
   .hero,
   .explorer,
   .methodSection,
+  .glossarySection,
   .limitations {
     width: min(100% - 36px, 1380px);
   }
@@ -760,6 +811,7 @@
 
   .explorer,
   .methodSection,
+  .glossarySection,
   .limitations {
     padding: 85px 0;
   }
@@ -827,6 +879,7 @@
   }
 
   .readout dl,
+  .glossaryGrid,
   .methodGrid {
     grid-template-columns: 1fr;
   }

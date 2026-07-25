@@ -1,4 +1,8 @@
 import { siteUrl } from "../lib/site";
+import {
+  publicKernelBoundary,
+  publicKernels,
+} from "../lib/public-kernels";
 import SimulationPreview from "./simulation-preview";
 import { ArrowIcon, SiteFooter, SiteHeader } from "./site-chrome";
 
@@ -70,6 +74,27 @@ const audiences = [
   },
 ];
 
+const startSteps = [
+  {
+    number: "01",
+    title: "Describe the job",
+    body:
+      "Bring together the part, machine, tooling, operations, constraints, and available evidence for review.",
+  },
+  {
+    number: "02",
+    title: "Challenge the advice",
+    body:
+      "Five focused software checks ask whether limits, evidence, familiarity, physical estimates, and uncertainty support continuing.",
+  },
+  {
+    number: "03",
+    title: "Leave the decision with people",
+    body:
+      "A qualified person reviews the record. The public prototype cannot approve itself or send physical machine commands.",
+  },
+];
+
 const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
@@ -126,10 +151,11 @@ const structuredData = {
       isPartOf: {
         "@id": `${siteUrl}#website`,
       },
-      featureList: [
-        "Typed process plans",
-        "Evidence-linked reasoning",
-        "Explicit simulated and observed evidence labels",
+       featureList: [
+         "Typed process plans",
+         "Evidence-linked reasoning",
+         "Five fail-closed advisory checks described at a public-safe level",
+         "Explicit simulated and observed evidence labels",
         "Reproducible public simulation evidence",
         "Fail-closed human approval",
       ],
@@ -144,10 +170,10 @@ const structuredDataJson = JSON.stringify(structuredData).replace(
 
 function ProcessMap() {
   return (
-    <div className="process-map" aria-label="SAGE assurance flow">
+    <div className="process-map" aria-label="How a SAGE advisory result moves">
       <div className="map-grid" aria-hidden="true" />
       <div className="map-header">
-        <span>Assurance flow</span>
+        <span>How an advisory result moves</span>
         <span className="live-label">
           <i />
           Prototype
@@ -156,44 +182,44 @@ function ProcessMap() {
       <div className="map-flow">
         <div className="flow-row">
           <div className="flow-node flow-node-source">
-            <span>Inputs</span>
-            <small>part · machine · evidence</small>
+            <span>Describe the job</span>
+            <small>part · machine · constraints</small>
           </div>
           <span className="flow-link" aria-hidden="true" />
           <div className="flow-node">
-            <span>Typed plan</span>
-            <small>setups · workingsteps</small>
+            <span>Build a reviewable plan</span>
+            <small>setups · tools · operations</small>
           </div>
         </div>
         <div className="flow-down" aria-hidden="true" />
         <div className="flow-row flow-row-reverse">
           <div className="flow-node flow-node-check">
-            <span>Independent check</span>
-            <small>record · provenance</small>
+            <span>Run a separate check</span>
+            <small>challenge the recommendation</small>
           </div>
           <span className="flow-link flow-link-left" aria-hidden="true" />
           <div className="flow-node">
-            <span>Evidence binding</span>
-            <small>observed ≠ simulated</small>
+            <span>Attach the evidence</span>
+            <small>source · label · limitations</small>
           </div>
         </div>
         <div className="flow-down flow-down-left" aria-hidden="true" />
         <div className="flow-row">
           <div className="flow-node flow-node-gate">
-            <span>Human gate</span>
-            <small>closed by default</small>
+            <span>A person decides</span>
+            <small>starts closed</small>
           </div>
           <span className="flow-link flow-link-dashed" aria-hidden="true" />
           <div className="flow-node flow-node-output">
-            <span>Advisory export</span>
-            <small>no machine authority</small>
+            <span>Advisory result</span>
+            <small>cannot command equipment</small>
           </div>
         </div>
       </div>
       <div className="map-status">
         <span>
           <i className="status-dot status-dot-green" />
-          Evidence attached
+          Source stays attached
         </span>
         <span>
           <i className="status-dot status-dot-amber" />
@@ -222,33 +248,60 @@ export default function Home() {
             Manufacturing intelligence · Pittsburgh
           </div>
           <h1>
-            Complete process planning,
-            <span>bounded by evidence.</span>
+            Review CNC plans
+            <span>without handing over control.</span>
           </h1>
           <p className="hero-lead">
-            SAGE Suite is an assurance-first manufacturing intelligence
-            platform being built for CNC process planning. Start with a
-            120-row public simulation you can inspect, download, hash, and
-            regenerate.
+            SAGE Suite is manufacturing-intelligence software that helps people
+            organize a CNC process plan, see the evidence behind advice, and
+            stop when the evidence is not strong enough. A qualified person
+            stays in charge.
           </p>
           <div className="hero-actions">
-            <a className="button button-primary" href="/simulation/">
-              Explore simulation evidence
+            <a className="button button-primary" href="#start">
+              Start the 60-second tour
               <ArrowIcon />
             </a>
-            <a className="button button-secondary" href="#platform">
-              See the platform
+            <a className="button button-secondary" href="/evidence/">
+              See the evidence guide
             </a>
           </div>
           <div className="boundary-strip">
-            <span>120 simulated samples</span>
-            <span>0 observed samples</span>
+            <span>Advisory prototype</span>
             <span>Advisory only</span>
             <span>No physical command authority</span>
+            <span>Unknown stays unknown</span>
           </div>
         </div>
         <div className="hero-visual">
           <ProcessMap />
+        </div>
+      </section>
+
+      <section className="start-section" id="start">
+        <div className="section-heading">
+          <div>
+            <div className="section-kicker">SAGE in 60 seconds</div>
+            <h2>One accountable thread from job description to human decision.</h2>
+          </div>
+          <p>
+            A process plan is the manufacturing recipe for making a part. SAGE
+            is being built to make that recipe and the evidence behind it easier
+            to review as a whole.
+          </p>
+        </div>
+        <div className="start-grid">
+          {startSteps.map((step) => (
+            <article key={step.number}>
+              <span>{step.number}</span>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+            </article>
+          ))}
+        </div>
+        <div className="plain-boundary">
+          In plain English: SAGE can help a person understand and challenge a
+          plan. It cannot run the machine.
         </div>
       </section>
 
@@ -272,6 +325,37 @@ export default function Home() {
               hiding uncertainty or crossing the boundary into machine control.
             </p>
           </div>
+        </div>
+      </section>
+
+      <section className="kernel-section" id="kernels">
+        <div className="section-heading">
+          <div>
+            <div className="section-kicker">Core assurance behavior</div>
+            <h2>Five software checks look for five different reasons to stop.</h2>
+          </div>
+          <p>
+            “Kernel” means a small, focused check. These are not machine
+            controllers or certified safety devices. They decide only whether an
+            advisory result is allowed to continue through the software review
+            path.
+          </p>
+        </div>
+        <div className="public-kernel-grid">
+          {publicKernels.map((kernel) => (
+            <article key={kernel.number}>
+              <span>{kernel.number}</span>
+              <h3>{kernel.shortName}</h3>
+              <strong>{kernel.question}</strong>
+              <p>{kernel.action}</p>
+              <small>{kernel.value}</small>
+            </article>
+          ))}
+        </div>
+        <div className="public-kernel-boundary">
+          <strong>Why the descriptions stop here</strong>
+          <p>{publicKernelBoundary}</p>
+          <a href="/evidence/#kernels">Read the plain-language kernel guide</a>
         </div>
       </section>
 

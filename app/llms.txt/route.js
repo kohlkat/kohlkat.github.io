@@ -3,52 +3,22 @@ import { siteOrigin } from "../../lib/site";
 export const dynamic = "force-static";
 
 export function GET() {
-  const body = `# SAGE Suite
+  const body = `# SAGE Suite automated-access policy
 
-> Public project hub for assurance-first manufacturing intelligence.
+This file communicates policy only. It is not an alternate copy of the site.
 
 Canonical site: ${siteOrigin}/
-Founder: David Kohler
-Location: Pittsburgh, Pennsylvania, USA
+Crawler rules: ${siteOrigin}/robots.txt
+TDM rights reservation: ${siteOrigin}/.well-known/tdmrep.json
+Human-readable policy: ${siteOrigin}/privacy/#automated-access
 
-## What SAGE Suite is
+Automated model training, retrieval augmentation, AI answer synthesis, dataset
+collection, bulk extraction, and archival copying are not authorized without
+written permission. Respect robots.txt and the site-wide TDM reservation.
 
-SAGE Suite is a functional, advisory prototype for evidence-linked CNC process
-planning. It represents setups and workingsteps in typed plans, preserves
-provenance, distinguishes simulated from observed evidence, records independent
-checks where implemented, and requires qualified human approval.
-
-## Public simulation evidence
-
-The public simulation page contains 120 one-second SIMULATED generic CNC-like
-samples and zero observed samples. Its generator, CSV, JSON, and SHA-256
-checksums are public. A disclosed illustrative rule marks advisory eligibility
-withheld when a synthetic vibration proxy exceeds 0.85 g RMS. That rule is not
-SAGE production policy, a machine-safety limit, or a certification criterion.
-Surface roughness Ra is unmeasured and remains null in every row.
-
-## Trust boundary
-
-- No physical CNC or robot command authority.
-- No replacement for qualified people, OEM controls, or certified safety systems.
-- Simulated evidence remains labeled.
-- Missing values remain unknown rather than becoming reassuring zeros.
-- Roadmap capabilities are not represented as deployed capabilities.
-
-## Public sections
-
-- Platform and current prototype: ${siteOrigin}/#platform
-- Reproducible public simulation evidence: ${siteOrigin}/simulation/
-- Intended audiences: ${siteOrigin}/#audiences
-- Trust boundary: ${siteOrigin}/#boundaries
-- Roadmap: ${siteOrigin}/#roadmap
-- Design-partner contact: ${siteOrigin}/#contact
-- Privacy: ${siteOrigin}/privacy/
-
-The public simulation uses only standalone teaching formulas and generic proxy
-fields. The proprietary implementation, production policies, private evidence,
-customer data, and private application materials are intentionally not
-published on this site.
+Ordinary human access and the explicitly allowlisted conventional search and
+social-preview crawlers remain permitted. These signals are requests to
+cooperative systems, not technical access control.
 `;
 
   return new Response(body, {
