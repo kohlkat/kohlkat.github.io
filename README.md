@@ -29,6 +29,17 @@ The build verifier checks the row schema, evidence labels, unknown-value
 handling, demo-rule derivation, source/artifact hashes, static downloads, and
 public-safe copy.
 
+## Newcomer evidence guide
+
+`/evidence/` begins with a plain-language product tour and five public-safe
+assurance-kernel descriptions. It then offers an optional source-synchronized
+browser replay, the reproduced Bosch open-data boundary result, a collapsed
+supporting research ledger, common questions, and a full glossary.
+
+The five-source dataset record is supporting evidence, not the product
+architecture. The site does not claim that Bosch, AI4I, NASA Milling, NUAA, and
+PHM 2010 trained one joint public checkpoint.
+
 ## Deployment
 
 Pushes to `main` build a static Next.js export and deploy it to
@@ -36,13 +47,19 @@ Pushes to `main` build a static Next.js export and deploy it to
 
 ## Search and measurement
 
-- `app/robots.js` and `app/sitemap.js` publish crawl controls.
+- `app/robots.js` explicitly allows conventional search/social-preview
+  crawlers, denies named AI/archive crawlers, and denies other cooperative
+  crawlers by default without blocking human browsers.
+- `public/.well-known/tdmrep.json` reserves site-wide text-and-data-mining
+  rights.
+- Global metadata requests indexing without cached copies.
+- `app/sitemap.js` publishes the conventional search sitemap.
 - `app/page.js` publishes visible-content-matched JSON-LD.
 - `app/simulation/page.js` publishes visible-content-matched `Dataset` JSON-LD
   for the downloadable public simulation artifacts.
 - `public/opengraph-image.png` provides the social preview.
-- `app/llms.txt/route.js` publishes a public-safe project summary for AI
-  readers. It is not treated as a Google ranking mechanism.
+- `app/llms.txt/route.js` publishes only the automated-access policy, not a
+  machine-oriented copy of the site.
 - `GOOGLE_SITE_VERIFICATION` is an optional GitHub Actions repository variable
   used to emit the Search Console verification meta tag.
 - `GA_MEASUREMENT_ID` is an optional GitHub Actions repository variable. The
@@ -67,3 +84,6 @@ records, or incompatible CAA records before changing GitHub.
   limit.
 - No customer data, real machine telemetry, production thresholds, private
   schemas, or proprietary SAGE algorithms are published.
+- Kernel descriptions stop at the user-facing question and fail-closed outcome.
+  Methods, formulas, calibration, thresholds, internal composition, private
+  identifiers, private legal material, and model internals remain private.

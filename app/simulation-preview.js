@@ -48,12 +48,13 @@ export default function SimulationPreview() {
     <section className={styles.section} id="simulation">
       <div className={styles.heading}>
         <div>
-          <div className="section-kicker">Public simulation evidence</div>
-          <h2>Inspect the trace—not just the pitch.</h2>
+          <div className="section-kicker">See one example</div>
+          <h2>Watch what the software is looking at.</h2>
         </div>
         <p>
-          Browse every one-second row from a generic CNC-like simulation. The
-          generator, data, demo rule, unknown values, and hashes are public.
+          This public teaching trace shows how SAGE keeps a source row, an
+          evidence label, a visible rule, and an unknown value together. It is
+          simulated—not a result measured on a machine.
         </p>
       </div>
 
@@ -184,8 +185,11 @@ export default function SimulationPreview() {
             <strong>0</strong>
             <small>unmeasured, kept null</small>
           </div>
-          <a className={`button button-primary ${styles.explore}`} href="/simulation/">
-            Explore all 120 samples
+          <a
+            className={`button button-primary ${styles.explore}`}
+            href="/evidence/#guided-replay"
+          >
+            Watch the guided replay
             <ArrowIcon />
           </a>
           <div className={styles.downloads}>

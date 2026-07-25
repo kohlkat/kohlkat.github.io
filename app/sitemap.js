@@ -22,5 +22,11 @@ export default function sitemap() {
       changeFrequency: "monthly",
       priority: 0.9,
     },
+    {
+      url: `${siteOrigin}/evidence/`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.95,
+    },
   ];
 }

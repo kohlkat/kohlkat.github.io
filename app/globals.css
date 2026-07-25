@@ -525,11 +525,64 @@ h1 span {
 }
 
 .problem-section,
+.start-section,
+.kernel-section,
 .platform-section,
 .audience-section,
 .roadmap-section {
   width: min(1380px, calc(100% - 64px));
   margin: 0 auto;
+}
+
+.start-section {
+  padding: 112px 0 120px;
+  border-top: 1px solid var(--line);
+}
+
+.start-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.start-grid article {
+  min-height: 270px;
+  padding: 31px;
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  background: rgba(255, 255, 255, 0.54);
+}
+
+.start-grid article > span {
+  color: var(--cyan-dark);
+  font-family: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.start-grid h3 {
+  margin: 50px 0 13px;
+  font-size: 25px;
+  font-weight: 620;
+  letter-spacing: -0.035em;
+}
+
+.start-grid p {
+  margin: 0;
+  color: var(--slate);
+  line-height: 1.7;
+}
+
+.plain-boundary {
+  margin-top: 14px;
+  padding: 18px 22px;
+  border-radius: 12px;
+  background: var(--ink);
+  color: #eaf4f3;
+  font-size: 15px;
+  line-height: 1.55;
+  text-align: center;
 }
 
 .problem-section {
@@ -572,6 +625,96 @@ h1 span {
 
 .problem-copy p:last-child {
   margin-bottom: 0;
+}
+
+.kernel-section {
+  padding: 115px 0;
+  border-top: 1px solid var(--line);
+}
+
+.public-kernel-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 9px;
+}
+
+.public-kernel-grid article {
+  display: flex;
+  flex-direction: column;
+  min-height: 390px;
+  padding: 25px 23px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.66);
+}
+
+.public-kernel-grid article > span {
+  color: var(--cyan-dark);
+  font-family: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.public-kernel-grid h3 {
+  margin: 25px 0 20px;
+  padding-bottom: 19px;
+  border-bottom: 1px solid var(--line);
+  font-size: 20px;
+  letter-spacing: -0.025em;
+}
+
+.public-kernel-grid strong {
+  color: #17343b;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.public-kernel-grid p {
+  margin: 18px 0;
+  color: var(--slate);
+  font-size: 13px;
+  line-height: 1.62;
+}
+
+.public-kernel-grid small {
+  display: block;
+  margin-top: auto;
+  color: #0d7672;
+  font-size: 12px;
+  font-weight: 720;
+  line-height: 1.52;
+}
+
+.public-kernel-boundary {
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  gap: 26px;
+  align-items: center;
+  margin-top: 13px;
+  padding: 20px 23px;
+  border-radius: 13px;
+  background: #0a181d;
+  color: #e7f1f1;
+}
+
+.public-kernel-boundary strong {
+  color: var(--lime);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.public-kernel-boundary p {
+  margin: 0;
+  color: #9cb0b7;
+  font-size: 12px;
+  line-height: 1.58;
+}
+
+.public-kernel-boundary a {
+  color: #d6e5e6;
+  font-size: 12px;
+  font-weight: 720;
 }
 
 .platform-section {
@@ -1121,6 +1264,20 @@ footer p {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .public-kernel-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .public-kernel-grid article:last-child {
+    grid-column: 1 / -1;
+    min-height: auto;
+  }
+
+  .public-kernel-boundary {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
   .boundary-panel,
   .partner-section {
     gap: 60px;
@@ -1134,12 +1291,14 @@ footer p {
 @media (max-width: 720px) {
   .site-header,
   .hero,
+  .start-section,
+  .kernel-section,
   .problem-section,
   .platform-section,
   .audience-section,
   .roadmap-section,
   footer {
-    width: min(100% - 36px, 1380px);
+    width: min(1380px, calc(100% - 36px));
   }
 
   .site-header {
@@ -1149,6 +1308,16 @@ footer p {
   .site-header .mobile-nav {
     gap: 12px;
     font-size: 10px;
+  }
+
+  .site-header .brand,
+  .site-header .mobile-nav {
+    min-width: 0;
+    flex: 0 0 auto;
+  }
+
+  .site-header .mobile-nav {
+    margin-left: auto;
   }
 
   .hero {
@@ -1190,6 +1359,8 @@ footer p {
   }
 
   .problem-section,
+  .start-section,
+  .kernel-section,
   .platform-section,
   .audience-section,
   .roadmap-section {
@@ -1199,6 +1370,22 @@ footer p {
   .problem-layout {
     margin-top: 28px;
     gap: 35px;
+  }
+
+  .start-grid,
+  .public-kernel-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .start-grid article,
+  .public-kernel-grid article,
+  .public-kernel-grid article:last-child {
+    grid-column: auto;
+    min-height: auto;
+  }
+
+  .start-grid h3 {
+    margin-top: 30px;
   }
 
   .capability-grid {

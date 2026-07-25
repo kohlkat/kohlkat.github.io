@@ -1,4 +1,5 @@
 import simulationRun from "../../public/data/sage-public-simulation-v1.json";
+import { evidenceTermsById } from "../../lib/public-evidence";
 import { siteUrl } from "../../lib/site";
 import { ArrowIcon, SiteFooter, SiteHeader } from "../site-chrome";
 import SimulationExplorer from "./simulation-explorer";
@@ -92,6 +93,23 @@ const methodCards = [
     body: "Surface roughness Ra is not generated or inferred. Every JSON value is null and every CSV cell is blank rather than a fabricated zero.",
   },
 ];
+
+const simulationTermIds = [
+  "cnc",
+  "simulated",
+  "observed",
+  "proxy",
+  "spindle-speed",
+  "feed-rate",
+  "g-rms",
+  "surface-roughness",
+  "null",
+  "sha-256",
+];
+
+const simulationTerms = simulationTermIds.map(
+  (termId) => evidenceTermsById[termId],
+);
 
 export default function SimulationPage() {
   return (
@@ -292,6 +310,32 @@ export default function SimulationPage() {
             </div>
           </dl>
         </div>
+      </section>
+
+      <section className={styles.glossarySection} aria-labelledby="terms-heading">
+        <div className={styles.sectionHeading}>
+          <div>
+            <div className="section-kicker">Terms used on this page</div>
+            <h2 id="terms-heading">The field names, in ordinary language.</h2>
+          </div>
+          <p>
+            The exact technical names stay visible for reproducibility. These
+            definitions explain what each one means without assuming machining
+            or statistics experience.
+          </p>
+        </div>
+        <dl className={styles.glossaryGrid}>
+          {simulationTerms.map((entry) => (
+            <div key={entry.id}>
+              <dt>{entry.term}</dt>
+              <dd>{entry.definition}</dd>
+            </div>
+          ))}
+        </dl>
+        <a className={styles.glossaryLink} href="/evidence/#glossary">
+          Open the complete evidence and statistics glossary
+          <ArrowIcon />
+        </a>
       </section>
 
       <section className={styles.limitations}>
