@@ -455,6 +455,12 @@ h1 span {
   transform: rotate(45deg);
 }
 
+.flow-link-left::after {
+  right: auto;
+  left: 0;
+  transform: rotate(-135deg);
+}
+
 .flow-link-dashed {
   background: repeating-linear-gradient(
     to right,

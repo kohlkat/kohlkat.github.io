@@ -98,7 +98,7 @@ function ProcessMap() {
             <span>Independent check</span>
             <small>record · provenance</small>
           </div>
-          <span className="flow-link" aria-hidden="true" />
+          <span className="flow-link flow-link-left" aria-hidden="true" />
           <div className="flow-node">
             <span>Evidence binding</span>
             <small>observed ≠ simulated</small>
