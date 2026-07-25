@@ -1,0 +1,198 @@
+.section {
+  width: min(1380px, calc(100% - 64px));
+  margin: 0 auto;
+  padding: 110px 0 125px;
+  border-top: 1px solid var(--line);
+}
+
+.heading {
+  display: grid;
+  margin-bottom: 48px;
+  grid-template-columns: 1.2fr 0.8fr;
+  align-items: end;
+  gap: 80px;
+}
+
+.heading h2 {
+  max-width: 780px;
+  margin: 22px 0 0;
+  font-size: clamp(42px, 5vw, 72px);
+  font-weight: 540;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+}
+
+.heading > p {
+  max-width: 500px;
+  margin: 0 0 5px;
+  color: var(--slate);
+  font-size: 16px;
+  line-height: 1.72;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(280px, 0.45fr);
+  gap: 18px;
+}
+
+.chartCard {
+  min-width: 0;
+  padding: 28px;
+  color: var(--white);
+  background:
+    linear-gradient(145deg, rgba(25, 215, 208, 0.055), transparent 45%),
+    var(--ink);
+  box-shadow: 0 28px 70px rgba(4, 15, 19, 0.14);
+}
+
+.chartHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.chartHeader span,
+.metric span {
+  display: block;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 9px;
+  font-weight: 760;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.chartHeader strong {
+  display: block;
+  margin-top: 7px;
+  font-size: 15px;
+  font-weight: 650;
+}
+
+.chartHeader .simulatedBadge {
+  padding: 7px 9px;
+  color: var(--ink);
+  background: var(--lime);
+}
+
+.chart {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 22px;
+}
+
+.chartNote {
+  margin: 7px 0 0;
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+
+.metric {
+  min-height: 145px;
+  padding: 23px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.42);
+}
+
+.metric span {
+  color: var(--cyan-dark);
+}
+
+.metric strong {
+  display: block;
+  margin: 21px 0 6px;
+  font-family: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: clamp(23px, 3vw, 34px);
+  font-weight: 560;
+  letter-spacing: -0.055em;
+}
+
+.metric small {
+  color: var(--slate);
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.explore {
+  min-height: 60px;
+  grid-column: 1 / -1;
+  border-radius: 0;
+}
+
+.downloads {
+  display: flex;
+  grid-column: 1 / -1;
+  align-items: center;
+  justify-content: center;
+  gap: 21px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  min-height: 48px;
+  color: var(--slate);
+  background: rgba(255, 255, 255, 0.42);
+  font-size: 10px;
+  font-weight: 740;
+  letter-spacing: 0.08em;
+}
+
+.downloads a {
+  text-decoration: underline;
+  text-decoration-color: rgba(7, 17, 21, 0.22);
+  text-underline-offset: 4px;
+}
+
+.downloadBoundary {
+  margin: 0;
+  padding: 12px 16px;
+  grid-column: 1 / -1;
+  color: var(--slate);
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.42);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1040px) {
+  .heading,
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .heading {
+    gap: 28px;
+  }
+}
+
+@media (max-width: 720px) {
+  .section {
+    width: min(100% - 36px, 1380px);
+    padding: 82px 0;
+  }
+
+  .chartCard {
+    padding: 18px 12px 20px;
+  }
+
+  .chartHeader {
+    padding: 0 6px;
+  }
+
+  .chartHeader strong {
+    font-size: 12px;
+  }
+}

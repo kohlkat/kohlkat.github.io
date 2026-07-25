@@ -4,7 +4,7 @@ import { siteOrigin } from "../lib/site";
 
 const siteTitle = "SAGE Suite | Assurance-First Manufacturing Intelligence";
 const siteDescription =
-  "SAGE Suite is an assurance-first manufacturing intelligence platform for evidence-linked CNC process planning, verification, and human approval.";
+  "SAGE Suite is an assurance-first manufacturing intelligence platform with a reproducible public CNC-like simulation, evidence-linked planning, verification, and human approval.";
 const googleSiteVerification =
   process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION?.trim();
 const contentSecurityPolicy = [

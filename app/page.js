@@ -1,4 +1,6 @@
 import { siteUrl } from "../lib/site";
+import SimulationPreview from "./simulation-preview";
+import { ArrowIcon, SiteFooter, SiteHeader } from "./site-chrome";
 
 const currentCapabilities = [
   {
@@ -128,6 +130,7 @@ const structuredData = {
         "Typed process plans",
         "Evidence-linked reasoning",
         "Explicit simulated and observed evidence labels",
+        "Reproducible public simulation evidence",
         "Fail-closed human approval",
       ],
     },
@@ -138,28 +141,6 @@ const structuredDataJson = JSON.stringify(structuredData).replace(
   /</g,
   "\\u003c",
 );
-
-function SageMark() {
-  return (
-    <svg
-      aria-hidden="true"
-      className="sage-mark"
-      viewBox="0 0 42 42"
-      fill="none"
-    >
-      <path d="M8 12.5 21 5l13 7.5v17L21 37 8 29.5v-17Z" />
-      <path d="m13 15.5 8-4.5 8 4.5-8 4.6-8-4.6Zm0 6 8 4.5 8-4.5M21 20.1V32" />
-    </svg>
-  );
-}
-
-function ArrowIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 18 18" fill="none">
-      <path d="M3 9h11M10 5l4 4-4 4" />
-    </svg>
-  );
-}
 
 function ProcessMap() {
   return (
@@ -230,25 +211,7 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: structuredDataJson }}
       />
-      <header className="site-header">
-        <a className="brand" href="#top" aria-label="SAGE Suite home">
-          <SageMark />
-          <span>
-            SAGE
-            <small>SUITE</small>
-          </span>
-        </a>
-        <nav aria-label="Main navigation">
-          <a href="#platform">Platform</a>
-          <a href="#audiences">Who it serves</a>
-          <a href="#boundaries">Trust boundary</a>
-          <a href="#roadmap">Roadmap</a>
-        </nav>
-        <a className="header-cta" href="#contact">
-          Design partners
-          <ArrowIcon />
-        </a>
-      </header>
+      <SiteHeader />
 
       <section className="hero" id="top">
         <div className="ambient ambient-one" />
@@ -264,25 +227,22 @@ export default function Home() {
           </h1>
           <p className="hero-lead">
             SAGE Suite is an assurance-first manufacturing intelligence
-            platform being built for CNC process planning—connecting typed
-            plans, evidence, independent checks, and human approval.
+            platform being built for CNC process planning. Start with a
+            120-row public simulation you can inspect, download, hash, and
+            regenerate.
           </p>
           <div className="hero-actions">
-            <a className="button button-primary" href="#platform">
-              Explore the approach
+            <a className="button button-primary" href="/simulation/">
+              Explore simulation evidence
               <ArrowIcon />
             </a>
-            <a
-              className="button button-secondary"
-              href="https://github.com/kohlkat"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Founder profile
+            <a className="button button-secondary" href="#platform">
+              See the platform
             </a>
           </div>
           <div className="boundary-strip">
-            <span>Functional prototype</span>
+            <span>120 simulated samples</span>
+            <span>0 observed samples</span>
             <span>Advisory only</span>
             <span>No physical command authority</span>
           </div>
@@ -291,6 +251,8 @@ export default function Home() {
           <ProcessMap />
         </div>
       </section>
+
+      <SimulationPreview />
 
       <section className="problem-section">
         <div className="section-kicker">The operating problem</div>
@@ -446,24 +408,7 @@ export default function Home() {
         </div>
       </section>
 
-      <footer>
-        <div className="brand footer-brand">
-          <SageMark />
-          <span>
-            SAGE
-            <small>SUITE</small>
-          </span>
-        </div>
-        <p>
-          Assurance-first manufacturing intelligence. Prototype · Advisory
-          only · No machine command authority.
-        </p>
-        <div className="footer-links">
-          <a href="/privacy/">Privacy</a>
-          <a href="https://github.com/kohlkat">GitHub</a>
-          <span>© 2026 SAGE Suite</span>
-        </div>
-      </footer>
+      <SiteFooter />
     </main>
   );
 }

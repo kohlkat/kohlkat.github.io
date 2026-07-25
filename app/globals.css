@@ -117,6 +117,10 @@ nav a:hover {
   color: var(--ink);
 }
 
+.mobile-nav {
+  display: none;
+}
+
 .header-cta {
   display: inline-flex;
   align-items: center;
@@ -1073,7 +1077,18 @@ footer p {
 }
 
 @media (max-width: 1040px) {
-  .site-header nav {
+  .site-header .desktop-nav {
+    display: none;
+  }
+
+  .site-header .mobile-nav {
+    display: flex;
+    gap: 18px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .header-cta {
     display: none;
   }
 
@@ -1131,8 +1146,9 @@ footer p {
     min-height: 78px;
   }
 
-  .header-cta {
-    display: none;
+  .site-header .mobile-nav {
+    gap: 12px;
+    font-size: 10px;
   }
 
   .hero {

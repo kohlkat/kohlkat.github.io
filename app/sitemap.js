@@ -16,5 +16,11 @@ export default function sitemap() {
       changeFrequency: "yearly",
       priority: 0.2,
     },
+    {
+      url: `${siteOrigin}/simulation/`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
   ];
 }
