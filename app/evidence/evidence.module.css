@@ -13,6 +13,7 @@
 
 .hero,
 .quickTour,
+.resultSection,
 .kernelSection,
 .classSection,
 .labSection,
@@ -209,6 +210,141 @@
   text-align: center;
 }
 
+.resultSection {
+  padding: 118px 0;
+  border-top: 1px solid var(--line);
+}
+
+.resultGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.resultGrid article {
+  min-width: 0;
+  padding: 30px;
+  color: #f4fbfa;
+  border: 1px solid rgba(25, 215, 208, 0.18);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 88% 0, rgba(25, 215, 208, 0.14), transparent 43%),
+    var(--ink);
+}
+
+.resultGrid article > span {
+  display: block;
+  color: var(--cyan);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.resultGrid article > strong {
+  display: block;
+  margin-top: 36px;
+  font-family: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: clamp(44px, 4.8vw, 68px);
+  font-weight: 540;
+  letter-spacing: -0.075em;
+  line-height: 0.9;
+}
+
+.resultGrid h3 {
+  margin: 13px 0 0;
+  font-size: 18px;
+  font-weight: 650;
+  letter-spacing: -0.025em;
+}
+
+.resultGrid article > p {
+  margin: 12px 0 0;
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 12px;
+}
+
+.resultMeaning {
+  display: grid;
+  margin-top: 14px;
+  padding: 22px 26px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 28px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.65);
+}
+
+.resultMeaning > div {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.38fr) 1fr;
+  align-items: start;
+  gap: 18px;
+}
+
+.resultMeaning strong {
+  font-size: 14px;
+}
+
+.resultMeaning p {
+  margin: 0;
+  color: var(--slate);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.modelDecision {
+  display: grid;
+  margin-top: 14px;
+  padding: 24px 26px;
+  grid-template-columns: minmax(260px, 0.8fr) minmax(320px, 1.2fr) auto;
+  align-items: center;
+  gap: 28px;
+  color: #edf7f6;
+  border-left: 4px solid var(--lime);
+  border-radius: 4px;
+  background: var(--ink);
+}
+
+.modelDecision span {
+  display: block;
+  color: var(--cyan);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.modelDecision strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 17px;
+  line-height: 1.35;
+}
+
+.modelDecision p {
+  margin: 0;
+  color: #9eb2b8;
+  font-size: 12px;
+  line-height: 1.62;
+}
+
+.modelDownloads {
+  display: grid;
+  gap: 8px;
+}
+
+.modelDownloads a {
+  display: block;
+  padding: 12px 14px;
+  color: var(--ink);
+  background: var(--lime);
+  font-size: 10px;
+  font-weight: 780;
+  line-height: 1.35;
+  text-align: center;
+}
+
 .kernelSection {
   padding: 118px 0;
   border-top: 1px solid var(--line);
@@ -317,7 +453,7 @@
 
 .classGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 14px;
 }
 
@@ -332,6 +468,10 @@
 }
 
 .classGrid article:nth-child(3) {
+  background: #edf3eb;
+}
+
+.classGrid article:nth-child(4) {
   background: #f3ead8;
 }
 
@@ -342,6 +482,11 @@
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+}
+
+.panelHeader .overline,
+.chartHeading .overline {
+  color: #76ded9;
 }
 
 .classGrid h3 {
@@ -1135,6 +1280,16 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .resultGrid,
+  .classGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .resultMeaning,
+  .modelDecision {
+    grid-template-columns: 1fr;
+  }
+
   .kernelGrid article:last-child {
     grid-column: 1 / -1;
     min-height: auto;
@@ -1166,6 +1321,7 @@
 @media (max-width: 760px) {
   .hero,
   .quickTour,
+  .resultSection,
   .kernelSection,
   .classSection,
   .labSection,
@@ -1190,6 +1346,7 @@
   .heroCopy,
   .heroGuide,
   .sectionIntro > *,
+  .resultGrid,
   .kernelGrid,
   .classGrid,
   .labGrid,
@@ -1216,6 +1373,7 @@
 
   .heroGuide,
   .quickGrid,
+  .resultGrid,
   .kernelGrid,
   .classGrid,
   .datasetGrid,
@@ -1229,6 +1387,7 @@
   }
 
   .quickTour,
+  .resultSection,
   .kernelSection,
   .classSection,
   .labSection,
@@ -1253,6 +1412,22 @@
 
   .quickGrid h3 {
     margin-top: 30px;
+  }
+
+  .resultMeaning {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .resultMeaning > div {
+    padding: 8px 0;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .modelDecision {
+    padding: 22px;
+    gap: 18px;
   }
 
   .kernelGrid article,

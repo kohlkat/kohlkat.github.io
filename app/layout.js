@@ -2,9 +2,9 @@ import "./globals.css";
 import GoogleAnalytics from "./google-analytics";
 import { siteOrigin } from "../lib/site";
 
-const siteTitle = "SAGE Suite | Assurance-First Manufacturing Intelligence";
+const siteTitle = "SAGE Suite | CNC Process Intelligence";
 const siteDescription =
-  "SAGE Suite helps manufacturing teams review CNC process plans, keep advice tied to evidence, stop when support is weak, and leave decisions with qualified people.";
+  "SAGE Suite turns difficult CNC planning into a reviewable engineering decision by connecting structured job context, simulation-backed alternatives, evidence, independent checks, and qualified human approval.";
 const googleSiteVerification =
   process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION?.trim();
 const contentSecurityPolicy = [
@@ -14,6 +14,7 @@ const contentSecurityPolicy = [
   "frame-src 'none'",
   "form-action 'self'",
   "img-src 'self' data: https://www.google-analytics.com",
+  "media-src 'self'",
   "font-src 'self'",
   "style-src 'self' 'unsafe-inline'",
   "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com",
@@ -70,7 +71,7 @@ export const metadata = {
         url: "/opengraph-image.png",
         width: 1200,
         height: 630,
-        alt: "SAGE Suite assurance flow for evidence-linked CNC process planning",
+        alt: "SAGE Suite manufacturing decision intelligence for CNC process planning",
       },
     ],
   },

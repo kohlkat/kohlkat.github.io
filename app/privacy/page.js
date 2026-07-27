@@ -44,7 +44,7 @@ export default function PrivacyPage() {
 
         <h2>Hosting</h2>
         <p>
-          GitHub Pages hosts this site and may process ordinary request and
+          Vercel hosts this site and may process ordinary request and
           security data under GitHub’s own terms and privacy statement. This
           site does not sell personal information.
         </p>

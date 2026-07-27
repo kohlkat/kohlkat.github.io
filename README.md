@@ -1,8 +1,9 @@
-# SAGE Suite project site
+# SAGE Suite public site
 
-Public, nonproprietary project and product hub for SAGE Suite. The site serves
-manufacturers, engineers, design partners, researchers, future customers, and
-other ecosystem participants; it is not specific to any accelerator.
+Public, nonproprietary product and evidence hub for SAGE Suite. The site is
+written for manufacturers, engineers, design partners, researchers, future
+customers, and technical reviewers encountering the platform for the first
+time.
 
 ## Local development
 
@@ -12,12 +13,71 @@ npm run generate:simulation
 npm run dev
 ```
 
-## Public simulation evidence
+## Product journey
 
-`/simulation/` publishes a deterministic 120-row generic CNC-like trace. Every
-row is labeled `SIMULATED`, the observed count is zero, surface roughness Ra is
-always null/unmeasured, and the only advisory threshold is fully disclosed as
-illustrative public-demo logic rather than SAGE production policy.
+The homepage begins with the customer outcome: a structured job model, ranked
+process-plan alternatives, and an evidence-linked review packet. Simulation,
+open-data research, and the five public-safe assurance checks support that
+product story rather than replacing it.
+
+## NVIDIA simulation evidence
+
+The product page leads with a deterministic public aggregate from the full
+disclosed NVIDIA Isaac Sim shadow campaign:
+
+- 2,542 program comparisons with matching provenance records
+- 659 verified shard archives
+- nine shape/material coverage cells
+- 46.7% median reduction in the campaign's composite synthetic objective
+- 2,542 of 2,542 programs below their own same-simulator baselines
+
+The reviewed aggregate is published at
+`public/data/sage-public-nvidia-simulation-v1.json`. It contains counts,
+coverage, distribution statistics, runtime scope, integrity status, and the
+fail-closed model decision. It excludes raw command schedules, private
+geometry, customer telemetry, objective composition, internal thresholds, and
+model internals.
+
+A separate retrospective aggregate at
+`public/data/sage-public-nvidia-surface-integrity-v1.json` covers all 2,542
+NVIDIA robot episodes. Its median modeled finish-pass interval is 1.78–3.43 µm,
+with a 2.64 µm midpoint. Historical corner radius was not recorded, so the
+result is explicitly assumption-bounded and `modeled_not_measured`; it is not
+measured Ra or a surface-quality guarantee.
+
+Robot articulation ran in NVIDIA Isaac Sim. Cutting loads were mechanistic and
+high-frequency vibration was model-synthesized. The campaign therefore
+demonstrates within-simulator shadow optimization and evidence capture; it is
+not held-out policy generalization, physical cutting, measured cycle time, part
+quality, or safety proof.
+
+The homepage also embeds `public/media/sage-simulation-replay-v1.mp4`, a silent
+capture of a separate public browser teaching replay. It is explicitly labeled
+as illustrative and is not presented as footage from the NVIDIA campaign.
+
+## Public teaching data
+
+`/simulation/` begins with the complete NVIDIA campaign and surface-integrity
+aggregates, then publishes a separate deterministic 120-row generic CNC-like
+teaching trace. Every teaching row is labeled `SIMULATED`, the observed count is
+zero, surface roughness Ra is always null/unmeasured, and the advisory threshold
+is fully disclosed as illustrative public-demo logic rather than SAGE
+production policy.
+
+## Research hub
+
+`/research/` summarizes the public-safe SAGE research program:
+
+- traceable machining and surface measurement;
+- digital-twin verification, validation, and uncertainty quantification;
+- transfer across machine, tool, material, geometry, pose, and time;
+- evidence exchange and non-actuating shadow pilots;
+- NIST CRADA, SBIR, and MEP collaboration routes; and
+- a counsel-gated TechRxiv, Zenodo, and peer-review release sequence.
+
+The site never publishes the founder-private NIST draft, patent material,
+weights, objective coefficients, calibration internals, private source, raw
+programs, or customer data.
 
 ```powershell
 npm run generate:simulation
@@ -25,65 +85,49 @@ npm run check:simulation
 ```
 
 The generator writes CSV, JSON, and `SHA256SUMS.txt` under `public/data/`.
-The build verifier checks the row schema, evidence labels, unknown-value
-handling, demo-rule derivation, source/artifact hashes, static downloads, and
-public-safe copy.
 
-## Newcomer evidence guide
+## Verification
 
-`/evidence/` begins with a plain-language product tour and five public-safe
-assurance-kernel descriptions. It then offers an optional source-synchronized
-browser replay, the reproduced Bosch open-data boundary result, a collapsed
-supporting research ledger, common questions, and a full glossary.
+```powershell
+npm run verify
+```
 
-The five-source dataset record is supporting evidence, not the product
-architecture. The site does not claim that Bosch, AI4I, NASA Milling, NUAA, and
-PHM 2010 trained one joint public checkpoint.
+The verifier checks the NVIDIA aggregate schema and reviewed values, public
+simulation artifacts, evidence labels, unknown-value handling, source hashes,
+static downloads, crawler policy, security headers, canonical URLs, and
+public-copy disclosure boundaries.
 
 ## Deployment
 
-Pushes to `main` build a static Next.js export and deploy it to
-`https://kohlkat.github.io` through GitHub Pages.
+Vercel is the sole production host:
 
-## Search and measurement
+`https://sage-public-evidence.vercel.app`
 
-- `app/robots.js` explicitly allows conventional search/social-preview
-  crawlers, denies named AI/archive crawlers, and denies other cooperative
-  crawlers by default without blocking human browsers.
+The retired GitHub Pages deployment workflow is intentionally absent. Preview
+deployments should be verified before promotion to production. Custom-domain
+preparation lives in `docs/CUSTOM_DOMAIN_CUTOVER.md`.
+
+## Search, privacy, and crawler policy
+
+- Conventional search and social-preview crawlers are permitted.
+- Named AI-training and archive crawlers are denied in `app/robots.js`.
 - `public/.well-known/tdmrep.json` reserves site-wide text-and-data-mining
   rights.
 - Global metadata requests indexing without cached copies.
-- `app/sitemap.js` publishes the conventional search sitemap.
-- `app/page.js` publishes visible-content-matched JSON-LD.
-- `app/simulation/page.js` publishes visible-content-matched `Dataset` JSON-LD
-  for the downloadable public simulation artifacts.
-- `public/opengraph-image.png` provides the social preview.
-- `app/llms.txt/route.js` publishes only the automated-access policy, not a
-  machine-oriented copy of the site.
-- `GOOGLE_SITE_VERIFICATION` is an optional GitHub Actions repository variable
-  used to emit the Search Console verification meta tag.
-- `GA_MEASUREMENT_ID` is an optional GitHub Actions repository variable. The
-  Google tag loads only after a visitor grants analytics consent.
-- `SITE_URL` is the validated canonical HTTPS origin. It remains
-  `https://kohlkat.github.io` until the secure custom-domain cutover.
-
-## Custom domain
-
-`docs/CUSTOM_DOMAIN_CUTOVER.md` and `scripts/custom-domain.ps1` prepare
-`kohler-engineering.com` without pointing Pages at an unowned domain. The CLI
-fails closed on missing registration, ownership TXT, unsafe DNS, wildcard
-records, or incompatible CAA records before changing GitHub.
+- `app/sitemap.js` publishes the search sitemap.
+- Visible-content-matched JSON-LD describes the product and public datasets.
+- Google Analytics loads only after visitor consent when configured.
+- Vercel response headers enforce CSP, framing, permissions, referrer, and
+  content-type boundaries.
 
 ## Truth boundary
 
-- Current prototype capabilities and roadmap items are labeled separately.
 - Physical CNC and robot command authority is disabled.
-- SAGE does not replace qualified human review, OEM controls, or certified safety systems.
-- Simulated evidence remains labeled, and missing values remain unknown.
-- The public demo threshold is not SAGE production policy or a machine-safety
-  limit.
-- No customer data, real machine telemetry, production thresholds, private
-  schemas, or proprietary SAGE algorithms are published.
-- Kernel descriptions stop at the user-facing question and fail-closed outcome.
-  Methods, formulas, calibration, thresholds, internal composition, private
-  identifiers, private legal material, and model internals remain private.
+- Simulation evidence remains labeled and missing values remain unknown.
+- Campaign gains are not presented as measured machine outcomes.
+- The saved surrogate was not promoted after independent held-out and
+  generated-boundary checks.
+- No customer data, raw campaign geometry, command schedules, private
+  thresholds, proprietary algorithms, or model internals are published.
+- Kernel descriptions stop at the user-facing question and fail-closed
+  outcome.

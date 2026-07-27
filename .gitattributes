@@ -2,4 +2,9 @@
 /scripts/generate-public-simulation.mjs text eol=lf
 /public/data/sage-public-simulation-v1.csv text eol=lf
 /public/data/sage-public-simulation-v1.json text eol=lf
+/public/data/sage-public-nvidia-simulation-v1.json text eol=lf
 /public/data/SHA256SUMS.txt text eol=lf
+/public/media/*.jpg binary
+/public/media/*.mp4 binary
+/public/media/*.vtt text eol=lf
+/public/opengraph-image.png binary

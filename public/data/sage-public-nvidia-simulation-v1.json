@@ -1,0 +1,157 @@
+{
+  "authority": "shadow_only_non_actuating",
+  "campaign": {
+    "provenance_records": 2542,
+    "robot_programs": 2542,
+    "runs": [
+      {
+        "name": "v3",
+        "programs": 1320
+      },
+      {
+        "name": "v4-collection",
+        "programs": 160
+      },
+      {
+        "name": "v5-targeted-world",
+        "programs": 152
+      },
+      {
+        "name": "v6-cnc-heavy",
+        "programs": 910
+      }
+    ],
+    "scenario_cells": 9,
+    "unique_program_hashes": 2542,
+    "verified_shard_archives": 659
+  },
+  "coverage": {
+    "cells": [
+      {
+        "material": "aluminum_6061",
+        "programs": 296,
+        "shape": "circle_pocket"
+      },
+      {
+        "material": "mild_steel",
+        "programs": 288,
+        "shape": "circle_pocket"
+      },
+      {
+        "material": "titanium_proxy",
+        "programs": 251,
+        "shape": "circle_pocket"
+      },
+      {
+        "material": "aluminum_6061",
+        "programs": 253,
+        "shape": "rounded_rectangle_pocket"
+      },
+      {
+        "material": "mild_steel",
+        "programs": 240,
+        "shape": "rounded_rectangle_pocket"
+      },
+      {
+        "material": "titanium_proxy",
+        "programs": 298,
+        "shape": "rounded_rectangle_pocket"
+      },
+      {
+        "material": "aluminum_6061",
+        "programs": 277,
+        "shape": "slot_pocket"
+      },
+      {
+        "material": "mild_steel",
+        "programs": 394,
+        "shape": "slot_pocket"
+      },
+      {
+        "material": "titanium_proxy",
+        "programs": 245,
+        "shape": "slot_pocket"
+      }
+    ],
+    "materials": [
+      {
+        "name": "aluminum_6061",
+        "programs": 826
+      },
+      {
+        "name": "mild_steel",
+        "programs": 922
+      },
+      {
+        "name": "titanium_proxy",
+        "programs": 794
+      }
+    ],
+    "shapes": [
+      {
+        "name": "circle_pocket",
+        "programs": 835
+      },
+      {
+        "name": "rounded_rectangle_pocket",
+        "programs": 791
+      },
+      {
+        "name": "slot_pocket",
+        "programs": 916
+      }
+    ]
+  },
+  "evidence_class": "SIMULATED",
+  "integrity": {
+    "corpus_fingerprint_sha256": "8eed048665f4a864a4ca756c9ec9d295f9b325ddfa5fc5cc4a7ee8b7883468cf",
+    "postflight_report_sha256": "ff1f347b0552e5acc963f3856140507713ecb0aff1d91b4b1db250bb44cff764",
+    "postflight_status": "PASS"
+  },
+  "interpretation": [
+    "The campaign demonstrates repeatable simulated shadow optimization and evidence capture across nine scenario cells.",
+    "Objective reductions compare each program with its own baseline inside the same synthetic objective.",
+    "The result is not held-out policy generalization, measured cycle time, part quality, physical cutting, or safety proof."
+  ],
+  "model_decision": {
+    "reason": "Independent full-heldout and generated-boundary audit did not support model authority.",
+    "saved_cnc_surrogate_promoted": false,
+    "trust_radius_published": false
+  },
+  "published_on": "2026-07-27",
+  "runtime": {
+    "name": "NVIDIA Isaac Sim",
+    "not_included": [
+      "validated material removal or chip formation",
+      "physical-machine cutting",
+      "customer geometry or telemetry"
+    ],
+    "scope": "Robot articulation executed in Isaac Sim. Cutting loads were mechanistic and high-frequency vibration was model-synthesized."
+  },
+  "schema_version": "sage-public-nvidia-simulation/v1",
+  "within_simulator_outcomes": {
+    "declared_simulated_constraint_violations": 0,
+    "direction": "lower_is_better",
+    "metric": "baseline-relative composite synthetic objective",
+    "program_objective_reduction_fraction": {
+      "maximum": 0.71985728,
+      "mean": 0.46815768,
+      "median": 0.46691006,
+      "minimum": 0.17586798,
+      "p10": 0.3750838,
+      "p90": 0.56336824,
+      "p95": 0.58993882
+    },
+    "programs_with_lower_objective": 2542,
+    "shard_policies_with_lower_objective": 659,
+    "shard_policy_objective_reduction_fraction": {
+      "maximum": 0.674768,
+      "mean": 0.49719692,
+      "median": 0.497034,
+      "minimum": 0.296931,
+      "p10": 0.3995536,
+      "p90": 0.5921838,
+      "p95": 0.6159292
+    }
+  }
+}
