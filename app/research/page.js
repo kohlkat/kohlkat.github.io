@@ -1,0 +1,425 @@
+import {
+  publicSimulationSummary,
+  publicSurfaceDocumentDownload,
+  publicSurfaceSummary,
+} from "../../lib/public-results";
+import { siteUrl } from "../../lib/site";
+import { ArrowIcon, SiteFooter, SiteHeader } from "../site-chrome";
+import styles from "./research.module.css";
+
+export const metadata = {
+  title: "Manufacturing Intelligence Research",
+  description:
+    "Explore SAGE Suite research in machining measurement, digital-twin VVUQ, surface integrity, transfer, uncertainty, interoperability, and non-actuating human review.",
+  alternates: {
+    canonical: "/research/",
+  },
+  openGraph: {
+    title: "Manufacturing Intelligence Research | SAGE Suite",
+    description:
+      "SAGE research connects machining measurement, digital twins, surface integrity, uncertainty, evidence exchange, and human review.",
+    url: "/research/",
+    type: "article",
+  },
+  twitter: {
+    title: "Manufacturing Intelligence Research | SAGE Suite",
+    description:
+      "SAGE research connects machining measurement, digital twins, surface integrity, uncertainty, evidence exchange, and human review.",
+  },
+};
+
+const researchTracks = [
+  {
+    number: "01",
+    title: "Traceable machining measurement",
+    body:
+      "Pair controller and spindle context with force, acceleration, temperature, acoustic context, tool state, and SI-traceable surface and dimensional measurements.",
+  },
+  {
+    number: "02",
+    title: "Digital-twin VVUQ",
+    body:
+      "Determine which decisions can rely on reduced-order models, articulation simulation, higher-fidelity process models, or physical measurements.",
+  },
+  {
+    number: "03",
+    title: "Transfer and abstention",
+    body:
+      "Evaluate by held-out machine, tool, material, geometry, pose, and time—and withdraw when the evidence does not support the new context.",
+  },
+  {
+    number: "04",
+    title: "Evidence exchange and review",
+    body:
+      "Bind alternatives, assumptions, applicability, uncertainty, independent checks, and human disposition in a portable non-actuating record.",
+  },
+];
+
+const releaseChannels = [
+  {
+    title: "Engineering preprint",
+    body:
+      "A non-enabling methods paper through TechRxiv, with preprint status stated clearly.",
+    href: "https://innovate.ieee.org/techrxiv/",
+    label: "TechRxiv",
+  },
+  {
+    title: "Versioned evidence record",
+    body:
+      "An immutable Zenodo record for the approved PDF, safe aggregate JSON, data dictionary, license, version, and checksums.",
+    href:
+      "https://help.zenodo.org/docs/deposit/describe-records/reserve-doi/",
+    label: "Zenodo DOI guidance",
+  },
+  {
+    title: "Peer-reviewed manufacturing venue",
+    body:
+      "A later paper targeted to an appropriate manufacturing, automation, or digital-twin journal after the paired study.",
+    href:
+      "https://www.asme.org/publications-submissions/journals/find-journal/journal-manufacturing-science-engineering",
+    label: "ASME JMSE",
+  },
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "ResearchProject",
+  name: "SAGE Manufacturing Intelligence Research",
+  url: `${siteUrl}research/`,
+  description:
+    "Research in machining measurement, digital-twin VVUQ, surface integrity, transfer, uncertainty, evidence exchange, and qualified human review.",
+  founder: {
+    "@type": "Person",
+    name: "David Kohler",
+    url: "https://www.linkedin.com/in/david-kohler22",
+  },
+  parentOrganization: {
+    "@type": "Organization",
+    name: "SAGE Suite",
+    url: siteUrl,
+  },
+};
+
+const structuredDataJson = JSON.stringify(structuredData).replace(
+  /</g,
+  "\\u003c",
+);
+
+export default function ResearchPage() {
+  return (
+    <main className={styles.page}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: structuredDataJson }}
+      />
+      <SiteHeader />
+
+      <section className={styles.hero}>
+        <div className={styles.heroGrid} aria-hidden="true" />
+        <div>
+          <div className="section-kicker section-kicker-light">
+            SAGE research program
+          </div>
+          <h1>
+            Build the measurement science behind
+            <span>trustworthy machining decisions.</span>
+          </h1>
+          <p>
+            SAGE research connects manufacturing context, multi-fidelity
+            simulation, uncertainty and abstention, traceable surface
+            measurements, interoperable evidence, and qualified human review.
+          </p>
+          <div className={styles.heroActions}>
+            <a className="button button-light" href="#program">
+              Explore the program
+              <ArrowIcon />
+            </a>
+            <a className={styles.heroLink} href="/evidence/">
+              Review current evidence
+            </a>
+          </div>
+        </div>
+        <div className={styles.heroFacts}>
+          <div>
+            <strong>
+              {publicSimulationSummary.programCount.toLocaleString()}
+            </strong>
+            <span>NVIDIA simulation programs</span>
+          </div>
+          <div>
+            <strong>
+              {publicSimulationSummary.medianReductionPercent.toFixed(1)}%
+            </strong>
+            <span>median same-simulator objective reduction</span>
+          </div>
+          <div>
+            <strong className={styles.surfaceRange}>
+              {publicSurfaceSummary.lowerMedianUm.toFixed(2)}–
+              {publicSurfaceSummary.upperMedianUm.toFixed(2)}
+            </strong>
+            <span>µm median modeled finish-proxy interval</span>
+          </div>
+          <div>
+            <strong>0</strong>
+            <span>physical-machine claims made by these results</span>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.program} id="program">
+        <div className={styles.sectionHeading}>
+          <div>
+            <div className="section-kicker">Research program</div>
+            <h2>One question: when should a machining recommendation be trusted?</h2>
+          </div>
+          <p>
+            The answer requires more than model accuracy. It requires traceable
+            measurements, declared simulation fidelity, transfer tests,
+            calibrated uncertainty, independent checks, and a workflow that can
+            abstain.
+          </p>
+        </div>
+        <div className={styles.trackGrid}>
+          {researchTracks.map((track) => (
+            <article key={track.number}>
+              <span>{track.number}</span>
+              <h3>{track.title}</h3>
+              <p>{track.body}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className={styles.currentEvidence}>
+        <div className={styles.evidenceCopy}>
+          <div className="section-kicker section-kicker-light">
+            Current public evidence
+          </div>
+          <h2>A working simulation and evidence pipeline—not a slide-only concept.</h2>
+          <p>
+            The completed campaign reconciles{" "}
+            {publicSimulationSummary.archiveCount} verified archives and{" "}
+            {publicSimulationSummary.programCount.toLocaleString()} unique
+            NVIDIA Isaac Sim robot programs across{" "}
+            {publicSimulationSummary.scenarioCellCount} shape/material cells.
+            Every program lowered its own same-simulator composite synthetic
+            objective.
+          </p>
+          <p>
+            The runtime combined NVIDIA robot articulation, mechanistic cutting
+            loads, and model-synthesized high-frequency vibration. It is labeled
+            SIMULATED and remains non-actuating.
+          </p>
+          <a className="button button-light" href="/#simulation">
+            See the campaign results
+            <ArrowIcon />
+          </a>
+        </div>
+        <div className={styles.surfaceCard}>
+          <span>Surface-integrity retrospective</span>
+          <strong>
+            {publicSurfaceSummary.lowerMedianUm.toFixed(2)}–
+            {publicSurfaceSummary.upperMedianUm.toFixed(2)} µm
+          </strong>
+          <h3>median finish-pass proxy interval</h3>
+          <p>
+            Derived from the NVIDIA-run feed, force, acceleration, and
+            temperature trajectories. Historical corner radius was not
+            recorded, so the analysis uses a disclosed sensitivity interval.
+          </p>
+          <div>
+            <span>Evidence class</span>
+            <strong>{publicSurfaceSummary.evidenceLabel}</strong>
+          </div>
+          <div>
+            <span>Measurement status</span>
+            <strong>Modeled, not measured Ra</strong>
+          </div>
+          <a href={publicSurfaceDocumentDownload} download>
+            Download public aggregate JSON
+          </a>
+        </div>
+      </section>
+
+      <section className={styles.nextStudy}>
+        <div>
+          <div className="section-kicker">Next scientific study</div>
+          <h2>Pair simulation with traceable physical measurements.</h2>
+        </div>
+        <div>
+          <p>
+            The next study is designed around synchronized process context and
+            measurement: controller and spindle data, force, acceleration,
+            temperature, acoustic context where available, tool geometry and
+            wear, runout and fixturing, plus traceable surface texture and
+            dimensional results.
+          </p>
+          <ul>
+            <li>Predeclare machine, tool, material, geometry, pose, and time holdouts.</li>
+            <li>Measure uncertainty, calibration, abstention, and negative findings.</li>
+            <li>Compare the modeled surface proxy with profilometer measurements.</li>
+            <li>Keep the software in shadow mode with qualified human review.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section className={styles.nistSection}>
+        <div className={styles.sectionHeading}>
+          <div>
+            <div className="section-kicker">NIST collaboration path</div>
+            <h2>Measurement, VVUQ, interoperability, and adoption belong together.</h2>
+          </div>
+          <p>
+            SAGE is preparing a controlled collaboration concept aligned with
+            NIST digital-twin, digital-thread, surface-texture, and trustworthy
+            AI work. This site does not imply NIST review, funding, or
+            endorsement.
+          </p>
+        </div>
+        <div className={styles.nistGrid}>
+          <article>
+            <span>Cooperative research</span>
+            <h3>CRADA or related collaboration</h3>
+            <p>
+              A route for joint confidential measurement, testbed, VVUQ, and
+              standards work. A CRADA does not fund the collaborator.
+            </p>
+            <a
+              href="https://www.nist.gov/tpo/cooperative-research-and-development-agreement-crada"
+              target="_blank"
+              rel="noreferrer"
+            >
+              NIST CRADA overview
+            </a>
+          </article>
+          <article>
+            <span>Small-business research</span>
+            <h3>NIST SBIR when a topic matches</h3>
+            <p>
+              A Phase I path only when a released solicitation directly matches
+              the proposed measurement and manufacturing scope.
+            </p>
+            <a
+              href="https://www.nist.gov/tpo/small-business-innovation-research-program-sbir"
+              target="_blank"
+              rel="noreferrer"
+            >
+              NIST SBIR
+            </a>
+          </article>
+          <article>
+            <span>Manufacturing adoption</span>
+            <h3>MEP partnership</h3>
+            <p>
+              A practical route for small- and medium-manufacturer pilots
+              through an eligible MEP Center or consortium.
+            </p>
+            <a
+              href="https://www.nist.gov/news-events/news/2026/05/nist-issues-notice-intent-upcoming-technology-accelerator-pilot-program"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Technology Accelerator notice
+            </a>
+          </article>
+        </div>
+        <div className={styles.nistLinks}>
+          <a
+            href="https://www.nist.gov/programs-projects/digital-twins-advanced-manufacturing"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Digital twins for advanced manufacturing
+          </a>
+          <a
+            href="https://www.nist.gov/programs-projects/digital-thread-manufacturing"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Digital thread for manufacturing
+          </a>
+          <a
+            href="https://www.nist.gov/programs-projects/surface-texture-and-forensic-topography"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Surface texture and topography
+          </a>
+          <a
+            href="https://www.nist.gov/itl/ai-risk-management-framework"
+            target="_blank"
+            rel="noreferrer"
+          >
+            AI Risk Management Framework
+          </a>
+        </div>
+      </section>
+
+      <section className={styles.releaseSection}>
+        <div className={styles.sectionHeading}>
+          <div>
+            <div className="section-kicker">Research release path</div>
+            <h2>Publish useful methods without publishing the private implementation.</h2>
+          </div>
+          <p>
+            The release sequence remains gated by registered patent counsel.
+            Preprints establish a public record; they are not peer review.
+          </p>
+        </div>
+        <div className={styles.releaseGrid}>
+          {releaseChannels.map((channel) => (
+            <article key={channel.title}>
+              <h3>{channel.title}</h3>
+              <p>{channel.body}</p>
+              <a href={channel.href} target="_blank" rel="noreferrer">
+                {channel.label}
+              </a>
+            </article>
+          ))}
+        </div>
+        <div className={styles.publicBoundary}>
+          <div>
+            <strong>Appropriate for a reviewed public package</strong>
+            <p>
+              Problem framing, non-enabling workflow, public-source provenance,
+              labeled aggregate simulation results, methods boundaries,
+              prospective experiments, negative findings, and checksums.
+            </p>
+          </div>
+          <div>
+            <strong>Kept controlled</strong>
+            <p>
+              Source code, model weights, hyperparameters, objective weights,
+              calibration internals, exact trust envelopes, proprietary
+              curation logic, raw programs and geometry, customer data, and
+              legal or patent material.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.contact}>
+        <div>
+          <div className="section-kicker section-kicker-light">
+            Research and measurement partners
+          </div>
+          <h2>Help turn the simulation evidence into a traceable paired study.</h2>
+          <p>
+            SAGE is seeking manufacturing, metrology, digital-twin, surface
+            integrity, standards, and research partners for a controlled,
+            non-actuating collaboration.
+          </p>
+        </div>
+        <a
+          className="button button-light"
+          href="mailto:dkohlkat@gmail.com?subject=SAGE%20research%20collaboration"
+        >
+          Start a research conversation
+          <ArrowIcon />
+        </a>
+      </section>
+
+      <SiteFooter />
+    </main>
+  );
+}

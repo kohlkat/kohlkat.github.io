@@ -1,28 +1,34 @@
 import simulationRun from "../../public/data/sage-public-simulation-v1.json";
 import { evidenceTermsById } from "../../lib/public-evidence";
+import {
+  publicSimulationDocumentDownload,
+  publicSimulationSummary,
+  publicSurfaceDocumentDownload,
+  publicSurfaceSummary,
+} from "../../lib/public-results";
 import { siteUrl } from "../../lib/site";
 import { ArrowIcon, SiteFooter, SiteHeader } from "../site-chrome";
 import SimulationExplorer from "./simulation-explorer";
 import styles from "./simulation.module.css";
 
 export const metadata = {
-  title: "Public Simulation Evidence",
+  title: "Simulation Results and Data Explorer",
   description:
-    "Inspect, download, and reproduce a 120-row simulated CNC-like process trace with explicit unknowns, a disclosed public-demo advisory rule, and zero observed samples.",
+    "Review the 2,542-program NVIDIA Isaac Sim campaign, modeled surface-integrity aggregate, and a separate reproducible browser teaching trace.",
   alternates: {
     canonical: "/simulation/",
   },
   openGraph: {
-    title: "Public Simulation Evidence | SAGE Suite",
+    title: "Simulation Results and Data Explorer | SAGE Suite",
     description:
-      "A reproducible 120-row simulated process trace with public data, hashes, methodology, and explicit limitations.",
+      "A verified 2,542-program NVIDIA simulation campaign, modeled surface-integrity aggregate, and reproducible public browser trace.",
     url: "/simulation/",
     type: "article",
   },
   twitter: {
-    title: "Public Simulation Evidence | SAGE Suite",
+    title: "Simulation Results and Data Explorer | SAGE Suite",
     description:
-      "A reproducible 120-row simulated process trace with public data, hashes, methodology, and explicit limitations.",
+      "A verified 2,542-program NVIDIA simulation campaign, modeled surface-integrity aggregate, and reproducible public browser trace.",
   },
 };
 
@@ -122,84 +128,93 @@ export default function SimulationPage() {
 
       <section className={styles.hero}>
         <div className={styles.heroCopy}>
-          <div className="section-kicker">Public evidence exhibit · v1</div>
+          <div className="section-kicker">NVIDIA campaign + public explorer</div>
           <h1>
-            A simulation
-            <span>you can audit.</span>
+            Simulation results
+            <span>you can inspect.</span>
           </h1>
           <p>
-            This is a deterministic, generic CNC-like process trace—not a
-            screenshot and not a field-performance claim. Inspect every row,
-            reproduce the generator, and verify the hashes.
+            Start with the complete aggregate from{" "}
+            {publicSimulationSummary.programCount.toLocaleString()} NVIDIA
+            Isaac Sim shadow programs. Then open a separate 120-row teaching
+            trace to inspect how commands, proxies, labels, and unknowns are
+            presented.
           </p>
           <div className={styles.heroActions}>
             <a
               className="button button-primary"
-              href="/data/sage-public-simulation-v1.csv"
+              href={publicSimulationDocumentDownload}
               download
             >
-              Download CSV
+              Download campaign JSON
               <ArrowIcon />
             </a>
             <a
               className="button button-secondary"
-              href="https://github.com/kohlkat/kohlkat.github.io/blob/main/scripts/generate-public-simulation.mjs"
-              target="_blank"
-              rel="noreferrer"
+              href="#browser-replay"
             >
-              Read generator source
+              Open browser explorer
             </a>
           </div>
           <p className={styles.heroBoundary}>
-            Public synthetic data only. Not field measurements.
+            SIMULATED, non-actuating evidence. No customer geometry or telemetry.
           </p>
         </div>
         <div className={styles.heroMetrics}>
           <div>
-            <span>Samples</span>
-            <strong>{simulationRun.summary.sample_count}</strong>
-            <small>one second apart</small>
+            <span>NVIDIA programs</span>
+            <strong>{publicSimulationSummary.programCount.toLocaleString()}</strong>
+            <small>verified shadow comparisons</small>
           </div>
           <div>
-            <span>Evidence mix</span>
-            <strong>120 / 0</strong>
-            <small>simulated / observed</small>
+            <span>Campaign median</span>
+            <strong>
+              {publicSimulationSummary.medianReductionPercent.toFixed(1)}%
+            </strong>
+            <small>lower composite synthetic objective</small>
           </div>
           <div>
-            <span>Stages</span>
-            <strong>{simulationRun.summary.stage_count}</strong>
-            <small>fully disclosed</small>
+            <span>Verified archives</span>
+            <strong>{publicSimulationSummary.archiveCount}</strong>
+            <small>program and provenance records reconciled</small>
           </div>
           <div>
-            <span>Demo withholds</span>
-            <strong>{simulationRun.summary.withheld_sample_count}</strong>
-            <small>threshold-derived rows</small>
+            <span>Coverage</span>
+            <strong>{publicSimulationSummary.scenarioCellCount}</strong>
+            <small>shape/material cells</small>
           </div>
           <div>
-            <span>Ra measurements</span>
-            <strong>0</strong>
-            <small>null in every row</small>
+            <span>Modeled finish proxy</span>
+            <strong>
+              {publicSurfaceSummary.lowerMedianUm.toFixed(2)}–
+              {publicSurfaceSummary.upperMedianUm.toFixed(2)}
+            </strong>
+            <small>µm median interval · not measured Ra</small>
           </div>
         </div>
       </section>
 
       <section className={styles.disclaimer} aria-labelledby="disclaimer-title">
         <div>
-          <span>Truth boundary</span>
-          <h2 id="disclaimer-title">Public simulation evidence only.</h2>
+          <span>Two evidence layers</span>
+          <h2 id="disclaimer-title">Campaign results plus a teaching replay.</h2>
         </div>
         <div>
           <p>
-            This page shows <strong>120 one-second SIMULATED</strong> generic
-            CNC-like samples generated by a public, reproducible script.{" "}
-            <strong>Observed samples: 0.</strong>
+            The primary result is the completed NVIDIA campaign:{" "}
+            <strong>
+              {publicSimulationSummary.programCount.toLocaleString()} SIMULATED
+              shadow programs
+            </strong>{" "}
+            and a retrospective surface-integrity proxy from their simulated
+            feed, force, acceleration, and temperature trajectories.
           </p>
           <p>
-            Values labeled <code>*_command_*</code> are synthetic command
-            trajectories. Values labeled <code>*_proxy_*</code> are synthetic
-            stand-ins, not calibrated sensor streams from a real machine.{" "}
-            <code>surface_roughness_ra_um</code> is null and unmeasured in every
-            row.
+            The browser explorer below is a separate{" "}
+            <strong>120 one-second SIMULATED</strong> generic teaching trace.{" "}
+            <strong>Observed samples: 0.</strong> Its command fields and proxy
+            values are synthetic and its <code>surface_roughness_ra_um</code>{" "}
+            field remains null.
           </p>
           <p>
             The advisory eligibility rule is a public-demo illustration only:
@@ -209,14 +224,27 @@ export default function SimulationPage() {
             criterion, or authorization to move or power equipment.
           </p>
           <p>
-            This material makes no claim of optimization, accuracy, defect
-            reduction, field validation, regulatory certification, machine
-            safety, or actuation. Do not use these numbers for process
-            qualification, acceptance testing, or shop-floor decisions.
+            The campaign establishes repeatable same-simulator optimization and
+            evidence capture. The modeled finish proxy is not measured Ra,
+            physical material removal, or a surface-quality guarantee.
           </p>
+          <a href={publicSurfaceDocumentDownload} download>
+            Download the surface-integrity aggregate JSON
+          </a>
+        </div>
+      </section>
+
+      <section className={styles.methodSection} id="browser-replay">
+        <div className={styles.sectionHeading}>
+          <div>
+            <div className="section-kicker">Interactive teaching replay</div>
+            <h2>Inspect the public data model row by row.</h2>
+          </div>
           <p>
-            SAGE concepts are described here, not demonstrated as live
-            industrial performance.
+            This explorer is intentionally simple and reproducible. It teaches
+            how SAGE keeps commands, modeled proxies, evidence labels, and
+            unknown values distinct; it is not footage or raw data from the
+            NVIDIA campaign.
           </p>
         </div>
       </section>
@@ -287,7 +315,7 @@ export default function SimulationPage() {
               </a>
               <a
                 className={styles.artifactLink}
-                href="https://github.com/kohlkat/kohlkat.github.io/blob/main/scripts/generate-public-simulation.mjs"
+                href="https://github.com/kohlkat/sage-public-evidence/blob/main/scripts/generate-public-simulation.mjs"
                 target="_blank"
                 rel="noreferrer"
               >

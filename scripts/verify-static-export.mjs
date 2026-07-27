@@ -4,11 +4,13 @@ import crypto from "node:crypto";
 
 const outputDirectory = path.resolve("out");
 const configuredOrigin =
-  process.env.NEXT_PUBLIC_SITE_URL?.trim() || "https://kohlkat.github.io";
+  process.env.NEXT_PUBLIC_SITE_URL?.trim() ||
+  "https://sage-public-evidence.vercel.app";
 const siteOrigin = new URL(configuredOrigin).origin;
 const requiredFiles = [
   "index.html",
   "evidence/index.html",
+  "research/index.html",
   "simulation/index.html",
   "privacy/index.html",
   "404.html",
@@ -20,7 +22,12 @@ const requiredFiles = [
   "robots.txt",
   "data/sage-public-simulation-v1.csv",
   "data/sage-public-simulation-v1.json",
+  "data/sage-public-nvidia-simulation-v1.json",
+  "data/sage-public-nvidia-surface-integrity-v1.json",
   "data/SHA256SUMS.txt",
+  "media/sage-simulation-replay-v1.mp4",
+  "media/sage-simulation-replay-captions-v1.vtt",
+  "media/sage-simulation-replay-poster-v1.jpg",
   "sitemap.xml",
 ];
 
@@ -43,6 +50,7 @@ const sourceTextExtensions = new Set([
   ".mjs",
   ".svg",
   ".txt",
+  ".vtt",
   ".webmanifest",
   ".yaml",
   ".yml",
@@ -73,12 +81,21 @@ for (const relativePath of requiredFiles) {
 
 const home = read("index.html");
 const evidence = read("evidence/index.html");
+const research = read("research/index.html");
 const simulation = read("simulation/index.html");
 const privacy = read("privacy/index.html");
 const robots = read("robots.txt");
 const sitemap = read("sitemap.xml");
 const llms = read("llms.txt");
 const tdmReservation = JSON.parse(read(".well-known/tdmrep.json"));
+const vercelConfiguration = JSON.parse(
+  fs.readFileSync(path.resolve("vercel.json"), "utf8"),
+);
+const vercelGlobalHeaders = new Map(
+  vercelConfiguration.headers
+    ?.find((entry) => entry.source === "/(.*)")
+    ?.headers?.map((header) => [header.key, header.value]) ?? [],
+);
 
 assert(
   home.includes(`rel="canonical" href="${siteOrigin}/"`),
@@ -89,6 +106,10 @@ assert(
   "Evidence-guide canonical does not match NEXT_PUBLIC_SITE_URL.",
 );
 assert(
+  research.includes(`rel="canonical" href="${siteOrigin}/research/"`),
+  "Research canonical does not match NEXT_PUBLIC_SITE_URL.",
+);
+assert(
   privacy.includes(`rel="canonical" href="${siteOrigin}/privacy/"`),
   "Privacy canonical does not match NEXT_PUBLIC_SITE_URL.",
 );
@@ -97,8 +118,23 @@ assert(
   "Simulation canonical does not match NEXT_PUBLIC_SITE_URL.",
 );
 assert(
-  home.includes('http-equiv="Content-Security-Policy"'),
-  "Content Security Policy meta tag is missing.",
+  home.includes('http-equiv="Content-Security-Policy"') &&
+    home.includes("media-src &#x27;self&#x27;"),
+  "Content Security Policy meta tag or same-origin media boundary is missing.",
+);
+assert(
+  vercelGlobalHeaders
+    .get("Content-Security-Policy")
+    ?.includes("media-src 'self'") &&
+    vercelGlobalHeaders
+      .get("Content-Security-Policy")
+      ?.includes("frame-ancestors 'none'") &&
+    vercelGlobalHeaders
+      .get("Permissions-Policy")
+      ?.includes("autoplay=(self)") &&
+    vercelGlobalHeaders.get("Permissions-Policy")?.includes("camera=()") &&
+    vercelGlobalHeaders.get("Permissions-Policy")?.includes("microphone=()"),
+  "Vercel media, framing, autoplay, camera, or microphone policy is not fail-closed.",
 );
 assert(
   home.includes("application/ld+json") &&
@@ -114,14 +150,36 @@ assert(
 );
 assert(
   home.includes('href="/evidence/"') &&
-    home.includes("SAGE in 60 seconds") &&
-    home.includes("Five software checks") &&
-    home.includes("cannot run the machine") &&
-    home.includes("public-demo threshold"),
-  "Homepage does not provide the newcomer path, five-check overview, or public simulation boundary.",
+    home.includes('href="/research/"') &&
+    home.includes("What your team receives") &&
+    home.includes("Five focused checks") &&
+    home.includes("Turn difficult CNC planning into") &&
+    home.includes("reviewable engineering decision") &&
+    home.includes("A decision packet, not a black-box prediction") &&
+    home.includes("2,542") &&
+    home.includes("46.7") &&
+    home.includes("2.64") &&
+    home.includes("Modeled finish context") &&
+    home.includes("659") &&
+    home.includes("NVIDIA Isaac Sim") &&
+    home.includes("not footage from the NVIDIA campaign") &&
+    home.includes('src="/media/sage-simulation-replay-v1.mp4"') &&
+    home.includes('kind="captions"') &&
+    home.includes('src="/media/sage-simulation-replay-captions-v1.vtt"'),
+  "Homepage does not provide the product journey, aggregate NVIDIA simulation evidence, surface proxy, replay provenance, research path, or five-check overview.",
 );
 assert(
   evidence.includes("Five assurance kernels") &&
+    evidence.includes("Verified NVIDIA simulation campaign") &&
+    evidence.includes(
+      "All 2,542 shadow programs scored below their simulated baselines",
+    ) &&
+    evidence.includes("46.7") &&
+    evidence.includes("659") &&
+    evidence.includes("Campaign integrity passed. Model promotion did not.") &&
+    evidence.includes("Surface-integrity retrospective") &&
+    evidence.includes("modeled, not measured") &&
+    evidence.includes("Surface aggregate JSON") &&
     evidence.includes("Public description boundary") &&
     evidence.includes("Open the five-source research ledger") &&
     evidence.includes("These datasets did not all train one publicly auditable model checkpoint") &&
@@ -134,8 +192,25 @@ assert(
     evidence.includes("NRMSE") &&
     evidence.includes("R²") &&
     evidence.includes("Rights review") &&
-    evidence.includes("No machine control"),
+    evidence.includes("simulation objective"),
   "Evidence guide is missing kernels, supporting dataset context, glossary terms, or authority boundaries.",
+);
+assert(
+  research.includes("SAGE research program") &&
+    research.includes("Traceable machining measurement") &&
+    research.includes("Digital-twin VVUQ") &&
+    research.includes("Surface-integrity retrospective") &&
+    research.includes("2,542") &&
+    research.includes("46.7") &&
+    research.includes("1.78") &&
+    research.includes("3.43") &&
+    research.includes("NIST collaboration path") &&
+    research.includes("CRADA") &&
+    research.includes("TechRxiv") &&
+    research.includes("Zenodo") &&
+    research.includes("Kept controlled") &&
+    research.includes("model weights"),
+  "Research page is missing the current evidence, NIST routes, release path, or disclosure boundary.",
 );
 assert(
   evidence.includes("0.563") &&
@@ -150,7 +225,7 @@ assert(
     simulation.includes("0.85") &&
     simulation.includes("not SAGE production policy") &&
     simulation.includes("surface_roughness_ra_um") &&
-    simulation.includes("null and unmeasured"),
+    simulation.includes("field remains null"),
   "Simulation truth-boundary language is missing or incomplete.",
 );
 assert(
@@ -231,7 +306,7 @@ assert(
     Object.keys(tdmReservation[0]).length === 2,
   "The site-wide TDM rights reservation is missing or malformed.",
 );
-for (const page of [home, evidence, simulation, privacy]) {
+for (const page of [home, evidence, research, simulation, privacy]) {
   assert(
     page.includes("index, follow, noarchive, nocache"),
     "A public page is missing the no-cache/no-archive indexing directive.",
@@ -247,6 +322,7 @@ assert(
 assert(
   sitemap.includes(`<loc>${siteOrigin}/</loc>`) &&
     sitemap.includes(`<loc>${siteOrigin}/evidence/</loc>`) &&
+    sitemap.includes(`<loc>${siteOrigin}/research/</loc>`) &&
     sitemap.includes(`<loc>${siteOrigin}/privacy/</loc>`) &&
     sitemap.includes(`<loc>${siteOrigin}/simulation/</loc>`),
   "sitemap.xml URLs do not match the canonical origin.",
@@ -362,6 +438,38 @@ assert(
   "Open Graph image must be 1200x630.",
 );
 
+const replayVideo = fs.readFileSync(
+  path.join(outputDirectory, "media", "sage-simulation-replay-v1.mp4"),
+);
+const replayPoster = fs.readFileSync(
+  path.join(
+    outputDirectory,
+    "media",
+    "sage-simulation-replay-poster-v1.jpg",
+  ),
+);
+assert(
+  replayVideo.length >= 50_000 &&
+    replayVideo.length <= 5_000_000 &&
+    replayVideo.subarray(4, 8).equals(Buffer.from("ftyp")) &&
+    !replayVideo.includes(Buffer.from("soun")) &&
+    sha256(replayVideo) ===
+      "4225bab3bfe8c5ef8286fd2fbbfc3cac5a6a872989a5d9d527fd48d100c2ff1c",
+  "Simulation replay must be a compact, silent MP4 asset.",
+);
+assert(
+  replayPoster.length >= 10_000 &&
+    replayPoster.length <= 1_000_000 &&
+    replayPoster.subarray(0, 2).equals(Buffer.from([0xff, 0xd8])) &&
+    replayPoster
+      .subarray(replayPoster.length - 2)
+      .equals(Buffer.from([0xff, 0xd9])) &&
+    !replayPoster.includes(Buffer.from("Exif")) &&
+    sha256(replayPoster) ===
+      "e9b9309bff959e04c3014ef22da9f2e9cec9dc9d8c7cb9f13502ba355c2e9221",
+  "Simulation replay poster must be a compact, metadata-clean JPEG.",
+);
+
 function sha256(content) {
   return crypto.createHash("sha256").update(content).digest("hex");
 }
@@ -376,7 +484,20 @@ const simulationCsvText = fs.readFileSync(
   path.join(sourceDataDirectory, "sage-public-simulation-v1.csv"),
   "utf8",
 );
+const nvidiaResultsText = fs.readFileSync(
+  path.join(sourceDataDirectory, "sage-public-nvidia-simulation-v1.json"),
+  "utf8",
+);
+const surfaceResultsText = fs.readFileSync(
+  path.join(
+    sourceDataDirectory,
+    "sage-public-nvidia-surface-integrity-v1.json",
+  ),
+  "utf8",
+);
 const simulationDocument = JSON.parse(simulationJsonText);
+const nvidiaResultsDocument = JSON.parse(nvidiaResultsText);
+const surfaceResultsDocument = JSON.parse(surfaceResultsText);
 const observations = simulationDocument.observations;
 const expectedObservationKeys = [
   "time_s",
@@ -481,6 +602,129 @@ assert(
   "Public simulation CSV must keep Ra blank and every row SIMULATED.",
 );
 
+const approximatelyEqual = (left, right) =>
+  Number.isFinite(left) &&
+  Number.isFinite(right) &&
+  Math.abs(left - right) < 1e-8;
+
+assert(
+  nvidiaResultsDocument.schema_version ===
+    "sage-public-nvidia-simulation/v1" &&
+    nvidiaResultsDocument.evidence_class === "SIMULATED" &&
+    nvidiaResultsDocument.authority === "shadow_only_non_actuating" &&
+    nvidiaResultsDocument.runtime?.name === "NVIDIA Isaac Sim" &&
+    nvidiaResultsDocument.integrity?.postflight_status === "PASS",
+  "Public NVIDIA result schema, evidence class, authority, runtime, or integrity status is invalid.",
+);
+
+const campaign = nvidiaResultsDocument.campaign;
+const outcomes = nvidiaResultsDocument.within_simulator_outcomes;
+const reduction = outcomes?.program_objective_reduction_fraction;
+assert(
+  campaign?.robot_programs === 2542 &&
+    campaign?.provenance_records === 2542 &&
+    campaign?.unique_program_hashes === 2542 &&
+    campaign?.verified_shard_archives === 659 &&
+    campaign?.scenario_cells === 9 &&
+    outcomes?.programs_with_lower_objective === 2542 &&
+    outcomes?.shard_policies_with_lower_objective === 659 &&
+    outcomes?.declared_simulated_constraint_violations === 0 &&
+    approximatelyEqual(reduction?.median, 0.46691006) &&
+    approximatelyEqual(reduction?.mean, 0.46815768) &&
+    approximatelyEqual(reduction?.p10, 0.3750838) &&
+    approximatelyEqual(reduction?.p90, 0.56336824),
+  "Public NVIDIA campaign counts or reviewed outcome distribution are invalid.",
+);
+
+const expectedCells = new Map([
+  ["circle_pocket|aluminum_6061", 296],
+  ["circle_pocket|mild_steel", 288],
+  ["circle_pocket|titanium_proxy", 251],
+  ["rounded_rectangle_pocket|aluminum_6061", 253],
+  ["rounded_rectangle_pocket|mild_steel", 240],
+  ["rounded_rectangle_pocket|titanium_proxy", 298],
+  ["slot_pocket|aluminum_6061", 277],
+  ["slot_pocket|mild_steel", 394],
+  ["slot_pocket|titanium_proxy", 245],
+]);
+const coverageCells = nvidiaResultsDocument.coverage?.cells;
+assert(
+  Array.isArray(coverageCells) &&
+    coverageCells.length === expectedCells.size &&
+    coverageCells.reduce((sum, cell) => sum + cell.programs, 0) === 2542 &&
+    coverageCells.every(
+      (cell) =>
+        expectedCells.get(`${cell.shape}|${cell.material}`) === cell.programs,
+    ),
+  "Public NVIDIA campaign coverage cells do not match the reviewed aggregate.",
+);
+
+assert(
+  Array.isArray(nvidiaResultsDocument.interpretation) &&
+    nvidiaResultsDocument.interpretation.some((boundary) =>
+      boundary.includes("not held-out policy generalization"),
+    ) &&
+    nvidiaResultsDocument.interpretation.some((boundary) =>
+      boundary.includes("physical cutting"),
+    ) &&
+    nvidiaResultsDocument.model_decision?.saved_cnc_surrogate_promoted ===
+      false &&
+    nvidiaResultsDocument.model_decision?.trust_radius_published === false,
+  "Public NVIDIA campaign boundaries or fail-closed model decision are missing.",
+);
+
+assert(
+  sha256(nvidiaResultsText) ===
+    "5a05ce9e948d5994fd461948a2d11adf7f114975b8a546f8ad84eee39be27817" &&
+    sha256(nvidiaResultsText.replace(/\r?\n/g, "\r\n")) ===
+      "cc230453e155f5e3bc103b30ce82c72ff57d08810801ef8c7c3bbf4003122ff7",
+  "Public NVIDIA result document does not match the reviewed exporter artifact.",
+);
+
+const publicSurface = surfaceResultsDocument
+  .finish_pass_surface_integrity_proxy_um;
+assert(
+  surfaceResultsDocument.schema_version ===
+    "sage-public-nvidia-surface-integrity/v1" &&
+    surfaceResultsDocument.evidence_class === "SIMULATED" &&
+    surfaceResultsDocument.authority === "shadow_only_non_actuating" &&
+    surfaceResultsDocument.measurement_status === "modeled_not_measured" &&
+    surfaceResultsDocument.runtime?.name ===
+      "NVIDIA Isaac Sim hybrid trajectory" &&
+    surfaceResultsDocument.integrity?.postflight_status === "PASS" &&
+    surfaceResultsDocument.campaign?.robot_episodes_analyzed === 2542 &&
+    surfaceResultsDocument.campaign?.verified_shard_archives === 659 &&
+    surfaceResultsDocument.historical_geometry_boundary
+      ?.campaign_programs_with_measured_corner_radius === 0 &&
+    approximatelyEqual(
+      publicSurface?.lower_bound_distribution?.median,
+      1.77892137,
+    ) &&
+    approximatelyEqual(
+      publicSurface?.midpoint_distribution?.median,
+      2.6418043,
+    ) &&
+    approximatelyEqual(
+      publicSurface?.upper_bound_distribution?.median,
+      3.42579012,
+    ),
+  "Public NVIDIA surface-integrity schema, campaign counts, labels, or reviewed distributions are invalid.",
+);
+assert(
+  Array.isArray(surfaceResultsDocument.interpretation) &&
+    surfaceResultsDocument.interpretation.some((boundary) =>
+      boundary.includes("not measured Ra"),
+    ) &&
+    surfaceResultsDocument.interpretation.some((boundary) =>
+      boundary.includes("physical cutting evidence"),
+    ) &&
+    sha256(surfaceResultsText) ===
+      "bf3bd81577d1b039c47aac67f72ed6ab17f3adc06a88e1de7e313140bbc1b93f" &&
+    sha256(surfaceResultsText.replace(/\r?\n/g, "\r\n")) ===
+      "836a0a5888042d10b53b9d3f8c07686028a1707b3d1aa7744ab9c34b73d04b5d",
+  "Public NVIDIA surface-integrity boundaries or exporter hash are invalid.",
+);
+
 const generatorBytes = fs.readFileSync(
   path.resolve("scripts", "generate-public-simulation.mjs"),
 );
@@ -512,6 +756,7 @@ for (const line of checksumLines) {
 const publicText = [
   home,
   evidence,
+  research,
   simulation,
   privacy,
   robots,
@@ -520,6 +765,8 @@ const publicText = [
   JSON.stringify(tdmReservation),
   simulationJsonText,
   simulationCsvText,
+  nvidiaResultsText,
+  surfaceResultsText,
 ].join("\n");
 const sourceText = [
   ...["app", "lib", "public", "scripts", ".github"].flatMap((directory) =>
@@ -580,6 +827,23 @@ for (const { label, pattern } of privateMarkerPatterns) {
   assert(
     !pattern.test(scannedText),
     `Potential proprietary or private marker found: ${label}.`,
+  );
+}
+
+const publicClaimScanText = scannedText.replace(
+  /\b(?:not|no)\b[^.!?]{0,180}\bmeasured (?:cycle time|quality|force|shop-floor performance)\b/gi,
+  "NEGATED_MEASUREMENT_BOUNDARY",
+);
+const prohibitedPublicClaims = [
+  /\bfield[- ]proven\b/i,
+  /\bmachine[- ]validated\b/i,
+  /\bmeasured (?:cycle time|quality|force|shop-floor performance)\b/i,
+  /\b(?:actual|live|executed)\s+(?:Isaac Sim|Omniverse)\b/i,
+];
+for (const pattern of prohibitedPublicClaims) {
+  assert(
+    !pattern.test(publicClaimScanText),
+    `Potential simulation overclaim found: ${pattern}.`,
   );
 }
 

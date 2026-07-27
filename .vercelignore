@@ -1,0 +1,9 @@
+.git
+.github
+.next
+.openai
+.vercel
+dist
+node_modules
+out
+*.log

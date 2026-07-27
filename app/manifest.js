@@ -5,7 +5,7 @@ export default function manifest() {
     name: "SAGE Suite",
     short_name: "SAGE",
     description:
-      "Manufacturing intelligence for reviewable CNC process plans, evidence-linked advice, fail-closed checks, and human decisions.",
+      "Manufacturing decision intelligence for reviewable CNC process planning, simulation-backed alternatives, evidence, and human approval.",
     start_url: "/",
     display: "standalone",
     background_color: "#f8faf7",

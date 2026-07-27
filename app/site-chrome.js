@@ -31,18 +31,18 @@ export function SiteHeader() {
         </span>
       </a>
       <nav className="desktop-nav" aria-label="Main navigation">
-        <a href="/#start">Start here</a>
-        <a href="/#kernels">Five checks</a>
-        <a href="/evidence/">Evidence guide</a>
-        <a href="/simulation/">Data explorer</a>
-        <a href="/#roadmap">Roadmap</a>
+        <a href="/#product">Product</a>
+        <a href="/#simulation">Results</a>
+        <a href="/#use-cases">Use cases</a>
+        <a href="/research/">Research</a>
+        <a href="/evidence/">Evidence</a>
       </nav>
       <nav className="mobile-nav" aria-label="Compact navigation">
         <a href="/#top">Home</a>
-        <a href="/evidence/">Evidence</a>
+        <a href="/research/">Research</a>
       </nav>
       <a className="header-cta" href="/#contact">
-        Design partners
+        Pilot SAGE
         <ArrowIcon />
       </a>
     </header>
@@ -60,11 +60,14 @@ export function SiteFooter() {
         </span>
       </div>
       <p>
-        SIMULATED public demo · 0 observed · no physical command authority ·
-        demo threshold ≠ production policy.
+        Manufacturing decision intelligence for structured planning,
+        simulation-backed comparison, evidence-linked review, and qualified
+        human approval.
       </p>
       <div className="footer-links">
-        <a href="/evidence/">Evidence guide</a>
+        <a href="/#product">Product</a>
+        <a href="/research/">Research</a>
+        <a href="/evidence/">Evidence</a>
         <a href="/simulation/">Simulation</a>
         <a href="/privacy/">Privacy &amp; crawler policy</a>
         <a href="https://github.com/kohlkat">GitHub</a>

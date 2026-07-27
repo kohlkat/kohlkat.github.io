@@ -1,0 +1,94 @@
+{
+  "authority": "shadow_only_non_actuating",
+  "campaign": {
+    "robot_episodes_analyzed": 2542,
+    "runs": [
+      {
+        "episodes": 1320,
+        "name": "v3"
+      },
+      {
+        "episodes": 160,
+        "name": "v4-collection"
+      },
+      {
+        "episodes": 152,
+        "name": "v5-targeted-world"
+      },
+      {
+        "episodes": 910,
+        "name": "v6-cnc-heavy"
+      }
+    ],
+    "verified_shard_archives": 659
+  },
+  "evidence_class": "SIMULATED",
+  "finish_pass_surface_integrity_proxy_um": {
+    "lower_bound_distribution": {
+      "maximum": 4.09802573,
+      "median": 1.77892137,
+      "minimum": 0.54674832,
+      "p10": 0.99003864,
+      "p90": 2.54895708
+    },
+    "midpoint_distribution": {
+      "maximum": 6.80986769,
+      "median": 2.6418043,
+      "minimum": 0.93181569,
+      "p10": 1.67280523,
+      "p90": 3.66580088
+    },
+    "trajectory_dynamic_displacement_proxy_distribution": {
+      "maximum": 1.26912249,
+      "median": 0.00689406,
+      "minimum": 9.671e-05,
+      "p10": 0.00102264,
+      "p90": 0.04486655
+    },
+    "upper_bound_distribution": {
+      "maximum": 10.46860263,
+      "median": 3.42579012,
+      "minimum": 1.19858736,
+      "p10": 2.27070755,
+      "p90": 4.99016331
+    }
+  },
+  "historical_geometry_boundary": {
+    "campaign_programs_with_measured_corner_radius": 0,
+    "method": "effective corner-radius sensitivity interval; no point estimate is presented as measured geometry",
+    "segment_geometry_sources": [
+      {
+        "segments": 14129,
+        "source": "historical_program_missing_geometry_sensitivity_range"
+      }
+    ]
+  },
+  "integrity": {
+    "corpus_fingerprint_sha256": "8eed048665f4a864a4ca756c9ec9d295f9b325ddfa5fc5cc4a7ee8b7883468cf",
+    "postflight_status": "PASS",
+    "private_detailed_records_sha256": "38ccdf4ee475881b9ab98c6497b098db79c31a71f08e6568bfe166919732385c"
+  },
+  "interpretation": [
+    "This retrospective result adds a surface-integrity proxy to the completed NVIDIA campaign without modifying its archives.",
+    "The proxy combines a kinematic feed-mark reference with trajectory-derived force, vibration, and thermal context.",
+    "It is not measured Ra, a surface-quality guarantee, physical cutting evidence, or independent validation."
+  ],
+  "measurement_status": "modeled_not_measured",
+  "published_on": "2026-07-27",
+  "runtime": {
+    "inputs_used": [
+      "simulated feed schedule",
+      "simulated force trajectory",
+      "simulated acceleration trajectory",
+      "simulated temperature trajectory"
+    ],
+    "name": "NVIDIA Isaac Sim hybrid trajectory",
+    "not_included": [
+      "profilometer measurement",
+      "physical material removal",
+      "chip-formation validation",
+      "customer geometry or telemetry"
+    ]
+  },
+  "schema_version": "sage-public-nvidia-surface-integrity/v1"
+}

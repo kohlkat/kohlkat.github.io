@@ -3,95 +3,125 @@ import {
   publicKernelBoundary,
   publicKernels,
 } from "../lib/public-kernels";
+import {
+  publicSimulationSummary,
+  publicSurfaceSummary,
+} from "../lib/public-results";
 import SimulationPreview from "./simulation-preview";
 import { ArrowIcon, SiteFooter, SiteHeader } from "./site-chrome";
 
-const currentCapabilities = [
+const deliverables = [
   {
     number: "01",
-    title: "Typed process plans",
-    body: "Represent setups and workingsteps in a vendor-neutral graph designed for review, comparison, and traceability.",
+    title: "A structured job model",
+    body:
+      "Part intent, setup, machine, tooling, material, operations, constraints, and available evidence in one reviewable record.",
   },
   {
     number: "02",
-    title: "Evidence-linked reasoning",
-    body: "Keep recommendations connected to provenance artifacts instead of presenting unsupported certainty.",
+    title: "Ranked process-plan alternatives",
+    body:
+      "Candidate approaches compared on a consistent modeled basis, with the baseline and tradeoffs kept visible.",
   },
   {
     number: "03",
-    title: "Honest evidence labels",
-    body: "Separate simulated from observed evidence and preserve unknown values rather than silently replacing them.",
-  },
-  {
-    number: "04",
-    title: "Fail-closed approval",
-    body: "Require an independent verification record and qualified human approval before any advisory export.",
+    title: "An evidence-linked review packet",
+    body:
+      "Sources, assumptions, applicability, independent-check results, and unresolved questions attached to the recommendation.",
   },
 ];
 
-const roadmapItems = [
-  "Exact geometry, tool, and fixture feasibility checks",
-  "Constrained search across complete process-plan alternatives",
-  "System-realized timing beyond toolpath time alone",
-  "Non-actuating shadow pilots with design partners",
+const workflow = [
+  {
+    number: "01",
+    title: "Bring one difficult job",
+    body:
+      "Start with a representative part, machine, tool set, material, constraints, and the evidence your team already has.",
+  },
+  {
+    number: "02",
+    title: "Compare feasible alternatives",
+    body:
+      "SAGE organizes the job and evaluates candidate process plans in a declared simulation and evidence context.",
+  },
+  {
+    number: "03",
+    title: "Review the decision packet",
+    body:
+      "A qualified person receives the alternatives, modeled tradeoffs, limits, and independent-check disposition—not a black-box command.",
+  },
+];
+
+const useCases = [
+  {
+    title: "Difficult new-part planning",
+    body:
+      "Compare plausible setup, tooling, and sequencing choices before committing scarce machine time.",
+  },
+  {
+    title: "Alternate machine or tool review",
+    body:
+      "Make the changed assumptions visible when evaluating whether a job can move to another resource.",
+  },
+  {
+    title: "Engineering design review",
+    body:
+      "Give manufacturing, applications, tooling, and quality teams one traceable record to challenge together.",
+  },
+  {
+    title: "Non-actuating shadow pilots",
+    body:
+      "Run beside the existing workflow, compare recommendations, and measure review value without commanding equipment.",
+  },
+];
+
+const platformCapabilities = [
+  {
+    number: "01",
+    title: "Manufacturing context",
+    body:
+      "A vendor-neutral representation of the job, setup, machine, tooling, operations, and evidence.",
+  },
+  {
+    number: "02",
+    title: "Multi-fidelity comparison",
+    body:
+      "A declared ladder from lightweight process models to NVIDIA simulation and, when available, governed measurements.",
+  },
+  {
+    number: "03",
+    title: "Advisory intelligence",
+    body:
+      "Deterministic engineering logic, constrained search, and learned ranking used as decision support—not machine authority.",
+  },
+  {
+    number: "04",
+    title: "Independent assurance",
+    body:
+      "Separate checks challenge the evidence, applicability, uncertainty, and approval state before export.",
+  },
 ];
 
 const principles = [
   {
     label: "Gate closed",
-    text: "No advisory export without the required verification and human decision.",
+    text:
+      "The workflow ends at qualified human review. Software does not approve or actuate itself.",
   },
   {
-    label: "Simulated labeled",
-    text: "Synthetic and simulated evidence stays visibly distinct from observed evidence.",
+    label: "Evidence attached",
+    text:
+      "Recommendations retain their sources, assumptions, evidence class, and independent disposition.",
   },
   {
-    label: "NaN honest",
-    text: "Missing measurements remain unknown, not converted into reassuring zeros.",
+    label: "Unknown stays unknown",
+    text:
+      "Missing measurements remain missing instead of becoming plausible-looking zeros.",
   },
   {
-    label: "Authority bounded",
-    text: "The prototype cannot issue physical CNC or robot commands.",
-  },
-];
-
-const audiences = [
-  {
-    title: "Precision manufacturers",
-    body: "Explore a reviewable planning approach for complex CNC work without handing physical authority to the software.",
-  },
-  {
-    title: "Manufacturing engineers and CNC programmers",
-    body: "Connect setups, workingsteps, evidence, and approval decisions in one accountable planning thread.",
-  },
-  {
-    title: "Applications, tooling, and machine teams",
-    body: "Bring machine capability and process evidence into clearer technical conversations around plan feasibility.",
-  },
-  {
-    title: "Research and design partners",
-    body: "Evaluate the assurance model, challenge its boundaries, and help shape non-actuating shadow pilots.",
-  },
-];
-
-const startSteps = [
-  {
-    number: "01",
-    title: "Describe the job",
-    body:
-      "Bring together the part, machine, tooling, operations, constraints, and available evidence for review.",
-  },
-  {
-    number: "02",
-    title: "Challenge the advice",
-    body:
-      "Five focused software checks ask whether limits, evidence, familiarity, physical estimates, and uncertainty support continuing.",
-  },
-  {
-    number: "03",
-    title: "Leave the decision with people",
-    body:
-      "A qualified person reviews the record. The public prototype cannot approve itself or send physical machine commands.",
+    label: "Limits stay visible",
+    text:
+      "A result can be withheld when the context or evidence does not support the requested conclusion.",
   },
 ];
 
@@ -105,7 +135,7 @@ const structuredData = {
       url: siteUrl,
       logo: `${siteUrl}icon.svg`,
       description:
-        "An assurance-first manufacturing intelligence project for evidence-linked CNC process planning.",
+        "Manufacturing decision intelligence for reviewable CNC process planning and simulation-backed comparison.",
       founder: {
         "@id": `${siteUrl}#founder`,
       },
@@ -130,7 +160,7 @@ const structuredData = {
       name: "SAGE Suite",
       url: siteUrl,
       description:
-        "The public project hub for SAGE Suite manufacturing intelligence.",
+        "The product and research hub for SAGE manufacturing decision intelligence.",
       inLanguage: "en-US",
       publisher: {
         "@id": `${siteUrl}#organization`,
@@ -144,20 +174,22 @@ const structuredData = {
       applicationCategory: "BusinessApplication",
       operatingSystem: "Platform-independent",
       description:
-        "A functional, advisory prototype for typed, evidence-linked CNC process planning with independent checks and human approval.",
+        "CNC manufacturing decision intelligence that structures jobs, compares candidate process plans, binds evidence, and returns a review packet for qualified human approval.",
       creator: {
         "@id": `${siteUrl}#founder`,
       },
       isPartOf: {
         "@id": `${siteUrl}#website`,
       },
-       featureList: [
-         "Typed process plans",
-         "Evidence-linked reasoning",
-         "Five fail-closed advisory checks described at a public-safe level",
-         "Explicit simulated and observed evidence labels",
-        "Reproducible public simulation evidence",
-        "Fail-closed human approval",
+      featureList: [
+        "Structured manufacturing job and process-plan context",
+        "Simulation-backed candidate comparison",
+        "Evidence-linked recommendation packets",
+        "Five public-safe independent assurance checks",
+        "Explicit simulated and observed evidence labels",
+        "Aggregate NVIDIA Isaac Sim campaign evidence",
+        "Modeled surface-integrity context",
+        "Qualified human approval",
       ],
     },
   ],
@@ -168,63 +200,51 @@ const structuredDataJson = JSON.stringify(structuredData).replace(
   "\\u003c",
 );
 
-function ProcessMap() {
+function DecisionPacket() {
   return (
-    <div className="process-map" aria-label="How a SAGE advisory result moves">
-      <div className="map-grid" aria-hidden="true" />
-      <div className="map-header">
-        <span>How an advisory result moves</span>
-        <span className="live-label">
+    <div
+      className="decision-packet"
+      role="group"
+      aria-label="Illustrative SAGE engineering decision packet"
+    >
+      <div className="decision-packet-grid" aria-hidden="true" />
+      <div className="decision-packet-header">
+        <span>SAGE engineering decision packet</span>
+        <span className="decision-packet-status">
           <i />
-          Prototype
+          Review ready
         </span>
       </div>
-      <div className="map-flow">
-        <div className="flow-row">
-          <div className="flow-node flow-node-source">
-            <span>Describe the job</span>
-            <small>part · machine · constraints</small>
-          </div>
-          <span className="flow-link" aria-hidden="true" />
-          <div className="flow-node">
-            <span>Build a reviewable plan</span>
-            <small>setups · tools · operations</small>
-          </div>
+      <div className="decision-packet-title">
+        <small>Representative planning question</small>
+        <h2>Which candidate plan deserves engineering review?</h2>
+        <p>
+          SAGE keeps the recommendation, alternatives, evidence, and limits in
+          one accountable object.
+        </p>
+      </div>
+      <div className="decision-packet-options">
+        <div>
+          <span>Candidate A</span>
+          <strong>Baseline</strong>
+          <small>Known reference</small>
         </div>
-        <div className="flow-down" aria-hidden="true" />
-        <div className="flow-row flow-row-reverse">
-          <div className="flow-node flow-node-check">
-            <span>Run a separate check</span>
-            <small>challenge the recommendation</small>
-          </div>
-          <span className="flow-link flow-link-left" aria-hidden="true" />
-          <div className="flow-node">
-            <span>Attach the evidence</span>
-            <small>source · label · limitations</small>
-          </div>
+        <div className="decision-packet-selected">
+          <span>Candidate B</span>
+          <strong>Recommended for review</strong>
+          <small>Modeled tradeoffs attached</small>
         </div>
-        <div className="flow-down flow-down-left" aria-hidden="true" />
-        <div className="flow-row">
-          <div className="flow-node flow-node-gate">
-            <span>A person decides</span>
-            <small>starts closed</small>
-          </div>
-          <span className="flow-link flow-link-dashed" aria-hidden="true" />
-          <div className="flow-node flow-node-output">
-            <span>Advisory result</span>
-            <small>cannot command equipment</small>
-          </div>
+        <div>
+          <span>Candidate C</span>
+          <strong>Withheld</strong>
+          <small>Evidence boundary reached</small>
         </div>
       </div>
-      <div className="map-status">
-        <span>
-          <i className="status-dot status-dot-green" />
-          Source stays attached
-        </span>
-        <span>
-          <i className="status-dot status-dot-amber" />
-          Human decision required
-        </span>
+      <div className="decision-packet-footer">
+        <span>Inputs bound</span>
+        <span>Evidence attached</span>
+        <span>Independent check</span>
+        <span>Human decision</span>
       </div>
     </div>
   );
@@ -245,100 +265,147 @@ export default function Home() {
         <div className="hero-copy">
           <div className="eyebrow">
             <span className="eyebrow-dot" />
-            Manufacturing intelligence · Pittsburgh
+            Manufacturing decision intelligence · Pittsburgh
           </div>
           <h1>
-            Review CNC plans
-            <span>without handing over control.</span>
+            Turn difficult CNC planning into
+            <span>a reviewable engineering decision.</span>
           </h1>
           <p className="hero-lead">
-            SAGE Suite is manufacturing-intelligence software that helps people
-            organize a CNC process plan, see the evidence behind advice, and
-            stop when the evidence is not strong enough. A qualified person
-            stays in charge.
+            SAGE organizes the job, compares candidate process plans in
+            simulation, and returns an evidence-linked recommendation packet
+            for qualified approval. Your team sees the alternatives, tradeoffs,
+            assumptions, and limits—not just an answer.
           </p>
           <div className="hero-actions">
-            <a className="button button-primary" href="#start">
-              Start the 60-second tour
+            <a className="button button-primary" href="#how-it-works">
+              See how SAGE works
               <ArrowIcon />
             </a>
-            <a className="button button-secondary" href="/evidence/">
-              See the evidence guide
+            <a className="button button-secondary" href="#contact">
+              Discuss a shadow pilot
             </a>
           </div>
           <div className="boundary-strip">
-            <span>Advisory prototype</span>
-            <span>Advisory only</span>
-            <span>No physical command authority</span>
-            <span>Unknown stays unknown</span>
+            <span>One job model</span>
+            <span>Ranked alternatives</span>
+            <span>Evidence-linked review</span>
+            <span>Non-actuating</span>
           </div>
         </div>
         <div className="hero-visual">
-          <ProcessMap />
+          <DecisionPacket />
         </div>
       </section>
 
-      <section className="start-section" id="start">
+      <section className="start-section" id="product">
         <div className="section-heading">
           <div>
-            <div className="section-kicker">SAGE in 60 seconds</div>
-            <h2>One accountable thread from job description to human decision.</h2>
+            <div className="section-kicker">What your team receives</div>
+            <h2>A decision packet, not a black-box prediction.</h2>
           </div>
           <p>
             A process plan is the manufacturing recipe for making a part. SAGE
-            is being built to make that recipe and the evidence behind it easier
-            to review as a whole.
+            turns the recipe and its context into an object your team can
+            compare, challenge, and approve.
           </p>
         </div>
         <div className="start-grid">
-          {startSteps.map((step) => (
-            <article key={step.number}>
-              <span>{step.number}</span>
-              <h3>{step.title}</h3>
-              <p>{step.body}</p>
+          {deliverables.map((deliverable) => (
+            <article key={deliverable.number}>
+              <span>{deliverable.number}</span>
+              <h3>{deliverable.title}</h3>
+              <p>{deliverable.body}</p>
             </article>
           ))}
         </div>
         <div className="plain-boundary">
-          In plain English: SAGE can help a person understand and challenge a
-          plan. It cannot run the machine.
+          The practical outcome: more alternatives examined before scarce
+          machine time is committed, with the technical basis preserved for
+          review.
+        </div>
+      </section>
+
+      <section className="problem-section" id="how-it-works">
+        <div className="section-kicker">How SAGE works</div>
+        <div className="problem-layout">
+          <h2>
+            Bring one difficult job. Leave with alternatives and an accountable
+            technical record.
+          </h2>
+          <div className="problem-copy">
+            {workflow.map((step) => (
+              <div className="workflow-step" key={step.number}>
+                <span>{step.number}</span>
+                <div>
+                  <h3>{step.title}</h3>
+                  <p>{step.body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       <SimulationPreview />
 
-      <section className="problem-section">
-        <div className="section-kicker">The operating problem</div>
-        <div className="problem-layout">
-          <h2>
-            Manufacturing knowledge lives in fragments. Decisions still need
-            one accountable thread.
-          </h2>
-          <div className="problem-copy">
-            <p>
-              A CNC process plan spans geometry, tooling, workholding, machine
-              capability, sequencing, timing, and hard-earned shop knowledge.
-              Those inputs rarely share one evidence model.
-            </p>
-            <p>
-              SAGE is designed to make the plan reviewable as a whole—without
-              hiding uncertainty or crossing the boundary into machine control.
-            </p>
+      <section className="audience-section" id="use-cases">
+        <div className="section-heading">
+          <div>
+            <div className="section-kicker">Where SAGE fits</div>
+            <h2>Start where planning is expensive, uncertain, or fragmented.</h2>
           </div>
+          <p>
+            SAGE is built for engineering decisions that cross part intent,
+            tooling, machine capability, simulation, sensing, and human
+            judgment.
+          </p>
+        </div>
+        <div className="audience-grid">
+          {useCases.map((useCase, index) => (
+            <article className="audience-card" key={useCase.title}>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <h3>{useCase.title}</h3>
+              <p>{useCase.body}</p>
+            </article>
+          ))}
         </div>
       </section>
 
-      <section className="kernel-section" id="kernels">
+      <section className="platform-section" id="platform">
         <div className="section-heading">
           <div>
-            <div className="section-kicker">Core assurance behavior</div>
-            <h2>Five software checks look for five different reasons to stop.</h2>
+            <div className="section-kicker">One product platform</div>
+            <h2>Planning, simulation, intelligence, and assurance stay connected.</h2>
           </div>
           <p>
-            “Kernel” means a small, focused check. These are not machine
-            controllers or certified safety devices. They decide only whether an
-            advisory result is allowed to continue through the software review
-            path.
+            SAGE is broader than one model or dataset. Each layer contributes to
+            the same reviewable manufacturing decision.
+          </p>
+        </div>
+        <div className="capability-grid">
+          {platformCapabilities.map((capability) => (
+            <article className="capability-card" key={capability.number}>
+              <span className="card-number">{capability.number}</span>
+              <div>
+                <h3>{capability.title}</h3>
+                <p>{capability.body}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="kernel-section" id="assurance">
+        <div className="section-heading">
+          <div>
+            <div className="section-kicker">Independent trust layer</div>
+            <h2>Five focused checks ask whether a recommendation should continue.</h2>
+          </div>
+          <p>
+            Each check answers a different question about limits, evidence,
+            context, physical plausibility, or uncertainty. If a required answer
+            is missing, the advisory result can be withheld.
           </p>
         </div>
         <div className="public-kernel-grid">
@@ -353,58 +420,9 @@ export default function Home() {
           ))}
         </div>
         <div className="public-kernel-boundary">
-          <strong>Why the descriptions stop here</strong>
+          <strong>Public description boundary</strong>
           <p>{publicKernelBoundary}</p>
-          <a href="/evidence/#kernels">Read the plain-language kernel guide</a>
-        </div>
-      </section>
-
-      <section className="platform-section" id="platform">
-        <div className="section-heading">
-          <div>
-            <div className="section-kicker">Current prototype</div>
-            <h2>An assurance layer for process-plan intelligence.</h2>
-          </div>
-          <p>
-            The prototype focuses on trustworthy representation and review.
-            It does not claim autonomous production control.
-          </p>
-        </div>
-        <div className="capability-grid">
-          {currentCapabilities.map((capability) => (
-            <article className="capability-card" key={capability.number}>
-              <span className="card-number">{capability.number}</span>
-              <div>
-                <h3>{capability.title}</h3>
-                <p>{capability.body}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="audience-section" id="audiences">
-        <div className="section-heading">
-          <div>
-            <div className="section-kicker">Project hub</div>
-            <h2>
-              Built for the people who plan, verify, and improve CNC work.
-            </h2>
-          </div>
-          <p>
-            This is the public home for SAGE Suite—not a campaign page for one
-            program. Follow what exists now, what comes next, and where outside
-            perspective can improve the work.
-          </p>
-        </div>
-        <div className="audience-grid">
-          {audiences.map((audience, index) => (
-            <article className="audience-card" key={audience.title}>
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              <h3>{audience.title}</h3>
-              <p>{audience.body}</p>
-            </article>
-          ))}
+          <a href="/evidence/#kernels">Read the plain-language assurance guide</a>
         </div>
       </section>
 
@@ -412,13 +430,13 @@ export default function Home() {
         <div className="boundary-panel">
           <div className="boundary-intro">
             <div className="section-kicker section-kicker-light">
-              Trust boundary
+              Built for accountable use
             </div>
-            <h2>Useful intelligence should make its limits visible.</h2>
+            <h2>Strong recommendations keep their evidence and limits attached.</h2>
             <p>
-              SAGE keeps advisory reasoning separate from physical authority.
-              Qualified people, OEM controls, and certified safety systems
-              remain responsible for real equipment.
+              SAGE is designed to make a manufacturing decision easier to
+              inspect without hiding uncertainty or crossing into machine
+              authority.
             </p>
           </div>
           <div className="principle-list">
@@ -435,26 +453,48 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="roadmap-section" id="roadmap">
+      <section className="roadmap-section" id="research">
         <div className="roadmap-label">
-          <span>Roadmap</span>
-          <small>Not represented as deployed capability</small>
+          <span>Research program</span>
+          <small>Measurement, digital twins, and surface integrity</small>
         </div>
         <div className="roadmap-content">
           <div>
-            <h2>From evidence-aware plans to bounded plan exploration.</h2>
+            <h2>Build the measurement science behind trustworthy machining intelligence.</h2>
             <p>
-              The next stage targets deeper feasibility and timing models,
-              developed in shadow mode with manufacturing design partners.
+              SAGE&apos;s research program connects simulation fidelity,
+              machine/tool/material transfer, uncertainty and abstention,
+              traceable surface texture, interoperable evidence, and human
+              review. A current public prospectus and NIST collaboration path
+              are summarized in the research hub.
             </p>
+            <div className="hero-actions">
+              <a className="button button-primary" href="/research/">
+                Explore the research program
+                <ArrowIcon />
+              </a>
+              <a className="button button-secondary" href="/evidence/">
+                Audit the evidence
+              </a>
+            </div>
           </div>
           <ol>
-            {roadmapItems.map((item, index) => (
-              <li key={item}>
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                {item}
-              </li>
-            ))}
+            <li>
+              <span>01</span>
+              Traceable machining and surface measurements
+            </li>
+            <li>
+              <span>02</span>
+              Digital-twin verification, validation, and uncertainty
+            </li>
+            <li>
+              <span>03</span>
+              Machine, tool, material, geometry, pose, and time transfer
+            </li>
+            <li>
+              <span>04</span>
+              Evidence exchange and non-actuating shadow pilots
+            </li>
           </ol>
         </div>
       </section>
@@ -465,17 +505,18 @@ export default function Home() {
           <div className="section-kicker section-kicker-light">
             Design-partner conversations
           </div>
-          <h2>Help shape an evidence-first planning workflow.</h2>
+          <h2>Bring a difficult planning problem to the conversation.</h2>
           <p>
-            We are looking to learn from precision manufacturers, manufacturing
-            engineers, CNC programmers, applications engineers, and operations
-            leaders working with complex process-planning decisions.
+            SAGE is seeking precision manufacturers, CNC programmers,
+            applications engineers, research partners, and technical teams who
+            want to evaluate an evidence-linked planning workflow in shadow
+            mode.
           </p>
         </div>
         <div className="partner-actions">
           <a
             className="button button-light"
-            href="mailto:dkohlkat@gmail.com?subject=SAGE%20Suite%20design%20partner"
+            href="mailto:dkohlkat@gmail.com?subject=SAGE%20Suite%20shadow%20pilot"
           >
             Start a conversation
             <ArrowIcon />
