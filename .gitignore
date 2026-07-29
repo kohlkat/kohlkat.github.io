@@ -2,6 +2,7 @@ node_modules/
 .next/
 out/
 dist/
+replay-qa/
 .openai/
 .vercel/
 

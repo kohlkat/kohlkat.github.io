@@ -1,0 +1,70 @@
+{
+  "schema_version": "sage-public-teaching-replay/v2",
+  "evidence_class": "SIMULATED",
+  "authority": "shadow_only_non_actuating",
+  "render_kind": "public_teaching_reconstruction",
+  "duration_seconds": 18,
+  "frame_size": {
+    "width": 1280,
+    "height": 720
+  },
+  "campaign_relationship": {
+    "disclosed_shape_classes": [
+      "circle_pocket",
+      "rounded_rectangle_pocket",
+      "slot_pocket"
+    ],
+    "historical_runtime": "NVIDIA Isaac Sim articulation with hybrid modeled cutting signals",
+    "raw_campaign_capture": false,
+    "raw_campaign_geometry": false,
+    "physical_machine_recording": false
+  },
+  "embodiments": [
+    {
+      "id": "cnc",
+      "deterministic_seed": 274120,
+      "learning_path": "surrogate_training_path",
+      "material_class": "aluminum_6061",
+      "shape_classes": [
+        "rounded_rectangle_pocket",
+        "circle_pocket",
+        "slot_pocket"
+      ],
+      "robot_visual": null
+    },
+    {
+      "id": "ros",
+      "deterministic_seed": 274121,
+      "learning_path": "shadow_optimization_path",
+      "material_class": "mild_steel",
+      "shape_classes": [
+        "rounded_rectangle_pocket",
+        "slot_pocket",
+        "circle_pocket"
+      ],
+      "robot_visual": "generic_unbranded_six_axis_irb120_class"
+    }
+  ],
+  "files": {
+    "video": {
+      "path": "sage-simulation-replay-v2.mp4",
+      "bytes": 1103195,
+      "sha256": "9adad0b8f71a71bd442173b9029118aa70957a6f1c51bbcb81176a27433b43fc"
+    },
+    "poster": {
+      "path": "sage-simulation-replay-poster-v2.jpg",
+      "bytes": 125655,
+      "sha256": "fa371afba5c73edeb64bc7fc862c4b1749d73061eee6a8b2f519e8753436b041"
+    },
+    "captions": {
+      "path": "sage-simulation-replay-captions-v2.vtt",
+      "bytes": 456,
+      "sha256": "9f0fa1ca1431f86ab2b6b92747999fd08330b27d376ae3bf4a9b22cde4f6e867"
+    },
+    "usd_scene": {
+      "path": "sage-public-teaching-scene-v2.usda",
+      "bytes": 10980,
+      "sha256": "e8fdef0b27f6744305529ea5987dc871a55ebad88951f30c4a84ba07b1e27086"
+    }
+  }
+}

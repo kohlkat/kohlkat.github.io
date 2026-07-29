@@ -10,6 +10,7 @@ time.
 ```powershell
 npm install
 npm run generate:simulation
+npm run generate:replay
 npm run dev
 ```
 
@@ -51,9 +52,15 @@ demonstrates within-simulator shadow optimization and evidence capture; it is
 not held-out policy generalization, physical cutting, measured cycle time, part
 quality, or safety proof.
 
-The homepage also embeds `public/media/sage-simulation-replay-v1.mp4`, a silent
-capture of a separate public browser teaching replay. It is explicitly labeled
-as illustrative and is not presented as footage from the NVIDIA campaign.
+The homepage also embeds `public/media/sage-simulation-replay-v2.mp4`, a silent
+public teaching reconstruction with an elevated cutaway camera. It shows a CNC
+surrogate-training path and a separate ROS shadow-optimization path over
+deterministic multi-feature stock. The matching public-safe scene is available
+as `public/media/sage-public-teaching-scene-v2.usda`.
+
+Neither asset is copied from a campaign USD or raw program sidecar. The replay
+is not raw NVIDIA campaign footage, physical cutting, or a hardware command
+stream.
 
 ## Public teaching data
 
@@ -82,9 +89,14 @@ programs, or customer data.
 ```powershell
 npm run generate:simulation
 npm run check:simulation
+npm run generate:replay
+npm run check:replay
 ```
 
-The generator writes CSV, JSON, and `SHA256SUMS.txt` under `public/data/`.
+The simulation generator writes CSV, JSON, and `SHA256SUMS.txt` under
+`public/data/`. The replay generator uses an installed Chrome or Edge browser
+to write the silent MP4, poster, captions, public USD scene, and review manifest
+under `public/media/`.
 
 ## Verification
 

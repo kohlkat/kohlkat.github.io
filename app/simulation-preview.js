@@ -228,31 +228,37 @@ export default function SimulationPreview() {
             loop
             muted
             playsInline
-            poster="/media/sage-simulation-replay-poster-v1.jpg"
+            poster="/media/sage-simulation-replay-poster-v2.jpg"
             preload="metadata"
             aria-describedby="simulation-replay-caption"
           >
             <source
-              src="/media/sage-simulation-replay-v1.mp4"
+              src="/media/sage-simulation-replay-v2.mp4"
               type="video/mp4"
             />
             <track
               default
               kind="captions"
-              src="/media/sage-simulation-replay-captions-v1.vtt"
+              src="/media/sage-simulation-replay-captions-v2.vtt"
               srcLang="en"
               label="English"
             />
             Your browser cannot play the simulation replay.{" "}
-            <a href="/media/sage-simulation-replay-v1.mp4">
+            <a href="/media/sage-simulation-replay-v2.mp4">
               Open the MP4 directly.
             </a>
           </video>
           <figcaption id="simulation-replay-caption">
-            <strong>Visual teaching replay</strong>
+            <strong>CNC + ROS teaching replay</strong>
             <span>
-              Illustrative browser trace only; not footage from the NVIDIA
-              campaign and not a physical-machine recording.
+              Public reconstruction from the disclosed shape classes; not raw
+              NVIDIA campaign footage or a physical-machine recording.{" "}
+              <a
+                href="/media/sage-public-teaching-scene-v2.usda"
+                download
+              >
+                Inspect the public USD scene.
+              </a>
             </span>
           </figcaption>
         </figure>
