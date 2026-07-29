@@ -1,0 +1,223 @@
+.section {
+  width: min(1500px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: clamp(70px, 8vw, 112px);
+  color: var(--white);
+  background:
+    radial-gradient(circle at 88% 10%, rgba(25, 215, 208, 0.16), transparent 28rem),
+    radial-gradient(circle at 8% 94%, rgba(185, 242, 93, 0.08), transparent 24rem),
+    var(--ink);
+}
+
+.heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.58fr);
+  align-items: end;
+  gap: clamp(55px, 9vw, 135px);
+}
+
+.heading h2 {
+  max-width: 900px;
+  margin: 22px 0 0;
+  color: var(--white);
+  font-size: clamp(46px, 5.5vw, 80px);
+  font-weight: 540;
+  letter-spacing: -0.06em;
+  line-height: 0.96;
+}
+
+.heading h2 span {
+  display: block;
+  color: var(--cyan);
+}
+
+.intro p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.intro strong {
+  display: block;
+  margin-top: 20px;
+  color: var(--white);
+  font-size: 14px;
+  font-weight: 620;
+  line-height: 1.6;
+}
+
+.stepGrid {
+  display: grid;
+  margin-top: 58px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  border-left: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.stepGrid article {
+  min-height: 300px;
+  padding: 28px;
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.stepGrid article > span {
+  color: var(--lime);
+  font-family: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 10px;
+}
+
+.stepGrid h3 {
+  margin: 72px 0 0;
+  color: var(--white);
+  font-size: 21px;
+  font-weight: 610;
+  letter-spacing: -0.03em;
+}
+
+.stepGrid p {
+  margin: 16px 0 0;
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.exchange {
+  display: grid;
+  margin-top: 18px;
+  padding: 34px;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(28px, 5vw, 72px);
+  color: var(--ink);
+  background: var(--white);
+}
+
+.exchange > div:not(.exchangeArrow) > span {
+  color: var(--cyan-dark);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.exchange ul {
+  display: grid;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.exchange li {
+  padding: 13px 0 13px 22px;
+  border-bottom: 1px solid var(--line);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.exchange li::before {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin: 0 11px 1px -22px;
+  border-radius: 50%;
+  background: var(--cyan);
+  content: "";
+}
+
+.exchangeArrow {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  color: var(--cyan-dark);
+}
+
+.exchangeArrow span {
+  font-family: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.exchangeArrow svg {
+  width: 28px;
+  height: 28px;
+}
+
+.boundary {
+  display: grid;
+  margin-top: 18px;
+  padding-top: 30px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 50px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.boundary strong {
+  color: var(--amber);
+  font-size: 10px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.boundary p {
+  max-width: 900px;
+  margin: 10px 0 0;
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 12px;
+  line-height: 1.68;
+}
+
+@media (max-width: 1050px) {
+  .heading,
+  .boundary {
+    grid-template-columns: 1fr;
+  }
+
+  .stepGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .exchange {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .exchangeArrow {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .section {
+    width: 100%;
+    padding: 72px 22px;
+  }
+
+  .heading h2 {
+    font-size: clamp(42px, 13vw, 64px);
+  }
+
+  .stepGrid,
+  .exchange {
+    grid-template-columns: 1fr;
+  }
+
+  .stepGrid article {
+    min-height: auto;
+  }
+
+  .stepGrid h3 {
+    margin-top: 38px;
+  }
+
+  .exchange {
+    padding: 24px;
+  }
+
+  .boundary a {
+    width: 100%;
+  }
+}

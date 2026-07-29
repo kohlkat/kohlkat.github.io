@@ -175,6 +175,13 @@ assert(
     home.includes("Force-aware relative pose for robotic machining") &&
     home.includes("Proposed · not current replay") &&
     home.includes("not a live ROS command path") &&
+    home.includes("Shadow pilot · offline and non-actuating") &&
+    home.includes("Prove the decision workflow before touching the machine") &&
+    home.includes("Scope one representative job") &&
+    home.includes("Compare in shadow") &&
+    home.includes("Disposition log and pilot report") &&
+    home.includes("No cross-customer training") &&
+    home.includes("Any physical trial is a separate protocol") &&
     home.includes("Inspect the capture manifest") &&
     home.includes(
       'href="/media/sage-isaac-capture-manifest-v3.json"',
