@@ -228,36 +228,36 @@ export default function SimulationPreview() {
             loop
             muted
             playsInline
-            poster="/media/sage-simulation-replay-poster-v2.jpg"
+            poster="/media/sage-simulation-replay-poster-v3.jpg"
             preload="metadata"
             aria-describedby="simulation-replay-caption"
           >
             <source
-              src="/media/sage-simulation-replay-v2.mp4"
+              src="/media/sage-simulation-replay-v3.mp4"
               type="video/mp4"
             />
             <track
               default
               kind="captions"
-              src="/media/sage-simulation-replay-captions-v2.vtt"
+              src="/media/sage-simulation-replay-captions-v3.vtt"
               srcLang="en"
               label="English"
             />
             Your browser cannot play the simulation replay.{" "}
-            <a href="/media/sage-simulation-replay-v2.mp4">
+            <a href="/media/sage-simulation-replay-v3.mp4">
               Open the MP4 directly.
             </a>
           </video>
           <figcaption id="simulation-replay-caption">
-            <strong>CNC + ROS teaching replay</strong>
+            <strong>NVIDIA Isaac Sim: CNC + UR10e</strong>
             <span>
-              Public reconstruction from the disclosed shape classes; not raw
-              NVIDIA campaign footage or a physical-machine recording.{" "}
+              Non-headless RTX footage of newly generated public-safe scenes;
+              simulated, non-actuating, and not a physical-machine recording.{" "}
               <a
-                href="/media/sage-public-teaching-scene-v2.usda"
+                href="/media/sage-isaac-capture-manifest-v3.json"
                 download
               >
-                Inspect the public USD scene.
+                Inspect the capture manifest.
               </a>
             </span>
           </figcaption>
