@@ -157,8 +157,8 @@ assert(
     home.includes('href="/research/"') &&
     home.includes("What your team receives") &&
     home.includes("Five focused checks") &&
-    home.includes("Turn difficult CNC planning into") &&
-    home.includes("reviewable engineering decision") &&
+    home.includes("Make every difficult cut") &&
+    home.includes("a decision you can defend") &&
     home.includes("A decision packet, not a black-box prediction") &&
     home.includes("2,542") &&
     home.includes("46.7") &&
@@ -168,6 +168,13 @@ assert(
     home.includes("NVIDIA Isaac Sim") &&
     home.includes("NVIDIA Isaac Sim: CNC + UR10e") &&
     home.includes("Non-headless RTX footage") &&
+    home.includes("fixed-base UR10e") &&
+    home.includes("force-aware relative pose") &&
+    home.includes("seventh-axis linear rail") &&
+    home.includes("two-axis tilt-rotary positioner") &&
+    home.includes("Force-aware relative pose for robotic machining") &&
+    home.includes("Proposed · not current replay") &&
+    home.includes("not a live ROS command path") &&
     home.includes("Inspect the capture manifest") &&
     home.includes(
       'href="/media/sage-isaac-capture-manifest-v3.json"',
@@ -208,6 +215,12 @@ assert(
   research.includes("SAGE research program") &&
     research.includes("Traceable machining measurement") &&
     research.includes("Digital-twin VVUQ") &&
+    research.includes("Force-aware relative pose") &&
+    research.includes("Fixed-base robot") &&
+    research.includes("Seventh-axis linear rail") &&
+    research.includes("Two-axis tilt-rotary positioner") &&
+    research.includes("Same synthetic job, three cell topologies") &&
+    research.includes("not a live ROS command path") &&
     research.includes("Surface-integrity retrospective") &&
     research.includes("2,542") &&
     research.includes("46.7") &&

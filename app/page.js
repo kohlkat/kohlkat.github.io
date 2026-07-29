@@ -7,6 +7,7 @@ import {
   publicSimulationSummary,
   publicSurfaceSummary,
 } from "../lib/public-results";
+import RelativePoseStudy from "./relative-pose-study";
 import SimulationPreview from "./simulation-preview";
 import { ArrowIcon, SiteFooter, SiteHeader } from "./site-chrome";
 
@@ -135,7 +136,7 @@ const structuredData = {
       url: siteUrl,
       logo: `${siteUrl}icon.svg`,
       description:
-        "Manufacturing decision intelligence for reviewable CNC process planning and simulation-backed comparison.",
+        "Manufacturing decision intelligence for defensible CNC process planning and simulation-backed comparison.",
       founder: {
         "@id": `${siteUrl}#founder`,
       },
@@ -174,7 +175,7 @@ const structuredData = {
       applicationCategory: "BusinessApplication",
       operatingSystem: "Platform-independent",
       description:
-        "CNC manufacturing decision intelligence that structures jobs, compares candidate process plans, binds evidence, and returns a review packet for qualified human approval.",
+        "CNC manufacturing decision intelligence that compares candidate process plans before machine time is committed and returns an evidence-linked packet for qualified human review.",
       creator: {
         "@id": `${siteUrl}#founder`,
       },
@@ -268,14 +269,14 @@ export default function Home() {
             Manufacturing decision intelligence · Pittsburgh
           </div>
           <h1>
-            Turn difficult CNC planning into
-            <span>a reviewable engineering decision.</span>
+            Make every difficult cut
+            <span>a decision you can defend.</span>
           </h1>
           <p className="hero-lead">
-            SAGE organizes the job, compares candidate process plans in
-            simulation, and returns an evidence-linked recommendation packet
-            for qualified approval. Your team sees the alternatives, tradeoffs,
-            assumptions, and limits—not just an answer.
+            Before scarce machine time is committed, SAGE compares candidate
+            process plans in simulation and returns the evidence, tradeoffs,
+            limits, and independent-check disposition a qualified engineer
+            needs—not just an answer.
           </p>
           <div className="hero-actions">
             <a className="button button-primary" href="#how-it-works">
@@ -348,6 +349,7 @@ export default function Home() {
       </section>
 
       <SimulationPreview />
+      <RelativePoseStudy />
 
       <section className="audience-section" id="use-cases">
         <div className="section-heading">
@@ -456,7 +458,9 @@ export default function Home() {
       <section className="roadmap-section" id="research">
         <div className="roadmap-label">
           <span>Research program</span>
-          <small>Measurement, digital twins, and surface integrity</small>
+          <small>
+            Measurement, digital twins, relative pose, and surface integrity
+          </small>
         </div>
         <div className="roadmap-content">
           <div>
@@ -493,6 +497,10 @@ export default function Home() {
             </li>
             <li>
               <span>04</span>
+              Force-aware relative pose for robotic machining
+            </li>
+            <li>
+              <span>05</span>
               Evidence exchange and non-actuating shadow pilots
             </li>
           </ol>

@@ -1,0 +1,408 @@
+.section {
+  width: min(1380px, calc(100% - 64px));
+  margin: 0 auto;
+  padding: 130px 0;
+}
+
+.heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.62fr);
+  align-items: end;
+  gap: clamp(48px, 8vw, 120px);
+}
+
+.heading h2 {
+  max-width: 860px;
+  margin: 22px 0 0;
+  font-size: clamp(48px, 5.5vw, 82px);
+  font-weight: 540;
+  letter-spacing: -0.06em;
+  line-height: 0.96;
+}
+
+.heading h2 span {
+  display: block;
+  color: var(--cyan-dark);
+}
+
+.intro p {
+  margin: 0;
+  color: var(--slate);
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.intro p + p {
+  margin-top: 16px;
+  color: var(--ink);
+  font-weight: 620;
+}
+
+.studyFrame {
+  margin-top: 58px;
+  padding: 22px;
+  color: var(--white);
+  background: var(--ink);
+}
+
+.frameHeader {
+  display: flex;
+  min-height: 68px;
+  padding: 0 10px 20px;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.frameHeader > div {
+  display: grid;
+  gap: 7px;
+}
+
+.frameHeader span {
+  color: rgba(255, 255, 255, 0.48);
+  font-family: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.frameHeader strong {
+  font-size: 19px;
+  font-weight: 610;
+}
+
+.proposedBadge {
+  padding: 8px 10px;
+  border: 1px solid rgba(255, 199, 102, 0.38);
+  color: var(--amber) !important;
+  white-space: nowrap;
+}
+
+.schematic {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #071115;
+}
+
+.svgEyebrow,
+.svgPanelLabel,
+.svgSmall,
+.svgStatus,
+.svgAxis,
+.svgForce {
+  font-family: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+}
+
+.svgEyebrow {
+  fill: rgba(255, 255, 255, 0.42);
+  font-size: 10px;
+  letter-spacing: 1.6px;
+}
+
+.svgStatus {
+  fill: #b9f25d;
+  font-size: 10px;
+  letter-spacing: 1.4px;
+}
+
+.svgPanelLabel {
+  fill: #19d7d0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+
+.svgSmall {
+  fill: rgba(255, 255, 255, 0.42);
+  font-size: 9px;
+  letter-spacing: 1.1px;
+}
+
+.svgAxis {
+  fill: #19d7d0;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.svgForce {
+  fill: #ffc766;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.rail {
+  stroke: rgba(255, 255, 255, 0.32);
+  stroke-width: 7;
+  stroke-linecap: round;
+}
+
+.machineBase {
+  fill: #0c8f91;
+  stroke: #19d7d0;
+  stroke-width: 2;
+}
+
+.robotArm {
+  fill: none;
+  stroke: #dce8e7;
+  stroke-width: 24;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.robotJoint {
+  fill: #1d343a;
+  stroke: #b9f25d;
+  stroke-width: 3;
+}
+
+.tool {
+  fill: none;
+  stroke: #ffc766;
+  stroke-width: 12;
+  stroke-linecap: round;
+}
+
+.stock {
+  fill: #d7e4e3;
+  stroke: #ffffff;
+  stroke-width: 2;
+}
+
+.positionerBase {
+  fill: #0d555c;
+  stroke: #19d7d0;
+  stroke-width: 2;
+}
+
+.positionerTable {
+  fill: #10878a;
+  stroke: #b9f25d;
+  stroke-width: 2;
+}
+
+.motionArrow {
+  fill: none;
+  stroke: #19d7d0;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.forceArrow {
+  fill: none;
+  stroke: #ffc766;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.poseBadge rect {
+  fill: #071115;
+  stroke: rgba(25, 215, 208, 0.55);
+}
+
+.poseBadge text:first-of-type {
+  fill: #19d7d0;
+  font-family: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.poseBadge text:last-of-type {
+  fill: rgba(255, 255, 255, 0.62);
+  font-family: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 9px;
+  letter-spacing: 0.8px;
+}
+
+.optionGrid {
+  display: grid;
+  margin-top: 18px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.optionGrid article {
+  display: grid;
+  min-height: 190px;
+  padding: 28px;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+  background: #0a171c;
+}
+
+.optionGrid article > span {
+  color: var(--lime);
+  font-family: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 13px;
+}
+
+.optionGrid h3 {
+  margin: 0;
+  font-size: 21px;
+  font-weight: 610;
+  letter-spacing: -0.025em;
+}
+
+.optionGrid p {
+  margin: 14px 0 0;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.translation {
+  display: grid;
+  padding: 30px 34px;
+  grid-template-columns: 0.34fr 1fr;
+  align-items: start;
+  gap: 30px;
+  border: 1px solid var(--line);
+  border-top: 0;
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.translation strong {
+  color: var(--cyan-dark);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+
+.translation p {
+  max-width: 900px;
+  margin: 0;
+  color: var(--slate);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.checkGrid {
+  display: grid;
+  margin-top: 18px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.checkGrid article {
+  min-height: 235px;
+  padding: 28px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.checkGrid article > span {
+  color: var(--cyan-dark);
+  font-family: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 10px;
+}
+
+.checkGrid h3 {
+  margin: 58px 0 0;
+  font-size: 22px;
+  font-weight: 620;
+  letter-spacing: -0.03em;
+}
+
+.checkGrid p {
+  margin: 15px 0 0;
+  color: var(--slate);
+  font-size: 12px;
+  line-height: 1.68;
+}
+
+.boundary {
+  display: grid;
+  margin-top: 18px;
+  padding: 32px 34px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 40px;
+  color: var(--white);
+  background: var(--ink);
+}
+
+.boundary strong {
+  color: var(--amber);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.boundary p {
+  max-width: 850px;
+  margin: 10px 0 0;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+@media (max-width: 980px) {
+  .heading,
+  .translation {
+    grid-template-columns: 1fr;
+  }
+
+  .intro {
+    max-width: 760px;
+  }
+
+  .optionGrid,
+  .checkGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .optionGrid article,
+  .checkGrid article {
+    min-height: auto;
+  }
+
+  .checkGrid h3 {
+    margin-top: 34px;
+  }
+}
+
+@media (max-width: 720px) {
+  .section {
+    width: min(1380px, calc(100% - 36px));
+    padding: 82px 0;
+  }
+
+  .heading h2 {
+    font-size: clamp(42px, 13vw, 64px);
+  }
+
+  .studyFrame {
+    margin-top: 40px;
+    padding: 14px;
+  }
+
+  .frameHeader,
+  .boundary {
+    align-items: stretch;
+    flex-direction: column;
+    grid-template-columns: 1fr;
+  }
+
+  .frameHeader {
+    display: flex;
+  }
+
+  .proposedBadge {
+    align-self: flex-start;
+  }
+
+  .optionGrid article,
+  .translation,
+  .checkGrid article,
+  .boundary {
+    padding: 24px;
+  }
+
+  .boundary a {
+    width: 100%;
+  }
+}

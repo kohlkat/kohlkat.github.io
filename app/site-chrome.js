@@ -60,7 +60,7 @@ export function SiteFooter() {
         </span>
       </div>
       <p>
-        Manufacturing decision intelligence for structured planning,
+        Make difficult machining decisions defensible with structured planning,
         simulation-backed comparison, evidence-linked review, and qualified
         human approval.
       </p>

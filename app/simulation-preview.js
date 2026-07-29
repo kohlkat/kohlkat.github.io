@@ -251,8 +251,10 @@ export default function SimulationPreview() {
           <figcaption id="simulation-replay-caption">
             <strong>NVIDIA Isaac Sim: CNC + UR10e</strong>
             <span>
-              Non-headless RTX footage of newly generated public-safe scenes;
-              simulated, non-actuating, and not a physical-machine recording.{" "}
+              Non-headless RTX footage of newly generated public-safe scenes
+              using a fixed-base UR10e; simulated, non-actuating, and not a
+              physical-machine recording. The rail and positioner study below
+              is proposed and is not shown in this capture.{" "}
               <a
                 href="/media/sage-isaac-capture-manifest-v3.json"
                 download

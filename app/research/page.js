@@ -10,21 +10,21 @@ import styles from "./research.module.css";
 export const metadata = {
   title: "Manufacturing Intelligence Research",
   description:
-    "Explore SAGE Suite research in machining measurement, digital-twin VVUQ, surface integrity, transfer, uncertainty, interoperability, and non-actuating human review.",
+    "Explore SAGE Suite research in machining measurement, digital-twin VVUQ, surface integrity, force-aware relative pose, transfer, uncertainty, and non-actuating human review.",
   alternates: {
     canonical: "/research/",
   },
   openGraph: {
     title: "Manufacturing Intelligence Research | SAGE Suite",
     description:
-      "SAGE research connects machining measurement, digital twins, surface integrity, uncertainty, evidence exchange, and human review.",
+      "SAGE research connects machining measurement, digital twins, surface integrity, force-aware relative pose, uncertainty, evidence exchange, and human review.",
     url: "/research/",
     type: "article",
   },
   twitter: {
     title: "Manufacturing Intelligence Research | SAGE Suite",
     description:
-      "SAGE research connects machining measurement, digital twins, surface integrity, uncertainty, evidence exchange, and human review.",
+      "SAGE research connects machining measurement, digital twins, surface integrity, force-aware relative pose, uncertainty, evidence exchange, and human review.",
   },
 };
 
@@ -49,6 +49,12 @@ const researchTracks = [
   },
   {
     number: "04",
+    title: "Force-aware relative pose",
+    body:
+      "Compare fixed-base, linear-rail, and tilt-rotary workholding arrangements while preserving reach, singularity, collision, and process boundaries.",
+  },
+  {
+    number: "05",
     title: "Evidence exchange and review",
     body:
       "Bind alternatives, assumptions, applicability, uncertainty, independent checks, and human disposition in a portable non-actuating record.",
@@ -87,7 +93,7 @@ const structuredData = {
   name: "SAGE Manufacturing Intelligence Research",
   url: `${siteUrl}research/`,
   description:
-    "Research in machining measurement, digital-twin VVUQ, surface integrity, transfer, uncertainty, evidence exchange, and qualified human review.",
+    "Research in machining measurement, digital-twin VVUQ, surface integrity, force-aware relative pose, transfer, uncertainty, evidence exchange, and qualified human review.",
   founder: {
     "@type": "Person",
     name: "David Kohler",
@@ -238,6 +244,103 @@ export default function ResearchPage() {
           <a href={publicSurfaceDocumentDownload} download>
             Download public aggregate JSON
           </a>
+        </div>
+      </section>
+
+      <section className={styles.poseStudy} id="relative-pose-study">
+        <div className={styles.poseStudyHeading}>
+          <div>
+            <div className="section-kicker">
+              Proposed robotic-machining study
+            </div>
+            <h2>“Head-on” is a stiffness and geometry question.</h2>
+          </div>
+          <div>
+            <span>Proposed · not current replay</span>
+            <p>
+              The research question is not whether a cutter should simply point
+              straight into metal. It is whether the robot, workpiece, and tool
+              can be arranged so the local surface and predicted cutting load
+              meet a better-conditioned robot pose.
+            </p>
+          </div>
+        </div>
+
+        <div className={styles.poseTopologyGrid}>
+          <article>
+            <span>Reference</span>
+            <h3>Fixed-base robot</h3>
+            <p>
+              Establish the same synthetic job and constraints used by the
+              current fixed-base UR10e simulation replay.
+            </p>
+          </article>
+          <article>
+            <span>Robot moves</span>
+            <h3>Seventh-axis linear rail</h3>
+            <p>
+              Reposition the robot base between cut regions to open stronger
+              postures without claiming that the rail stiffens the arm itself.
+            </p>
+          </article>
+          <article>
+            <span>Part moves</span>
+            <h3>Two-axis tilt-rotary positioner</h3>
+            <p>
+              Present the workpiece to the cutter while the robot remains in a
+              better-conditioned part of its workspace.
+            </p>
+          </article>
+        </div>
+
+        <div className={styles.poseStudyBody}>
+          <div>
+            <h3>Same synthetic job, three cell topologies.</h3>
+            <p>
+              A force-aware relative-pose study would compare candidate
+              tool-workpiece relationships on a consistent modeled basis. The
+              review should keep each contributing constraint visible rather
+              than reducing the answer to one unexplained score.
+            </p>
+            <ul>
+              <li>Local surface orientation and tool-axis suitability</li>
+              <li>
+                Predicted cutting-load direction and pose-dependent stiffness
+              </li>
+              <li>
+                Reach, joint limits, singularity distance, and collision margin
+              </li>
+              <li>
+                Process limits, assumptions, alternatives, and abstention state
+              </li>
+            </ul>
+          </div>
+          <aside>
+            <strong>Evidence boundary</strong>
+            <p>
+              This is a proposed simulation study. It is not a live ROS command
+              path, a physical cut, or a measured efficiency result. The
+              independent gate remains closed and a qualified person decides
+              what advances.
+            </p>
+            <div className={styles.poseSources}>
+              <span>Prior methods context</span>
+              <a
+                href="https://www.jstage.jst.go.jp/article/ijat/13/5/13_574/_article/-char/en"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Tool-orientation optimization research
+              </a>
+              <a
+                href="https://www.mdpi.com/2076-3417/9/6/1044"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Workpiece-pose optimization research
+              </a>
+            </div>
+          </aside>
         </div>
       </section>
 
