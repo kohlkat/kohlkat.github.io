@@ -349,6 +349,12 @@
   text-align: right;
 }
 
+.videoCard figcaption a {
+  color: var(--cyan);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
 .explainer {
   display: flex;
   min-width: 0;
@@ -503,6 +509,6 @@
     aspect-ratio: 16 / 9;
     content: "";
     background:
-      url("/media/sage-simulation-replay-poster-v1.jpg") center / cover no-repeat;
+      url("/media/sage-simulation-replay-poster-v2.jpg") center / cover no-repeat;
   }
 }

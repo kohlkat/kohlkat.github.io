@@ -7,9 +7,11 @@
     "dev": "next dev",
     "build": "next build",
     "generate:simulation": "node scripts/generate-public-simulation.mjs",
+    "generate:replay": "node scripts/render-public-replay.mjs",
     "check:simulation": "node scripts/generate-public-simulation.mjs --check",
+    "check:replay": "node scripts/render-public-replay.mjs --check",
     "check:seo": "node scripts/verify-static-export.mjs",
-    "verify": "npm run check:simulation && npm run build && npm run check:seo"
+    "verify": "npm run check:simulation && npm run check:replay && npm run build && npm run check:seo"
   },
   "dependencies": {
     "next": "16.2.11",

@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
+import { readFragmentedMp4DurationSeconds } from "./public-replay-scene.mjs";
 
 const outputDirectory = path.resolve("out");
 const configuredOrigin =
@@ -25,9 +26,11 @@ const requiredFiles = [
   "data/sage-public-nvidia-simulation-v1.json",
   "data/sage-public-nvidia-surface-integrity-v1.json",
   "data/SHA256SUMS.txt",
-  "media/sage-simulation-replay-v1.mp4",
-  "media/sage-simulation-replay-captions-v1.vtt",
-  "media/sage-simulation-replay-poster-v1.jpg",
+  "media/sage-public-teaching-scene-v2.usda",
+  "media/sage-simulation-replay-captions-v2.vtt",
+  "media/sage-simulation-replay-manifest-v2.json",
+  "media/sage-simulation-replay-poster-v2.jpg",
+  "media/sage-simulation-replay-v2.mp4",
   "sitemap.xml",
 ];
 
@@ -50,6 +53,7 @@ const sourceTextExtensions = new Set([
   ".mjs",
   ".svg",
   ".txt",
+  ".usda",
   ".vtt",
   ".webmanifest",
   ".yaml",
@@ -162,10 +166,15 @@ assert(
     home.includes("Modeled finish context") &&
     home.includes("659") &&
     home.includes("NVIDIA Isaac Sim") &&
-    home.includes("not footage from the NVIDIA campaign") &&
-    home.includes('src="/media/sage-simulation-replay-v1.mp4"') &&
+    home.includes("CNC + ROS teaching replay") &&
+    home.includes("not raw NVIDIA campaign footage") &&
+    home.includes("Inspect the public USD scene") &&
+    home.includes(
+      'href="/media/sage-public-teaching-scene-v2.usda"',
+    ) &&
+    home.includes('src="/media/sage-simulation-replay-v2.mp4"') &&
     home.includes('kind="captions"') &&
-    home.includes('src="/media/sage-simulation-replay-captions-v1.vtt"'),
+    home.includes('src="/media/sage-simulation-replay-captions-v2.vtt"'),
   "Homepage does not provide the product journey, aggregate NVIDIA simulation evidence, surface proxy, replay provenance, research path, or five-check overview.",
 );
 assert(
@@ -439,23 +448,42 @@ assert(
 );
 
 const replayVideo = fs.readFileSync(
-  path.join(outputDirectory, "media", "sage-simulation-replay-v1.mp4"),
+  path.join(outputDirectory, "media", "sage-simulation-replay-v2.mp4"),
 );
 const replayPoster = fs.readFileSync(
   path.join(
     outputDirectory,
     "media",
-    "sage-simulation-replay-poster-v1.jpg",
+    "sage-simulation-replay-poster-v2.jpg",
   ),
 );
+const replayCaptions = read("media/sage-simulation-replay-captions-v2.vtt");
+const replayUsd = read("media/sage-public-teaching-scene-v2.usda");
+const replayManifestText = read(
+  "media/sage-simulation-replay-manifest-v2.json",
+);
+const replayManifest = JSON.parse(replayManifestText);
+const reviewedReplayHashes = {
+  video: "9adad0b8f71a71bd442173b9029118aa70957a6f1c51bbcb81176a27433b43fc",
+  poster: "fa371afba5c73edeb64bc7fc862c4b1749d73061eee6a8b2f519e8753436b041",
+  captions:
+    "9f0fa1ca1431f86ab2b6b92747999fd08330b27d376ae3bf4a9b22cde4f6e867",
+  usd: "e8fdef0b27f6744305529ea5987dc871a55ebad88951f30c4a84ba07b1e27086",
+  manifest:
+    "8625475ac6be3a7e2a2e3cf311e618c3939911b9d7fd55ce06e43b2bfc95c45f",
+};
+const replayDurationSeconds = readFragmentedMp4DurationSeconds(replayVideo);
 assert(
-  replayVideo.length >= 50_000 &&
+  replayVideo.length >= 100_000 &&
     replayVideo.length <= 5_000_000 &&
     replayVideo.subarray(4, 8).equals(Buffer.from("ftyp")) &&
     !replayVideo.includes(Buffer.from("soun")) &&
-    sha256(replayVideo) ===
-      "4225bab3bfe8c5ef8286fd2fbbfc3cac5a6a872989a5d9d527fd48d100c2ff1c",
-  "Simulation replay must be a compact, silent MP4 asset.",
+    replayDurationSeconds >= 17.8 &&
+    replayDurationSeconds <= 18.2 &&
+    sha256(replayVideo) === reviewedReplayHashes.video &&
+    replayManifest.files?.video?.sha256 === sha256(replayVideo) &&
+    replayManifest.files?.video?.bytes === replayVideo.length,
+  "Simulation replay must be a compact, silent, manifest-bound MP4 asset.",
 );
 assert(
   replayPoster.length >= 10_000 &&
@@ -465,9 +493,62 @@ assert(
       .subarray(replayPoster.length - 2)
       .equals(Buffer.from([0xff, 0xd9])) &&
     !replayPoster.includes(Buffer.from("Exif")) &&
-    sha256(replayPoster) ===
-      "e9b9309bff959e04c3014ef22da9f2e9cec9dc9d8c7cb9f13502ba355c2e9221",
-  "Simulation replay poster must be a compact, metadata-clean JPEG.",
+    sha256(replayPoster) === reviewedReplayHashes.poster &&
+    replayManifest.files?.poster?.sha256 === sha256(replayPoster) &&
+    replayManifest.files?.poster?.bytes === replayPoster.length,
+  "Simulation replay poster must be a compact, manifest-bound, metadata-clean JPEG.",
+);
+assert(
+  replayManifest.schema_version === "sage-public-teaching-replay/v2" &&
+    replayManifest.evidence_class === "SIMULATED" &&
+    replayManifest.authority === "shadow_only_non_actuating" &&
+    replayManifest.render_kind === "public_teaching_reconstruction" &&
+    replayManifest.duration_seconds === 18 &&
+    sha256(replayManifestText) === reviewedReplayHashes.manifest &&
+    replayManifest.frame_size?.width === 1280 &&
+    replayManifest.frame_size?.height === 720 &&
+    replayManifest.campaign_relationship?.raw_campaign_capture === false &&
+    replayManifest.campaign_relationship?.raw_campaign_geometry === false &&
+    replayManifest.campaign_relationship?.physical_machine_recording ===
+      false &&
+    replayManifest.embodiments?.some(
+      (embodiment) =>
+        embodiment.id === "cnc" &&
+        embodiment.learning_path === "surrogate_training_path",
+    ) &&
+    replayManifest.embodiments?.some(
+      (embodiment) =>
+        embodiment.id === "ros" &&
+        embodiment.learning_path === "shadow_optimization_path" &&
+        embodiment.robot_visual ===
+          "generic_unbranded_six_axis_irb120_class",
+    ),
+  "Simulation replay manifest is missing its evidence, embodiment, or provenance boundary.",
+);
+assert(
+  replayCaptions.includes("CNC surrogate-training path") &&
+    replayCaptions.includes("ROS shadow-optimization path") &&
+    replayCaptions.includes("Physical gate closed") &&
+    sha256(replayCaptions) === reviewedReplayHashes.captions &&
+    replayManifest.files?.captions?.sha256 === sha256(replayCaptions),
+  "Simulation replay captions are missing the two-path or authority boundary.",
+);
+assert(
+  replayUsd.startsWith("#usda 1.0") &&
+    replayUsd.includes('string evidenceClass = "SIMULATED"') &&
+    replayUsd.includes(
+      'string provenance = "public_teaching_reconstruction"',
+    ) &&
+    replayUsd.includes(
+      'sage:learningPath = "surrogate_training_path"',
+    ) &&
+    replayUsd.includes(
+      'sage:learningPath = "shadow_optimization_path"',
+    ) &&
+    replayUsd.includes('string sourceBoundary = "not_raw_campaign_geometry"') &&
+    sha256(replayUsd) === reviewedReplayHashes.usd &&
+    replayManifest.files?.usd_scene?.sha256 === sha256(replayUsd),
+  "Public replay USD is missing its manifest, evidence, or source boundary.",
 );
 
 function sha256(content) {
