@@ -182,6 +182,8 @@ assert(
     home.includes("Disposition log and pilot report") &&
     home.includes("No cross-customer training") &&
     home.includes("Any physical trial is a separate protocol") &&
+    home.includes("do not attach controlled production files") &&
+    home.includes("A secure intake route is agreed after data-use terms") &&
     home.includes("Inspect the capture manifest") &&
     home.includes(
       'href="/media/sage-isaac-capture-manifest-v3.json"',

@@ -111,7 +111,9 @@ export default function PilotReadiness() {
             Customer files remain controlled. No cross-customer training or
             public case study occurs without written permission. Any physical
             trial is a separate protocol with independent safety controls and
-            site authorization.
+            site authorization. Use email only to scope the engagement; do not
+            attach controlled production files. A secure intake route is agreed
+            after data-use terms.
           </p>
         </div>
         <a

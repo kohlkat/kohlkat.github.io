@@ -29,6 +29,8 @@ job, compare alternatives in shadow, review an evidence packet with a qualified
 engineer, and decide whether to stop, repeat, add measurements, or design a
 separate physical trial. It also states the customer-data boundary and requires
 written permission for cross-customer training or a public case study.
+The public email link is for scoping only; controlled production files wait for
+agreed data-use terms and a separate secure intake route.
 
 The pilot section does not imply live controller or ROS access, customer proof,
 measured process improvement, or authority over production equipment.
