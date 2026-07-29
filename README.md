@@ -52,15 +52,15 @@ demonstrates within-simulator shadow optimization and evidence capture; it is
 not held-out policy generalization, physical cutting, measured cycle time, part
 quality, or safety proof.
 
-The homepage also embeds `public/media/sage-simulation-replay-v2.mp4`, a silent
-public teaching reconstruction with an elevated cutaway camera. It shows a CNC
-surrogate-training path and a separate ROS shadow-optimization path over
-deterministic multi-feature stock. The matching public-safe scene is available
-as `public/media/sage-public-teaching-scene-v2.usda`.
+The homepage also embeds `public/media/sage-simulation-replay-v3.mp4`, a silent
+36-second non-headless NVIDIA Isaac Sim 6.0.1 capture. It alternates three CNC
+surrogate-training scenes with three NVIDIA UR10e robot shadow-optimization
+scenes over the disclosed circle, rounded-rectangle, and slot classes.
 
-Neither asset is copied from a campaign USD or raw program sidecar. The replay
-is not raw NVIDIA campaign footage, physical cutting, or a hardware command
-stream.
+`public/media/sage-isaac-capture-manifest-v3.json` records the six jobs and 864
+RTX-rendered frames. The capture is newly generated and public-safe; it is not a
+private campaign USD, customer program, physical cutting, measured machine
+footage, or a hardware command stream.
 
 ## Public teaching data
 
@@ -94,9 +94,9 @@ npm run check:replay
 ```
 
 The simulation generator writes CSV, JSON, and `SHA256SUMS.txt` under
-`public/data/`. The replay generator uses an installed Chrome or Edge browser
-to write the silent MP4, poster, captions, public USD scene, and review manifest
-under `public/media/`.
+`public/data/`. The replay command verifies the reviewed Isaac Sim MP4, poster,
+captions, capture manifest, and web-binding manifest under `public/media/`;
+it does not regenerate or substitute the captured renderer output.
 
 ## Verification
 
