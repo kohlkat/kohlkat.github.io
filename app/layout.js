@@ -2,9 +2,9 @@ import "./globals.css";
 import GoogleAnalytics from "./google-analytics";
 import { siteOrigin } from "../lib/site";
 
-const siteTitle = "SAGE Suite | CNC Process Intelligence";
+const siteTitle = "SAGE Suite | Defensible Machining Decisions";
 const siteDescription =
-  "SAGE Suite turns difficult CNC planning into a reviewable engineering decision by connecting structured job context, simulation-backed alternatives, evidence, independent checks, and qualified human approval.";
+  "Compare difficult CNC process plans before machine time is committed. SAGE returns ranked, simulation-backed alternatives with evidence, limits, and independent checks for qualified human review.";
 const googleSiteVerification =
   process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION?.trim();
 const contentSecurityPolicy = [
@@ -71,7 +71,7 @@ export const metadata = {
         url: "/opengraph-image.png",
         width: 1200,
         height: 630,
-        alt: "SAGE Suite manufacturing decision intelligence for CNC process planning",
+        alt: "SAGE Suite for defensible, simulation-backed machining decisions",
       },
     ],
   },

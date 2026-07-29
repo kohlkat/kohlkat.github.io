@@ -16,7 +16,8 @@ npm run dev
 
 ## Product journey
 
-The homepage begins with the customer outcome: a structured job model, ranked
+The homepage begins with the promise, “Make every difficult cut a decision you
+can defend.” It then shows the customer outcome: a structured job model, ranked
 process-plan alternatives, and an evidence-linked review packet. Simulation,
 open-data research, and the five public-safe assurance checks support that
 product story rather than replacing it.
@@ -62,6 +63,13 @@ RTX-rendered frames. The capture is newly generated and public-safe; it is not a
 private campaign USD, customer program, physical cutting, measured machine
 footage, or a hardware command stream.
 
+The v3 robot scenes use a fixed-base UR10e. A separate public engineering
+schematic introduces a proposed force-aware relative-pose study comparing the
+same synthetic job across a fixed-base cell, a robot on a seventh-axis linear
+rail, and a part on a two-axis tilt-rotary positioner. That comparison is not in
+the current replay and is not a live ROS path, physical-machining result, or
+measured efficiency claim.
+
 ## Public teaching data
 
 `/simulation/` begins with the complete NVIDIA campaign and surface-integrity
@@ -78,6 +86,8 @@ production policy.
 - traceable machining and surface measurement;
 - digital-twin verification, validation, and uncertainty quantification;
 - transfer across machine, tool, material, geometry, pose, and time;
+- force-aware relative pose across fixed-base, rail, and articulated-workpiece
+  cell arrangements;
 - evidence exchange and non-actuating shadow pilots;
 - NIST CRADA, SBIR, and MEP collaboration routes; and
 - a counsel-gated TechRxiv, Zenodo, and peer-review release sequence.
