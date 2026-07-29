@@ -22,6 +22,17 @@ process-plan alternatives, and an evidence-linked review packet. Simulation,
 open-data research, and the five public-safe assurance checks support that
 product story rather than replacing it.
 
+## Shadow pilot path
+
+The homepage publishes a concrete offline pilot format: scope one representative
+job, compare alternatives in shadow, review an evidence packet with a qualified
+engineer, and decide whether to stop, repeat, add measurements, or design a
+separate physical trial. It also states the customer-data boundary and requires
+written permission for cross-customer training or a public case study.
+
+The pilot section does not imply live controller or ROS access, customer proof,
+measured process improvement, or authority over production equipment.
+
 ## NVIDIA simulation evidence
 
 The product page leads with a deterministic public aggregate from the full

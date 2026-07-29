@@ -7,6 +7,7 @@ import {
   publicSimulationSummary,
   publicSurfaceSummary,
 } from "../lib/public-results";
+import PilotReadiness from "./pilot-readiness";
 import RelativePoseStudy from "./relative-pose-study";
 import SimulationPreview from "./simulation-preview";
 import { ArrowIcon, SiteFooter, SiteHeader } from "./site-chrome";
@@ -283,7 +284,7 @@ export default function Home() {
               See how SAGE works
               <ArrowIcon />
             </a>
-            <a className="button button-secondary" href="#contact">
+            <a className="button button-secondary" href="#pilot">
               Discuss a shadow pilot
             </a>
           </div>
@@ -373,6 +374,8 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      <PilotReadiness />
 
       <section className="platform-section" id="platform">
         <div className="section-heading">

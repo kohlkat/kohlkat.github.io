@@ -41,7 +41,7 @@ export function SiteHeader() {
         <a href="/#top">Home</a>
         <a href="/research/">Research</a>
       </nav>
-      <a className="header-cta" href="/#contact">
+      <a className="header-cta" href="/#pilot">
         Pilot SAGE
         <ArrowIcon />
       </a>
@@ -66,6 +66,7 @@ export function SiteFooter() {
       </p>
       <div className="footer-links">
         <a href="/#product">Product</a>
+        <a href="/#pilot">Pilot</a>
         <a href="/research/">Research</a>
         <a href="/evidence/">Evidence</a>
         <a href="/simulation/">Simulation</a>
