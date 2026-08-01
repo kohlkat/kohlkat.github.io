@@ -15,17 +15,12 @@ export function pathPoint(shape, progress, halfExtents, offset = [0, 0]) {
     return [ox + halfX * Math.cos(phase), oy + halfY * Math.sin(phase)];
   }
   if (shape === "rounded_rectangle") {
-    // Stadium-ish rounded rectangle perimeter (parameterized by angle).
-    const ax = halfX * Math.sign(Math.cos(phase)) || halfX;
-    const ay = halfY * Math.sign(Math.sin(phase)) || halfY;
-    const cx = Math.abs(Math.cos(phase));
-    const sy = Math.abs(Math.sin(phase));
-    const rx = halfX * 0.55;
-    const ry = halfY * 0.55;
-    if (cx * halfY > sy * halfX) {
-      return [ox + ax, oy + Math.sin(phase) * ry];
-    }
-    return [ox + Math.cos(phase) * rx, oy + ay];
+    // Continuous superellipse (n=4) — matches showcase-scene-v4.html
+    const n = 4;
+    const c = Math.cos(phase), s = Math.sin(phase);
+    const ax = Math.pow(Math.abs(c), 2 / n) * Math.sign(c || 1);
+    const ay = Math.pow(Math.abs(s), 2 / n) * Math.sign(s || 1);
+    return [ox + halfX * ax, oy + halfY * ay];
   }
   // slot: elongated ellipse
   return [ox + halfX * Math.cos(phase), oy + halfY * Math.sin(phase)];
@@ -74,16 +69,60 @@ export function sceneFor(shape, seed) {
   };
 }
 
-/** Self-check: fails process if tip does not plunge / move along path. */
+/**
+ * Analytic 2-link IK (mirrors showcase-scene-v4.html armIk).
+ * tip args are Three.js world (x, height y, z).
+ */
+export function armIk(tipX, tipY, tipZ, opts = {}) {
+  const L1 = opts.L1 ?? 0.55;
+  const L2 = opts.L2 ?? 0.48;
+  const tipOffset = opts.tipOffset ?? 0.22;
+  const baseX = opts.baseX ?? -0.12;
+  const baseZ = opts.baseZ ?? 0.0;
+  const shoulderY = opts.shoulderY ?? 0.88;
+  const dx = tipX - baseX;
+  const dz = tipZ - baseZ;
+  const yaw = Math.atan2(dx, dz);
+  const wy = tipY + tipOffset;
+  const planar = Math.hypot(dx, dz);
+  const dy = wy - shoulderY;
+  let dist = Math.hypot(planar, dy);
+  const maxR = L1 + L2 - 0.01;
+  const minR = Math.abs(L1 - L2) + 0.01;
+  dist = Math.max(minR, Math.min(maxR, dist));
+  const cosElbow = (L1 * L1 + L2 * L2 - dist * dist) / (2 * L1 * L2);
+  const elbowInterior = Math.acos(Math.max(-1, Math.min(1, cosElbow)));
+  const elbow = Math.PI - elbowInterior;
+  const cosShoulder = (dist * dist + L1 * L1 - L2 * L2) / (2 * dist * L1);
+  const alpha = Math.acos(Math.max(-1, Math.min(1, cosShoulder)));
+  const line = Math.atan2(planar, dy);
+  const shoulder = line - alpha;
+  return { yaw, shoulder, elbow };
+}
+
+/**
+ * toolTip uses {x, y path-plane, z height}. Three.js world is (x, height, pathY).
+ * armIk(worldX, worldY_height, worldZ) maps as armIk(t.x, t.z, t.y).
+ */
 export function selfCheck() {
   const scene = sceneFor("circle", 274503);
-  const stockCenter = [0, 0, scene.stock[2] / 2];
-  const stockTopZ = scene.stock[2];
+  const stockCenter = [0.35, 0, 0];
+  const stockTopZ = 0.92 + scene.stock[2] / 2 + 0.002;
   const a = toolTip("circle", 0, stockCenter, stockTopZ, scene.pathHalf, scene.pathOffset, scene.targetDepth);
-  const b = toolTip("circle", 0.5, stockCenter, stockTopZ, scene.pathHalf, scene.pathOffset, scene.targetDepth);
+  const b = toolTip("circle", 0.25, stockCenter, stockTopZ, scene.pathHalf, scene.pathOffset, scene.targetDepth);
   const c = toolTip("circle", 1, stockCenter, stockTopZ, scene.pathHalf, scene.pathOffset, scene.targetDepth);
   if (!(a.z > c.z)) throw new Error("tool tip does not plunge");
   if (Math.hypot(b.x - a.x, b.y - a.y) < 0.01) throw new Error("tool tip does not travel path");
+  // Map path tip → Three.js world for IK
+  const ikA = armIk(a.x, a.z, a.y);
+  const ikB = armIk(b.x, b.z, b.y);
+  if (![ikA.yaw, ikA.shoulder, ikA.elbow, ikB.yaw, ikB.shoulder, ikB.elbow].every(Number.isFinite)) {
+    throw new Error("arm IK produced non-finite joints");
+  }
+  // p=0 vs p=0.25 moves path Y → world Z → yaw must change
+  if (Math.abs(ikA.yaw - ikB.yaw) < 1e-4) {
+    throw new Error("arm IK yaw did not track path motion");
+  }
   return "showcase-path-v4 self-check OK";
 }
 
