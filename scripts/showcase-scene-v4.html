@@ -22,12 +22,22 @@ import * as THREE from "three";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 
 const params = new URLSearchParams(location.search);
-let mode = params.get("mode") || "cnc"; // cnc | robot
+let mode = params.get("mode") || "cnc";
 let shape = params.get("shape") || "circle";
 let seed = Number(params.get("seed") || "274500");
 let progress = Number(params.get("progress") || "0");
 const width = Number(params.get("w") || "1280");
 const height = Number(params.get("h") || "720");
+
+/** Link lengths (m) for 2-DOF planar arm (shoulder → elbow → wrist). Sized to reach stock. */
+const L1 = 0.55;
+const L2 = 0.48;
+/** Wrist → tool tip local offset (tool points −Y in wrist frame). */
+const TIP_OFFSET = 0.22;
+/** Shoulder world height and base XY (pedestal top). */
+const SHOULDER_Y = 0.88;
+const BASE_X = -0.12;
+const BASE_Z = 0.0;
 
 function pathPoint(shape, p, half, offset = [0, 0]) {
   const [hx, hy] = half;
@@ -35,12 +45,14 @@ function pathPoint(shape, p, half, offset = [0, 0]) {
   const phase = 2 * Math.PI * (p % 1);
   if (shape === "circle") return [ox + hx * Math.cos(phase), oy + hy * Math.sin(phase)];
   if (shape === "rounded_rectangle") {
-    const cx = Math.abs(Math.cos(phase));
-    const sy = Math.abs(Math.sin(phase));
-    const rx = hx * 0.55, ry = hy * 0.55;
-    if (cx * hy > sy * hx) return [ox + Math.sign(Math.cos(phase)) * hx, oy + Math.sin(phase) * ry];
-    return [ox + Math.cos(phase) * rx, oy + Math.sign(Math.sin(phase)) * hy];
+    // Continuous superellipse (n=4) — readable closed pocket, no side jumps.
+    const n = 4;
+    const c = Math.cos(phase), s = Math.sin(phase);
+    const ax = Math.pow(Math.abs(c), 2 / n) * Math.sign(c || 1);
+    const ay = Math.pow(Math.abs(s), 2 / n) * Math.sign(s || 1);
+    return [ox + hx * ax, oy + hy * ay];
   }
+  // slot: elongated ellipse
   return [ox + hx * Math.cos(phase), oy + hy * Math.sin(phase)];
 }
 
@@ -60,12 +72,42 @@ function sceneFor(shape, seed) {
   return { stock, pathHalf, pathOffset: [0, 0], targetDepth: 0.008 + rnd() * 0.004 };
 }
 
+/**
+ * Analytic 2-link IK: wrist above tip by TIP_OFFSET (tool −Y = world −Y).
+ * Joint frame: shoulder/elbow rotate about local X; 0 = link along +Y;
+ * positive pitch swings toward +Z in the yawed base frame.
+ * Returns { yaw, shoulder, elbow } in radians.
+ */
+function armIk(tipX, tipY, tipZ) {
+  const dx = tipX - BASE_X;
+  const dz = tipZ - BASE_Z;
+  const yaw = Math.atan2(dx, dz);
+  // Wrist is TIP_OFFSET above tip when tool points straight down (−world Y).
+  const wy = tipY + TIP_OFFSET;
+  const planar = Math.hypot(dx, dz);
+  const dy = wy - SHOULDER_Y;
+  let dist = Math.hypot(planar, dy);
+  const maxR = L1 + L2 - 0.01;
+  const minR = Math.abs(L1 - L2) + 0.01;
+  dist = Math.max(minR, Math.min(maxR, dist));
+  const cosElbow = (L1 * L1 + L2 * L2 - dist * dist) / (2 * L1 * L2);
+  const elbowInterior = Math.acos(Math.max(-1, Math.min(1, cosElbow)));
+  // Elbow: 0 = straight; positive folds (line−alpha branch).
+  const elbow = Math.PI - elbowInterior;
+  const cosShoulder = (dist * dist + L1 * L1 - L2 * L2) / (2 * dist * L1);
+  const alpha = Math.acos(Math.max(-1, Math.min(1, cosShoulder)));
+  // Angle of shoulder→wrist from +Y toward +Z, then subtract alpha (elbow-down).
+  const line = Math.atan2(planar, dy);
+  const shoulder = line - alpha;
+  return { yaw, shoulder, elbow };
+}
+
 const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
 renderer.setSize(width, height, false);
 renderer.setPixelRatio(1);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.05;
+renderer.toneMappingExposure = 0.92;
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
@@ -80,43 +122,41 @@ scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
 const camera = new THREE.PerspectiveCamera(38, width / height, 0.02, 40);
 
 const metal = new THREE.MeshStandardMaterial({
-  color: 0x8a949c, metalness: 0.92, roughness: 0.22, envMapIntensity: 1.15,
+  color: 0x9aa3ab, metalness: 0.78, roughness: 0.38, envMapIntensity: 0.95,
 });
 const darkMetal = new THREE.MeshStandardMaterial({
-  color: 0x2a3238, metalness: 0.88, roughness: 0.28, envMapIntensity: 0.9,
+  color: 0x2c343c, metalness: 0.72, roughness: 0.42, envMapIntensity: 0.8,
 });
 const accent = new THREE.MeshStandardMaterial({
-  color: 0x0a6e96, metalness: 0.55, roughness: 0.32, envMapIntensity: 0.85,
+  color: 0x0a6e96, metalness: 0.45, roughness: 0.4, envMapIntensity: 0.75,
 });
 const grooveMat = new THREE.MeshStandardMaterial({
-  color: 0x1a1f24, metalness: 0.75, roughness: 0.18, envMapIntensity: 0.7,
+  color: 0x14181c, metalness: 0.55, roughness: 0.35, envMapIntensity: 0.55,
 });
 const chipMat = new THREE.MeshStandardMaterial({
-  color: 0xc9a227, metalness: 0.95, roughness: 0.18, envMapIntensity: 1.2,
+  color: 0xd4a84b, metalness: 0.9, roughness: 0.28, envMapIntensity: 1.0,
 });
 const floorMat = new THREE.MeshStandardMaterial({
-  color: 0x0d1216, metalness: 0.35, roughness: 0.55,
+  color: 0x0d1216, metalness: 0.25, roughness: 0.65,
+});
+const stockMat = new THREE.MeshStandardMaterial({
+  color: 0x7a8690, metalness: 0.7, roughness: 0.45, envMapIntensity: 0.85,
 });
 
-const key = new THREE.DirectionalLight(0xfff2e0, 3.2);
-key.position.set(2.2, 3.4, 1.6);
+const key = new THREE.DirectionalLight(0xfff1e4, 2.4);
+key.position.set(2.0, 3.2, 1.8);
 key.castShadow = true;
 key.shadow.mapSize.set(2048, 2048);
-key.shadow.camera.near = 0.2;
-key.shadow.camera.far = 12;
-key.shadow.camera.left = -2;
-key.shadow.camera.right = 2;
-key.shadow.camera.top = 2;
-key.shadow.camera.bottom = -2;
+key.shadow.bias = -0.0002;
 scene.add(key);
-const fill = new THREE.DirectionalLight(0xb8d4ff, 1.4);
-fill.position.set(-2.4, 2.0, 1.2);
+const fill = new THREE.DirectionalLight(0xc5d8f0, 1.15);
+fill.position.set(-2.2, 1.8, 1.0);
 scene.add(fill);
-const rim = new THREE.DirectionalLight(0xffe6c8, 1.1);
-rim.position.set(-0.4, 1.8, -2.5);
+const rim = new THREE.DirectionalLight(0xffe0c0, 0.85);
+rim.position.set(-0.2, 1.6, -2.2);
 scene.add(rim);
-scene.add(new THREE.AmbientLight(0x6a7a88, 0.28));
-scene.add(new THREE.HemisphereLight(0xc5d8ef, 0x1a2026, 0.45));
+scene.add(new THREE.AmbientLight(0x6a7a88, 0.38));
+scene.add(new THREE.HemisphereLight(0xd0e0f0, 0x1a2026, 0.55));
 
 const floor = new THREE.Mesh(new THREE.BoxGeometry(8, 0.08, 8), floorMat);
 floor.position.y = -0.04;
@@ -126,15 +166,17 @@ scene.add(floor);
 const root = new THREE.Group();
 scene.add(root);
 
+// ---- Tool (spindle): tip at local (0, -TIP_OFFSET, 0) ----
 const tool = new THREE.Group();
-const housing = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.06, 0.22, 24), darkMetal);
+tool.name = "teachingSpindle";
+const housing = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.045, 0.12, 24), darkMetal);
+housing.position.y = -0.04;
 housing.castShadow = true;
-const holder = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.028, 0.09, 16), metal);
-holder.position.y = -0.14;
-const cutter = new THREE.Mesh(new THREE.CylinderGeometry(0.007, 0.007, 0.11, 12), metal);
-cutter.position.y = -0.23;
+const holder = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.024, 0.06, 16), metal);
+holder.position.y = -0.12;
+const cutter = new THREE.Mesh(new THREE.CylinderGeometry(0.006, 0.006, 0.07, 12), metal);
+cutter.position.y = -0.185; // bottom ≈ -0.22 = -TIP_OFFSET
 tool.add(housing, holder, cutter);
-root.add(tool);
 
 const chips = [];
 for (let i = 0; i < 18; i++) {
@@ -144,25 +186,57 @@ for (let i = 0; i < 18; i++) {
   chips.push(c);
 }
 
-const joint1 = new THREE.Group();
-const joint2 = new THREE.Group();
+// ---- Robot kinematic chain: pedestal → baseYaw → shoulder → upper → elbow → forearm → wrist → tool ----
 const robot = new THREE.Group();
-{
-  const pedestal = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.55, 0.28), accent);
-  pedestal.position.set(-0.55, 0.28, 0);
-  const link1 = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.55, 0.1), metal);
-  link1.position.set(0, 0.35, 0);
-  joint1.position.set(-0.55, 0.55, 0);
-  const link2 = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.48, 0.09), metal);
-  link2.position.set(0, 0.28, 0);
-  joint2.position.set(0, 0.55, 0);
-  const wrist = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 0.08, 14), darkMetal);
-  wrist.position.set(0, 0.48, 0);
-  joint2.add(link2, wrist);
-  joint1.add(link1, joint2);
-  robot.add(pedestal, joint1);
-  root.add(robot);
-}
+robot.name = "robot";
+const pedestal = new THREE.Mesh(new THREE.BoxGeometry(0.28, SHOULDER_Y - 0.06, 0.28), accent);
+pedestal.position.set(BASE_X, (SHOULDER_Y - 0.06) / 2, BASE_Z);
+pedestal.castShadow = true;
+
+const baseYaw = new THREE.Group();
+baseYaw.name = "baseYaw";
+baseYaw.position.set(BASE_X, SHOULDER_Y, BASE_Z);
+
+const shoulder = new THREE.Group();
+shoulder.name = "shoulder";
+// Pitch about local X after yaw
+
+const upperArm = new THREE.Mesh(
+  new THREE.BoxGeometry(0.09, L1, 0.09),
+  metal,
+);
+upperArm.position.y = L1 / 2;
+upperArm.castShadow = true;
+
+const elbow = new THREE.Group();
+elbow.name = "elbow";
+elbow.position.y = L1;
+
+const forearm = new THREE.Mesh(
+  new THREE.BoxGeometry(0.08, L2, 0.08),
+  metal,
+);
+forearm.position.y = L2 / 2;
+forearm.castShadow = true;
+
+const wrist = new THREE.Group();
+wrist.name = "wrist";
+wrist.position.y = L2;
+
+const wristMesh = new THREE.Mesh(
+  new THREE.CylinderGeometry(0.032, 0.032, 0.06, 14),
+  darkMetal,
+);
+wristMesh.rotation.x = Math.PI / 2;
+wrist.add(wristMesh);
+
+// Continuous chain: tool is always a child of wrist for robot mode.
+wrist.add(tool);
+elbow.add(forearm, wrist);
+shoulder.add(upperArm, elbow);
+baseYaw.add(shoulder);
+robot.add(pedestal, baseYaw);
+root.add(robot);
 
 const machine = new THREE.Group();
 root.add(machine);
@@ -170,7 +244,6 @@ root.add(machine);
 let stock = null;
 let grooveMeshes = [];
 let stockY = 0.5;
-const tipLocalY = -0.285;
 const grooveCount = 96;
 
 function clearGroup(g) {
@@ -198,7 +271,7 @@ function rebuildJob() {
   const stockH = variant.stock[2];
   stock = new THREE.Mesh(
     new THREE.BoxGeometry(variant.stock[0], stockH, variant.stock[1]),
-    metal,
+    stockMat,
   );
   stock.castShadow = true;
   stock.receiveShadow = true;
@@ -219,7 +292,7 @@ function rebuildJob() {
 
   for (let i = 0; i < grooveCount; i++) {
     const g = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.0055, 0.0055, variant.targetDepth * 1.05, 10),
+      new THREE.CylinderGeometry(0.009, 0.009, variant.targetDepth * 1.35, 12),
       grooveMat,
     );
     const [lx, ly] = pathPoint(shape, i / grooveCount, variant.pathHalf, variant.pathOffset);
@@ -234,30 +307,35 @@ function rebuildJob() {
   }
 
   robot.visible = mode === "robot";
-  robot.traverse((obj) => {
-    if (obj !== robot) obj.visible = mode === "robot";
-  });
-
   if (mode === "cnc") {
-    // Open table only — no vertical machine body that can occlude the stock.
+    // CNC: free spindle (not on arm). Reparent tool to root.
+    if (tool.parent !== root) root.add(tool);
     const table = new THREE.Mesh(new THREE.BoxGeometry(0.95, 0.06, 0.75), metal);
     table.position.set(0, 0.42, 0);
     table.receiveShadow = true;
     const riser = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.35, 0.5), darkMetal);
     riser.position.set(0, 0.2, 0);
     machine.add(table, riser);
-    // Top-front three-quarter looking straight at stock + tool.
-    camera.position.set(0.55, 1.15, 0.85);
+    // Close framing so tool + stock + cut path read clearly on video.
+    camera.position.set(0.38, 0.78, 0.52);
     camera.up.set(0, 1, 0);
-    camera.lookAt(0, stockY, 0);
+    camera.lookAt(0, stockY + 0.02, 0);
+    camera.fov = 32;
+    camera.updateProjectionMatrix();
   } else {
+    // Robot: continuous chain — tool must stay under wrist.
+    if (tool.parent !== wrist) wrist.add(tool);
+    tool.position.set(0, 0, 0);
+    tool.rotation.set(0, 0, 0);
     const table = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.1, 0.7), darkMetal);
     table.position.set(0.35, 0.87, 0);
     table.receiveShadow = true;
     machine.add(table);
-    camera.position.set(1.35, 1.48, 1.25);
+    camera.position.set(0.95, 1.22, 0.88);
     camera.up.set(0, 1, 0);
-    camera.lookAt(stock.position.x, stockY, stock.position.z);
+    camera.lookAt(stock.position.x, stockY + 0.04, stock.position.z);
+    camera.fov = 34;
+    camera.updateProjectionMatrix();
   }
 
   window.__SAGE_VARIANT__ = variant;
@@ -272,8 +350,23 @@ function paint(p) {
   const tipY = stockY + stockH / 2 - variant.targetDepth * plunge + 0.001;
   const tipX = stock.position.x + lx;
   const tipZ = stock.position.z + ly;
-  tool.position.set(tipX, tipY - tipLocalY, tipZ);
-  tool.rotation.y = progress * Math.PI * 18;
+
+  if (mode === "cnc") {
+    if (tool.parent !== root) root.add(tool);
+    tool.position.set(tipX, tipY + TIP_OFFSET, tipZ);
+    tool.rotation.set(0, progress * Math.PI * 18, 0);
+  } else {
+    // Continuous kinematic chain: IK → joints → wrist holds tool → tip on path.
+    if (tool.parent !== wrist) wrist.add(tool);
+    tool.position.set(0, 0, 0);
+    tool.rotation.set(0, progress * Math.PI * 18, 0);
+    const ik = armIk(tipX, tipY, tipZ);
+    baseYaw.rotation.set(0, ik.yaw, 0);
+    shoulder.rotation.set(ik.shoulder, 0, 0);
+    elbow.rotation.set(ik.elbow, 0, 0);
+    // Keep tool axis world-down: cancel residual wrist pitch so cutter −Y = world −Y.
+    wrist.rotation.set(-(ik.shoulder + ik.elbow), 0, 0);
+  }
 
   const visible = Math.min(grooveCount, 1 + Math.floor(progress * grooveCount));
   for (let i = 0; i < grooveCount; i++) grooveMeshes[i].visible = i < visible;
@@ -290,14 +383,30 @@ function paint(p) {
     );
   }
 
-  if (mode === "robot") {
-    joint1.rotation.y = Math.atan2(tipX + 0.55, tipZ + 0.001);
-    joint1.rotation.z = -0.55 - progress * 0.12;
-    joint2.rotation.z = 1.05 + progress * 0.18;
+  // World-space tip for tests / stills metadata
+  const tipWorld = new THREE.Vector3(0, -TIP_OFFSET, 0);
+  tool.localToWorld(tipWorld);
+
+  // Chain proof for automated checks
+  const chain = [];
+  let o = tool;
+  while (o) {
+    chain.push(o.name || o.type);
+    o = o.parent;
   }
 
   renderer.render(scene, camera);
-  window.__SAGE_SHOWCASE_META__ = { mode, shape, seed, progress, tip: { x: tipX, y: tipY, z: tipZ } };
+  window.__SAGE_SHOWCASE_META__ = {
+    mode,
+    shape,
+    seed,
+    progress,
+    tip: { x: tipX, y: tipY, z: tipZ },
+    tipWorld: { x: tipWorld.x, y: tipWorld.y, z: tipWorld.z },
+    toolParent: tool.parent?.name || null,
+    chain,
+    robotHoldsTool: mode !== "robot" || tool.parent === wrist,
+  };
 }
 
 window.__SAGE_SET_JOB__ = (m, sh, sd) => {
@@ -306,6 +415,8 @@ window.__SAGE_SET_JOB__ = (m, sh, sd) => {
   paint(0);
 };
 window.__SAGE_SET_PROGRESS__ = (p) => paint(Number(p));
+window.__SAGE_ARM_IK__ = armIk;
+window.__SAGE_TIP_OFFSET__ = TIP_OFFSET;
 
 rebuildJob();
 paint(progress);
