@@ -256,35 +256,35 @@ export default function SimulationPreview() {
             loop
             muted
             playsInline
-            poster="/media/sage-simulation-replay-poster-v3.jpg"
+            poster="/media/sage-simulation-replay-poster-v4.jpg"
             preload="metadata"
             aria-describedby="simulation-replay-caption"
           >
             <source
-              src="/media/sage-simulation-replay-v3.mp4"
+              src="/media/sage-simulation-replay-v4.mp4"
               type="video/mp4"
             />
             <track
               default
               kind="captions"
-              src="/media/sage-simulation-replay-captions-v3.vtt"
+              src="/media/sage-simulation-replay-captions-v4.vtt"
               srcLang="en"
               label="English"
             />
             Your browser cannot play the simulation replay.{" "}
-            <a href="/media/sage-simulation-replay-v3.mp4">
+            <a href="/media/sage-simulation-replay-v4.mp4">
               Open the MP4 directly.
             </a>
           </video>
           <figcaption id="simulation-replay-caption">
-            <strong>NVIDIA Isaac Sim: CNC + UR10e</strong>
+            <strong>CNC + robot teaching showcase (SIMULATED)</strong>
             <span>
-              Non-headless RTX footage of newly generated public-safe scenes
-              using a fixed-base UR10e; simulated, non-actuating, and not a
-              physical-machine recording. The rail and positioner study below
-              is proposed and is not shown in this capture.{" "}
+              Public-safe showcase with tool–stock cutting contact, progressive
+              cut reveal, and metal lighting. Non-actuating; independent physical
+              gate closed. Not physical machine footage. Optional Isaac recapture
+              path remains available for higher-fidelity RTX re-renders.{" "}
               <a
-                href="/media/sage-isaac-capture-manifest-v3.json"
+                href="/media/sage-isaac-capture-manifest-v4.json"
                 download
               >
                 Inspect the capture manifest.

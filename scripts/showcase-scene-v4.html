@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>SAGE public showcase v4</title>
+  <style>
+    html, body { margin: 0; background: #0a1014; overflow: hidden; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+import * as THREE from "three";
+import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+
+const params = new URLSearchParams(location.search);
+let mode = params.get("mode") || "cnc"; // cnc | robot
+let shape = params.get("shape") || "circle";
+let seed = Number(params.get("seed") || "274500");
+let progress = Number(params.get("progress") || "0");
+const width = Number(params.get("w") || "1280");
+const height = Number(params.get("h") || "720");
+
+function pathPoint(shape, p, half, offset = [0, 0]) {
+  const [hx, hy] = half;
+  const [ox, oy] = offset;
+  const phase = 2 * Math.PI * (p % 1);
+  if (shape === "circle") return [ox + hx * Math.cos(phase), oy + hy * Math.sin(phase)];
+  if (shape === "rounded_rectangle") {
+    const cx = Math.abs(Math.cos(phase));
+    const sy = Math.abs(Math.sin(phase));
+    const rx = hx * 0.55, ry = hy * 0.55;
+    if (cx * hy > sy * hx) return [ox + Math.sign(Math.cos(phase)) * hx, oy + Math.sin(phase) * ry];
+    return [ox + Math.cos(phase) * rx, oy + Math.sign(Math.sin(phase)) * hy];
+  }
+  return [ox + hx * Math.cos(phase), oy + hy * Math.sin(phase)];
+}
+
+function sceneFor(shape, seed) {
+  let s = (seed * 1103515245 + 12345) >>> 0;
+  const rnd = () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 0xffffffff; };
+  const stock = [0.28 + rnd() * 0.08, 0.2 + rnd() * 0.07, 0.05 + rnd() * 0.03];
+  let pathHalf;
+  if (shape === "circle") {
+    const r = Math.min(stock[0], stock[1]) * (0.22 + rnd() * 0.1);
+    pathHalf = [r, r];
+  } else if (shape === "rounded_rectangle") {
+    pathHalf = [stock[0] * 0.26, stock[1] * 0.24];
+  } else {
+    pathHalf = [stock[0] * 0.3, stock[1] * 0.12];
+  }
+  return { stock, pathHalf, pathOffset: [0, 0], targetDepth: 0.008 + rnd() * 0.004 };
+}
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setSize(width, height, false);
+renderer.setPixelRatio(1);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+document.body.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x12181e);
+scene.fog = new THREE.Fog(0x12181e, 4.5, 12);
+
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+
+const camera = new THREE.PerspectiveCamera(38, width / height, 0.02, 40);
+
+const metal = new THREE.MeshStandardMaterial({
+  color: 0x8a949c, metalness: 0.92, roughness: 0.22, envMapIntensity: 1.15,
+});
+const darkMetal = new THREE.MeshStandardMaterial({
+  color: 0x2a3238, metalness: 0.88, roughness: 0.28, envMapIntensity: 0.9,
+});
+const accent = new THREE.MeshStandardMaterial({
+  color: 0x0a6e96, metalness: 0.55, roughness: 0.32, envMapIntensity: 0.85,
+});
+const grooveMat = new THREE.MeshStandardMaterial({
+  color: 0x1a1f24, metalness: 0.75, roughness: 0.18, envMapIntensity: 0.7,
+});
+const chipMat = new THREE.MeshStandardMaterial({
+  color: 0xc9a227, metalness: 0.95, roughness: 0.18, envMapIntensity: 1.2,
+});
+const floorMat = new THREE.MeshStandardMaterial({
+  color: 0x0d1216, metalness: 0.35, roughness: 0.55,
+});
+
+const key = new THREE.DirectionalLight(0xfff2e0, 3.2);
+key.position.set(2.2, 3.4, 1.6);
+key.castShadow = true;
+key.shadow.mapSize.set(2048, 2048);
+key.shadow.camera.near = 0.2;
+key.shadow.camera.far = 12;
+key.shadow.camera.left = -2;
+key.shadow.camera.right = 2;
+key.shadow.camera.top = 2;
+key.shadow.camera.bottom = -2;
+scene.add(key);
+const fill = new THREE.DirectionalLight(0xb8d4ff, 1.4);
+fill.position.set(-2.4, 2.0, 1.2);
+scene.add(fill);
+const rim = new THREE.DirectionalLight(0xffe6c8, 1.1);
+rim.position.set(-0.4, 1.8, -2.5);
+scene.add(rim);
+scene.add(new THREE.AmbientLight(0x6a7a88, 0.28));
+scene.add(new THREE.HemisphereLight(0xc5d8ef, 0x1a2026, 0.45));
+
+const floor = new THREE.Mesh(new THREE.BoxGeometry(8, 0.08, 8), floorMat);
+floor.position.y = -0.04;
+floor.receiveShadow = true;
+scene.add(floor);
+
+const root = new THREE.Group();
+scene.add(root);
+
+const tool = new THREE.Group();
+const housing = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.06, 0.22, 24), darkMetal);
+housing.castShadow = true;
+const holder = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.028, 0.09, 16), metal);
+holder.position.y = -0.14;
+const cutter = new THREE.Mesh(new THREE.CylinderGeometry(0.007, 0.007, 0.11, 12), metal);
+cutter.position.y = -0.23;
+tool.add(housing, holder, cutter);
+root.add(tool);
+
+const chips = [];
+for (let i = 0; i < 18; i++) {
+  const c = new THREE.Mesh(new THREE.SphereGeometry(0.003 + (i % 3) * 0.0008, 8, 8), chipMat);
+  c.visible = false;
+  root.add(c);
+  chips.push(c);
+}
+
+const joint1 = new THREE.Group();
+const joint2 = new THREE.Group();
+const robot = new THREE.Group();
+{
+  const pedestal = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.55, 0.28), accent);
+  pedestal.position.set(-0.55, 0.28, 0);
+  const link1 = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.55, 0.1), metal);
+  link1.position.set(0, 0.35, 0);
+  joint1.position.set(-0.55, 0.55, 0);
+  const link2 = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.48, 0.09), metal);
+  link2.position.set(0, 0.28, 0);
+  joint2.position.set(0, 0.55, 0);
+  const wrist = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 0.08, 14), darkMetal);
+  wrist.position.set(0, 0.48, 0);
+  joint2.add(link2, wrist);
+  joint1.add(link1, joint2);
+  robot.add(pedestal, joint1);
+  root.add(robot);
+}
+
+const machine = new THREE.Group();
+root.add(machine);
+
+let stock = null;
+let grooveMeshes = [];
+let stockY = 0.5;
+const tipLocalY = -0.285;
+const grooveCount = 96;
+
+function clearGroup(g) {
+  while (g.children.length) {
+    const ch = g.children[0];
+    g.remove(ch);
+    if (ch.geometry) ch.geometry.dispose();
+  }
+}
+
+function rebuildJob() {
+  clearGroup(machine);
+  if (stock) {
+    root.remove(stock);
+    stock.geometry.dispose();
+    stock = null;
+  }
+  for (const g of grooveMeshes) {
+    root.remove(g);
+    g.geometry.dispose();
+  }
+  grooveMeshes = [];
+
+  const variant = sceneFor(shape, seed);
+  const stockH = variant.stock[2];
+  stock = new THREE.Mesh(
+    new THREE.BoxGeometry(variant.stock[0], stockH, variant.stock[1]),
+    metal,
+  );
+  stock.castShadow = true;
+  stock.receiveShadow = true;
+  const tableTopZ = mode === "cnc" ? 0.44 : 0.92;
+  stockY = tableTopZ + stockH / 2 + 0.002;
+  stock.position.set(mode === "cnc" ? 0 : 0.35, stockY, 0);
+  root.add(stock);
+
+  for (const zOff of [variant.stock[1] / 2 + 0.03, -(variant.stock[1] / 2 + 0.03)]) {
+    const j = new THREE.Mesh(
+      new THREE.BoxGeometry(variant.stock[0] + 0.06, 0.04, 0.035),
+      accent,
+    );
+    j.position.set(stock.position.x, tableTopZ + 0.02, zOff);
+    j.castShadow = true;
+    machine.add(j);
+  }
+
+  for (let i = 0; i < grooveCount; i++) {
+    const g = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.0055, 0.0055, variant.targetDepth * 1.05, 10),
+      grooveMat,
+    );
+    const [lx, ly] = pathPoint(shape, i / grooveCount, variant.pathHalf, variant.pathOffset);
+    g.position.set(
+      stock.position.x + lx,
+      stockY + stockH / 2 - variant.targetDepth / 2,
+      stock.position.z + ly,
+    );
+    g.visible = false;
+    root.add(g);
+    grooveMeshes.push(g);
+  }
+
+  robot.visible = mode === "robot";
+  robot.traverse((obj) => {
+    if (obj !== robot) obj.visible = mode === "robot";
+  });
+
+  if (mode === "cnc") {
+    // Open table only — no vertical machine body that can occlude the stock.
+    const table = new THREE.Mesh(new THREE.BoxGeometry(0.95, 0.06, 0.75), metal);
+    table.position.set(0, 0.42, 0);
+    table.receiveShadow = true;
+    const riser = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.35, 0.5), darkMetal);
+    riser.position.set(0, 0.2, 0);
+    machine.add(table, riser);
+    // Top-front three-quarter looking straight at stock + tool.
+    camera.position.set(0.55, 1.15, 0.85);
+    camera.up.set(0, 1, 0);
+    camera.lookAt(0, stockY, 0);
+  } else {
+    const table = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.1, 0.7), darkMetal);
+    table.position.set(0.35, 0.87, 0);
+    table.receiveShadow = true;
+    machine.add(table);
+    camera.position.set(1.35, 1.48, 1.25);
+    camera.up.set(0, 1, 0);
+    camera.lookAt(stock.position.x, stockY, stock.position.z);
+  }
+
+  window.__SAGE_VARIANT__ = variant;
+}
+
+function paint(p) {
+  progress = p;
+  const variant = window.__SAGE_VARIANT__;
+  const stockH = variant.stock[2];
+  const plunge = Math.min(progress / 0.12, 1);
+  const [lx, ly] = pathPoint(shape, progress, variant.pathHalf, variant.pathOffset);
+  const tipY = stockY + stockH / 2 - variant.targetDepth * plunge + 0.001;
+  const tipX = stock.position.x + lx;
+  const tipZ = stock.position.z + ly;
+  tool.position.set(tipX, tipY - tipLocalY, tipZ);
+  tool.rotation.y = progress * Math.PI * 18;
+
+  const visible = Math.min(grooveCount, 1 + Math.floor(progress * grooveCount));
+  for (let i = 0; i < grooveCount; i++) grooveMeshes[i].visible = i < visible;
+
+  for (let i = 0; i < chips.length; i++) {
+    const phase = (progress * 4 + i * 0.07) % 1;
+    const ang = phase * Math.PI * 2 + i;
+    const rad = 0.02 + 0.05 * phase;
+    chips[i].visible = progress > 0.05;
+    chips[i].position.set(
+      tipX + rad * Math.cos(ang),
+      tipY + 0.02 + 0.08 * Math.sin(phase * Math.PI),
+      tipZ + rad * Math.sin(ang),
+    );
+  }
+
+  if (mode === "robot") {
+    joint1.rotation.y = Math.atan2(tipX + 0.55, tipZ + 0.001);
+    joint1.rotation.z = -0.55 - progress * 0.12;
+    joint2.rotation.z = 1.05 + progress * 0.18;
+  }
+
+  renderer.render(scene, camera);
+  window.__SAGE_SHOWCASE_META__ = { mode, shape, seed, progress, tip: { x: tipX, y: tipY, z: tipZ } };
+}
+
+window.__SAGE_SET_JOB__ = (m, sh, sd) => {
+  mode = m; shape = sh; seed = Number(sd);
+  rebuildJob();
+  paint(0);
+};
+window.__SAGE_SET_PROGRESS__ = (p) => paint(Number(p));
+
+rebuildJob();
+paint(progress);
+window.__SAGE_SHOWCASE_READY__ = true;
+</script>
+</body>
+</html>

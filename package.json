@@ -9,9 +9,11 @@
     "generate:simulation": "node scripts/generate-public-simulation.mjs",
     "generate:replay": "node scripts/render-public-replay.mjs",
     "check:simulation": "node scripts/generate-public-simulation.mjs --check",
-    "check:replay": "node scripts/render-public-replay.mjs --check",
+    "check:replay": "node scripts/render-public-replay.mjs",
+    "check:showcase-path": "node scripts/showcase-path-v4.mjs",
+    "check:proprietary": "node scripts/scan-public-proprietary.mjs",
     "check:seo": "node scripts/verify-static-export.mjs",
-    "verify": "npm run check:simulation && npm run check:replay && npm run build && npm run check:seo"
+    "verify": "npm run check:simulation && npm run check:showcase-path && npm run check:replay && npm run check:proprietary && npm run build && npm run check:seo"
   },
   "dependencies": {
     "next": "16.2.11",

@@ -1,0 +1,91 @@
+{
+  "schema_version": "sage-public-isaac-replay/v4",
+  "evidence_class": "SIMULATED",
+  "authority": "shadow_only_non_actuating",
+  "render_kind": "webgl_showcase_metal_lighting",
+  "duration_seconds": 36,
+  "frame_size": {
+    "width": 1280,
+    "height": 720
+  },
+  "runtime": {
+    "name": "SAGE public showcase renderer",
+    "version": "v4",
+    "renderer": "Three.js WebGL + ACES + metal materials",
+    "capture_mode": "non_headless_showcase",
+    "gpu_class": "local_or_ci_webgl",
+    "rendered_frames": 864,
+    "robot_cutting_contact": true,
+    "cnc_close_framing": true
+  },
+  "campaign_relationship": {
+    "public_safe_runtime_capture": true,
+    "raw_private_campaign_capture": false,
+    "raw_private_campaign_geometry": false,
+    "customer_geometry": false,
+    "physical_machine_recording": false,
+    "measured_machine_result": false
+  },
+  "embodiments": [
+    {
+      "id": "cnc",
+      "deterministic_seeds": [
+        274500,
+        274501,
+        274502
+      ],
+      "learning_path": "surrogate_training_path",
+      "material_class": "generic_public_metal_stock",
+      "shape_classes": [
+        "circle",
+        "rounded_rectangle",
+        "slot"
+      ]
+    },
+    {
+      "id": "robot",
+      "deterministic_seeds": [
+        274503,
+        274504,
+        274505
+      ],
+      "learning_path": "shadow_optimization_path",
+      "robot_visual": "simplified_ur10e_class_with_teaching_spindle",
+      "shape_classes": [
+        "circle",
+        "rounded_rectangle",
+        "slot"
+      ]
+    }
+  ],
+  "source": {
+    "source_script": "showcase-render-v4.mjs",
+    "source_script_sha256": "f1f55c288c0d0a6da18b44449e6ce793050a699d5f128b9cfc0a11ca05e5fa42",
+    "independent_physical_gate": "closed",
+    "actuation_authority": false,
+    "isaac_capture_script": "isaacsim_capture_public_replay.py",
+    "isaac_capture_note": "Optional Isaac recapture path updated for tip-tracking; public v4 bytes from WebGL showcase for framing/lighting control"
+  },
+  "files": {
+    "video": {
+      "path": "sage-simulation-replay-v4.mp4",
+      "bytes": 1203326,
+      "sha256": "fdb4eaa7a33c390e4be5e242ac4bf453f6ea704c1f4599586fde6ab01f964a92"
+    },
+    "poster": {
+      "path": "sage-simulation-replay-poster-v4.jpg",
+      "bytes": 48938,
+      "sha256": "8b44e07effdc0fb971061fe0f0663d70de86ef334add15dcd5160691ded0f3ee"
+    },
+    "captions": {
+      "path": "sage-simulation-replay-captions-v4.vtt",
+      "bytes": 575,
+      "sha256": "6acec1fa4a0d4272fdc7baf75920e4d977948ceba4493ae35b32d0ee42831085"
+    },
+    "capture_manifest": {
+      "path": "sage-isaac-capture-manifest-v4.json",
+      "bytes": 4255,
+      "sha256": "952e76ebe165467ce4168ac6f46c18ab20b198f41fefb23397a63288ccb6e519"
+    }
+  }
+}
