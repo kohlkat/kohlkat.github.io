@@ -25,6 +25,7 @@ const requiredFiles = [
   "data/sage-public-simulation-v1.json",
   "data/sage-public-nvidia-simulation-v1.json",
   "data/sage-public-nvidia-surface-integrity-v1.json",
+  "data/sage-public-fusion-worldsim-v1.json",
   "data/SHA256SUMS.txt",
   "media/sage-isaac-capture-manifest-v3.json",
   "media/sage-simulation-replay-captions-v3.vtt",
@@ -620,9 +621,14 @@ const surfaceResultsText = fs.readFileSync(
   ),
   "utf8",
 );
+const fusionResultsText = fs.readFileSync(
+  path.join(sourceDataDirectory, "sage-public-fusion-worldsim-v1.json"),
+  "utf8",
+);
 const simulationDocument = JSON.parse(simulationJsonText);
 const nvidiaResultsDocument = JSON.parse(nvidiaResultsText);
 const surfaceResultsDocument = JSON.parse(surfaceResultsText);
+const fusionResultsDocument = JSON.parse(fusionResultsText);
 const observations = simulationDocument.observations;
 const expectedObservationKeys = [
   "time_s",
@@ -850,6 +856,32 @@ assert(
   "Public NVIDIA surface-integrity boundaries or exporter hash are invalid.",
 );
 
+assert(
+  fusionResultsDocument.schema === "sage-public-fusion-worldsim/v1" &&
+    fusionResultsDocument.evidence_class === "SIMULATED" &&
+    fusionResultsDocument.authority === "shadow_only_non_actuating" &&
+    fusionResultsDocument.measurement_status === "modeled_not_measured" &&
+    fusionResultsDocument.observed_count === 0 &&
+    fusionResultsDocument.physical_cutting === false &&
+    fusionResultsDocument.physical_machine_validation === false &&
+    fusionResultsDocument.campaign?.worker_runs === 53 &&
+    fusionResultsDocument.campaign?.stress_episodes === 497834 &&
+    fusionResultsDocument.campaign?.sensor_catalog_size === 26 &&
+    fusionResultsDocument.latency_stress?.knee_ident_below_0_4_reached ===
+      false &&
+    approximatelyEqual(fusionResultsDocument.latency_stress?.x2?.ident_mean, 0.602) &&
+    approximatelyEqual(fusionResultsDocument.latency_stress?.x4?.ident_mean, 0.548) &&
+    Array.isArray(fusionResultsDocument.nonclaims) &&
+    fusionResultsDocument.nonclaims.some((item) =>
+      item.includes("Not physical machine validation"),
+    ) &&
+    fusionResultsDocument.digital_twin_capability?.status ===
+      "implemented_software" &&
+    sha256(fusionResultsText) ===
+      "60c4ee7f4fd7d94b7a28fab1ca02962a90d7ad404da61acc2673cf1ad86c9e10",
+  "Public fusion world-sim aggregate schema, labels, or reviewed counts are invalid.",
+);
+
 const generatorBytes = fs.readFileSync(
   path.resolve("scripts", "generate-public-simulation.mjs"),
 );
@@ -892,6 +924,7 @@ const publicText = [
   simulationCsvText,
   nvidiaResultsText,
   surfaceResultsText,
+  fusionResultsText,
 ].join("\n");
 const sourceText = [
   ...["app", "lib", "public", "scripts", ".github"].flatMap((directory) =>

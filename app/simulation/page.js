@@ -1,6 +1,9 @@
 import simulationRun from "../../public/data/sage-public-simulation-v1.json";
 import { evidenceTermsById } from "../../lib/public-evidence";
 import {
+  publicFusionDescription,
+  publicFusionDocumentDownload,
+  publicFusionSummary,
   publicSimulationDocumentDownload,
   publicSimulationSummary,
   publicSurfaceDocumentDownload,
@@ -14,21 +17,21 @@ import styles from "./simulation.module.css";
 export const metadata = {
   title: "Simulation Results and Data Explorer",
   description:
-    "Review the 2,542-program NVIDIA Isaac Sim campaign, modeled surface-integrity aggregate, and a separate reproducible browser teaching trace.",
+    "Review NVIDIA Isaac Sim shadow programs, multi-sensor digital-twin fusion stress results, modeled surface-integrity aggregate, and a reproducible browser teaching trace.",
   alternates: {
     canonical: "/simulation/",
   },
   openGraph: {
     title: "Simulation Results and Data Explorer | SAGE Suite",
     description:
-      "A verified 2,542-program NVIDIA simulation campaign, modeled surface-integrity aggregate, and reproducible public browser trace.",
+      "Executable digital-twin evidence: NVIDIA shadow campaign, multi-sensor fusion under latency, surface-integrity aggregate, and public teaching trace.",
     url: "/simulation/",
     type: "article",
   },
   twitter: {
     title: "Simulation Results and Data Explorer | SAGE Suite",
     description:
-      "A verified 2,542-program NVIDIA simulation campaign, modeled surface-integrity aggregate, and reproducible public browser trace.",
+      "Executable digital-twin evidence: NVIDIA shadow campaign, multi-sensor fusion under latency, surface-integrity aggregate, and public teaching trace.",
   },
 };
 
@@ -128,36 +131,40 @@ export default function SimulationPage() {
 
       <section className={styles.hero}>
         <div className={styles.heroCopy}>
-          <div className="section-kicker">NVIDIA campaign + public explorer</div>
+          <div className="section-kicker">Digital twin evidence + public explorer</div>
           <h1>
-            Simulation results
+            Twin results
             <span>you can inspect.</span>
           </h1>
           <p>
-            Start with the complete aggregate from{" "}
+            Start with executable twin evidence:{" "}
             {publicSimulationSummary.programCount.toLocaleString()} NVIDIA
-            Isaac Sim shadow programs. Then open a separate 120-row teaching
+            Isaac Sim shadow programs and{" "}
+            {publicFusionSummary.stressEpisodes.toLocaleString()} multi-sensor
+            fusion stress episodes. Then open a separate 120-row teaching
             trace to inspect how commands, proxies, labels, and unknowns are
             presented.
           </p>
           <div className={styles.heroActions}>
             <a
               className="button button-primary"
-              href={publicSimulationDocumentDownload}
+              href={publicFusionDocumentDownload}
               download
             >
-              Download campaign JSON
+              Download fusion twin JSON
               <ArrowIcon />
             </a>
             <a
               className="button button-secondary"
-              href="#browser-replay"
+              href={publicSimulationDocumentDownload}
+              download
             >
-              Open browser explorer
+              Download NVIDIA campaign JSON
             </a>
           </div>
           <p className={styles.heroBoundary}>
             SIMULATED, non-actuating evidence. No customer geometry or telemetry.
+            Observed physical samples: 0.
           </p>
         </div>
         <div className={styles.heroMetrics}>
@@ -165,6 +172,15 @@ export default function SimulationPage() {
             <span>NVIDIA programs</span>
             <strong>{publicSimulationSummary.programCount.toLocaleString()}</strong>
             <small>verified shadow comparisons</small>
+          </div>
+          <div>
+            <span>Fusion twin episodes</span>
+            <strong>
+              {publicFusionSummary.stressEpisodes.toLocaleString()}
+            </strong>
+            <small>
+              {publicFusionSummary.workerRuns} GPU workers · latency stress
+            </small>
           </div>
           <div>
             <span>Campaign median</span>
@@ -196,18 +212,29 @@ export default function SimulationPage() {
 
       <section className={styles.disclaimer} aria-labelledby="disclaimer-title">
         <div>
-          <span>Two evidence layers</span>
-          <h2 id="disclaimer-title">Campaign results plus a teaching replay.</h2>
+          <span>Three evidence layers</span>
+          <h2 id="disclaimer-title">
+            Twin campaigns, surface context, and a teaching replay.
+          </h2>
         </div>
         <div>
           <p>
-            The primary result is the completed NVIDIA campaign:{" "}
+            Layer one is the completed NVIDIA campaign:{" "}
             <strong>
               {publicSimulationSummary.programCount.toLocaleString()} SIMULATED
               shadow programs
             </strong>{" "}
             and a retrospective surface-integrity proxy from their simulated
             feed, force, acceleration, and temperature trajectories.
+          </p>
+          <p>
+            Layer two is the multi-sensor digital twin:{" "}
+            <strong>
+              {publicFusionSummary.stressEpisodes.toLocaleString()} SIMULATED
+              fusion stress episodes
+            </strong>{" "}
+            across a {publicFusionSummary.sensorCatalogSize}-class catalog under
+            2× and 4× transport latency. {publicFusionDescription}
           </p>
           <p>
             The browser explorer below is a separate{" "}
@@ -224,13 +251,77 @@ export default function SimulationPage() {
             criterion, or authorization to move or power equipment.
           </p>
           <p>
-            The campaign establishes repeatable same-simulator optimization and
-            evidence capture. The modeled finish proxy is not measured Ra,
-            physical material removal, or a surface-quality guarantee.
+            These campaigns establish executable twin software and same-simulator
+            optimization with provenance. They are not measured Ra, physical
+            material removal, field transfer proof, or a performance guarantee.
           </p>
           <a href={publicSurfaceDocumentDownload} download>
             Download the surface-integrity aggregate JSON
           </a>
+          {" · "}
+          <a href={publicFusionDocumentDownload} download>
+            Download the fusion twin aggregate JSON
+          </a>
+        </div>
+      </section>
+
+      <section className={styles.methodSection} id="fusion-twin">
+        <div className={styles.sectionHeading}>
+          <div>
+            <div className="section-kicker">Multi-sensor digital twin</div>
+            <h2>Latency-stressed fusion you can rank before hardware.</h2>
+          </div>
+          <p>
+            Random sensor suites fuse an asynchronous event stream while
+            transport latency, dropout, and clock skew are injected. The twin is
+            real software; the world it observes here is synthetic.
+          </p>
+        </div>
+        <div className={styles.methodGrid}>
+          <article>
+            <span>01</span>
+            <h3>Scale</h3>
+            <p>
+              {publicFusionSummary.workerRuns} GPU workers produced{" "}
+              {publicFusionSummary.stressEpisodes.toLocaleString()} stress
+              episodes over a {publicFusionSummary.sensorCatalogSize}-class
+              sensor catalog (completed {publicFusionSummary.completedDate}).
+            </p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Latency curve</h3>
+            <p>
+              At 2× latency, mean identifiability is{" "}
+              {publicFusionSummary.x2IdentMean.toFixed(3)} (p10{" "}
+              {publicFusionSummary.x2IdentP10.toFixed(3)};{" "}
+              {publicFusionSummary.x2FracBelow04Percent.toFixed(1)}% of episodes
+              below 0.4). At 4×: mean{" "}
+              {publicFusionSummary.x4IdentMean.toFixed(3)}, p10{" "}
+              {publicFusionSummary.x4IdentP10.toFixed(3)},{" "}
+              {publicFusionSummary.x4FracBelow04Percent.toFixed(1)}% below 0.4.
+              Knee not reached.
+            </p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>What transfers</h3>
+            <p>
+              {publicFusionSummary.whatTransfers.join(" ")} Top public suite
+              class retains overall identifiability{" "}
+              {publicFusionSummary.topSuiteIdent.toFixed(3)} (n≈4 suite
+              instances—directional, not definitive).
+            </p>
+          </article>
+          <article>
+            <span>04</span>
+            <h3>What does not</h3>
+            <p>
+              {publicFusionSummary.whatDoesNotTransfer.join(" ")} Evidence class:{" "}
+              {publicFusionSummary.evidenceLabel}. Observed count:{" "}
+              {publicFusionSummary.observedCount}.
+            </p>
+          </article>
         </div>
       </section>
 

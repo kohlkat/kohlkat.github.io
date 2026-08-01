@@ -1,4 +1,6 @@
 import {
+  publicFusionDocumentDownload,
+  publicFusionSummary,
   publicSimulationCells,
   publicSimulationDocumentDownload,
   publicSimulationObjectiveDescription,
@@ -48,6 +50,11 @@ const campaignSteps = [
     body:
       "A retrospective finish-pass proxy connects simulated feed, force, vibration, and temperature context without calling it measured Ra.",
   },
+  {
+    number: "05",
+    label: "What the fusion twin adds",
+    body: `A multi-sensor network twin stressed ${publicFusionSummary.stressEpisodes.toLocaleString()} episodes under 2× and 4× latency so suite choices can be ranked before hardware is fixed.`,
+  },
 ];
 
 function findCell(shape, material) {
@@ -65,15 +72,16 @@ export default function SimulationPreview() {
     >
       <div className={styles.heading}>
         <div>
-          <div className="section-kicker">Verified NVIDIA simulation evidence</div>
+          <div className="section-kicker">Verified multi-fidelity twin evidence</div>
           <h2 id="simulation-results-heading">
-            One complete campaign. Thousands of traceable comparisons.
+            Real twin software. Thousands of traceable comparisons.
           </h2>
         </div>
         <p>
-          This is the aggregate record from the full disclosed campaign, not a
-          selection of best-looking runs. Every number below is simulated,
-          baseline-relative, and non-actuating.
+          NVIDIA shadow programs and multi-sensor fusion stress runs are
+          executable digital-twin evidence—not screenshots. Every number below is
+          SIMULATED, baseline-relative or latent-world-relative, and non-actuating.
+          Methods transfer as planning support; physical validation is separate.
         </p>
       </div>
 
@@ -147,6 +155,26 @@ export default function SimulationPreview() {
             {publicSurfaceSummary.lowerMedianUm.toFixed(2)}–
             {publicSurfaceSummary.upperMedianUm.toFixed(2)} µm. Modeled, not
             measured Ra.
+          </p>
+        </article>
+
+        <article>
+          <div className={styles.resultTopline}>
+            <span>Multi-sensor twin</span>
+            <i>{publicFusionSummary.evidenceLabel}</i>
+          </div>
+          <strong>
+            {publicFusionSummary.stressEpisodes.toLocaleString()}
+          </strong>
+          <h3>latency-stressed fusion episodes</h3>
+          <p>
+            {publicFusionSummary.workerRuns} GPU workers ·{" "}
+            {publicFusionSummary.sensorCatalogSize}-class catalog · mean
+            identifiability {publicFusionSummary.x4IdentMean.toFixed(2)} at 4×
+            latency.{" "}
+            <a href={publicFusionDocumentDownload} download>
+              Download aggregate
+            </a>
           </p>
         </article>
       </div>
