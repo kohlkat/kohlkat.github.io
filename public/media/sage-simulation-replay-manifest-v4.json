@@ -60,7 +60,7 @@
   ],
   "source": {
     "source_script": "showcase-render-v4.mjs",
-    "source_script_sha256": "f1f55c288c0d0a6da18b44449e6ce793050a699d5f128b9cfc0a11ca05e5fa42",
+    "source_script_sha256": "ce4d833e259dcbc9274087dc64283103d55817c758da10f9128ce9781eaade56",
     "independent_physical_gate": "closed",
     "actuation_authority": false,
     "isaac_capture_script": "isaacsim_capture_public_replay.py",
@@ -69,13 +69,13 @@
   "files": {
     "video": {
       "path": "sage-simulation-replay-v4.mp4",
-      "bytes": 1864219,
-      "sha256": "812e57ae4419312046b19791f577f8a7c1718b3b8059bb4f53bfdf9ac3820bfc"
+      "bytes": 1142236,
+      "sha256": "4cce935b7c07fa726541d22388a329ace9c3cf73873d756fed8ab32253d831b9"
     },
     "poster": {
       "path": "sage-simulation-replay-poster-v4.jpg",
-      "bytes": 58922,
-      "sha256": "2b80fac3d2e440f107a49220c31178757e476af93046845b89939b105356bf4c"
+      "bytes": 54381,
+      "sha256": "3190109dc143b92c0a881e153962bc9a33025f9dd74476142e756c8e5653e0d0"
     },
     "captions": {
       "path": "sage-simulation-replay-captions-v4.vtt",
@@ -85,7 +85,7 @@
     "capture_manifest": {
       "path": "sage-isaac-capture-manifest-v4.json",
       "bytes": 4255,
-      "sha256": "b06a7415f60703df77811437ea288e6d302d79a48ef4612e378393fc11602c3b"
+      "sha256": "37cfcae281b069ef440b09aff5ba17c5e6ee7e3476974b3a8e02d1eb0099165a"
     }
   }
 }

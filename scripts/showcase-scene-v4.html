@@ -39,20 +39,44 @@ const SHOULDER_Y = 0.88;
 const BASE_X = -0.12;
 const BASE_Z = 0.0;
 
+/** Arc-length rounded rectangle: 4 straights + 4 corner arcs (full corners cut). */
+function roundedRectPoint(p, hx, hy, ox, oy) {
+  const r = Math.min(hx, hy) * 0.38;
+  const w = Math.max(hx - r, 1e-6);
+  const h = Math.max(hy - r, 1e-6);
+  const arc = (Math.PI / 2) * r;
+  const segs = [
+    { type: "line", len: 2 * h, x0: hx, y0: -h, x1: hx, y1: h },
+    { type: "arc", len: arc, cx: w, cy: h, a0: 0, a1: Math.PI / 2 },
+    { type: "line", len: 2 * w, x0: w, y0: hy, x1: -w, y1: hy },
+    { type: "arc", len: arc, cx: -w, cy: h, a0: Math.PI / 2, a1: Math.PI },
+    { type: "line", len: 2 * h, x0: -hx, y0: h, x1: -hx, y1: -h },
+    { type: "arc", len: arc, cx: -w, cy: -h, a0: Math.PI, a1: (3 * Math.PI) / 2 },
+    { type: "line", len: 2 * w, x0: -w, y0: -hy, x1: w, y1: -hy },
+    { type: "arc", len: arc, cx: w, cy: -h, a0: (3 * Math.PI) / 2, a1: 2 * Math.PI },
+  ];
+  const peri = segs.reduce((s, g) => s + g.len, 0);
+  let d = (((p % 1) + 1) % 1) * peri;
+  for (const g of segs) {
+    if (d <= g.len + 1e-12) {
+      const t = g.len > 0 ? d / g.len : 0;
+      if (g.type === "line") {
+        return [ox + g.x0 + (g.x1 - g.x0) * t, oy + g.y0 + (g.y1 - g.y0) * t];
+      }
+      const ang = g.a0 + (g.a1 - g.a0) * t;
+      return [ox + g.cx + r * Math.cos(ang), oy + g.cy + r * Math.sin(ang)];
+    }
+    d -= g.len;
+  }
+  return [ox + hx, oy];
+}
+
 function pathPoint(shape, p, half, offset = [0, 0]) {
   const [hx, hy] = half;
   const [ox, oy] = offset;
   const phase = 2 * Math.PI * (p % 1);
   if (shape === "circle") return [ox + hx * Math.cos(phase), oy + hy * Math.sin(phase)];
-  if (shape === "rounded_rectangle") {
-    // Continuous superellipse (n=4) — readable closed pocket, no side jumps.
-    const n = 4;
-    const c = Math.cos(phase), s = Math.sin(phase);
-    const ax = Math.pow(Math.abs(c), 2 / n) * Math.sign(c || 1);
-    const ay = Math.pow(Math.abs(s), 2 / n) * Math.sign(s || 1);
-    return [ox + hx * ax, oy + hy * ay];
-  }
-  // slot: elongated ellipse
+  if (shape === "rounded_rectangle") return roundedRectPoint(p, hx, hy, ox, oy);
   return [ox + hx * Math.cos(phase), oy + hy * Math.sin(phase)];
 }
 
@@ -133,14 +157,14 @@ const accent = new THREE.MeshStandardMaterial({
 const grooveMat = new THREE.MeshStandardMaterial({
   color: 0x14181c, metalness: 0.55, roughness: 0.35, envMapIntensity: 0.55,
 });
-const chipMat = new THREE.MeshStandardMaterial({
-  color: 0xd4a84b, metalness: 0.9, roughness: 0.28, envMapIntensity: 1.0,
-});
 const floorMat = new THREE.MeshStandardMaterial({
   color: 0x0d1216, metalness: 0.25, roughness: 0.65,
 });
 const stockMat = new THREE.MeshStandardMaterial({
   color: 0x7a8690, metalness: 0.7, roughness: 0.45, envMapIntensity: 0.85,
+});
+const jointMat = new THREE.MeshStandardMaterial({
+  color: 0x3a4550, metalness: 0.8, roughness: 0.35, envMapIntensity: 0.9,
 });
 
 const key = new THREE.DirectionalLight(0xfff1e4, 2.4);
@@ -178,20 +202,17 @@ const cutter = new THREE.Mesh(new THREE.CylinderGeometry(0.006, 0.006, 0.07, 12)
 cutter.position.y = -0.185; // bottom ≈ -0.22 = -TIP_OFFSET
 tool.add(housing, holder, cutter);
 
-const chips = [];
-for (let i = 0; i < 18; i++) {
-  const c = new THREE.Mesh(new THREE.SphereGeometry(0.003 + (i % 3) * 0.0008, 8, 8), chipMat);
-  c.visible = false;
-  root.add(c);
-  chips.push(c);
-}
-
 // ---- Robot kinematic chain: pedestal → baseYaw → shoulder → upper → elbow → forearm → wrist → tool ----
+// Links overlap joint spheres so the arm reads as one continuous machine.
 const robot = new THREE.Group();
 robot.name = "robot";
-const pedestal = new THREE.Mesh(new THREE.BoxGeometry(0.28, SHOULDER_Y - 0.06, 0.28), accent);
-pedestal.position.set(BASE_X, (SHOULDER_Y - 0.06) / 2, BASE_Z);
+const pedestalH = SHOULDER_Y - 0.08;
+const pedestal = new THREE.Mesh(new THREE.BoxGeometry(0.28, pedestalH, 0.28), accent);
+pedestal.position.set(BASE_X, pedestalH / 2, BASE_Z);
 pedestal.castShadow = true;
+const shoulderCap = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.12, 0.08, 20), darkMetal);
+shoulderCap.position.set(BASE_X, SHOULDER_Y - 0.04, BASE_Z);
+shoulderCap.castShadow = true;
 
 const baseYaw = new THREE.Group();
 baseYaw.name = "baseYaw";
@@ -199,43 +220,40 @@ baseYaw.position.set(BASE_X, SHOULDER_Y, BASE_Z);
 
 const shoulder = new THREE.Group();
 shoulder.name = "shoulder";
-// Pitch about local X after yaw
+const shoulderJoint = new THREE.Mesh(new THREE.SphereGeometry(0.07, 18, 16), jointMat);
+shoulderJoint.castShadow = true;
 
-const upperArm = new THREE.Mesh(
-  new THREE.BoxGeometry(0.09, L1, 0.09),
-  metal,
-);
+// Slightly longer than L1 so mesh overlaps elbow joint (no visual gap).
+const upperArm = new THREE.Mesh(new THREE.BoxGeometry(0.1, L1 + 0.06, 0.1), metal);
 upperArm.position.y = L1 / 2;
 upperArm.castShadow = true;
 
 const elbow = new THREE.Group();
 elbow.name = "elbow";
 elbow.position.y = L1;
+const elbowJoint = new THREE.Mesh(new THREE.SphereGeometry(0.065, 18, 16), jointMat);
+elbowJoint.castShadow = true;
 
-const forearm = new THREE.Mesh(
-  new THREE.BoxGeometry(0.08, L2, 0.08),
-  metal,
-);
+const forearm = new THREE.Mesh(new THREE.BoxGeometry(0.09, L2 + 0.06, 0.09), metal);
 forearm.position.y = L2 / 2;
 forearm.castShadow = true;
 
 const wrist = new THREE.Group();
 wrist.name = "wrist";
 wrist.position.y = L2;
-
-const wristMesh = new THREE.Mesh(
-  new THREE.CylinderGeometry(0.032, 0.032, 0.06, 14),
-  darkMetal,
-);
+const wristJoint = new THREE.Mesh(new THREE.SphereGeometry(0.055, 16, 14), jointMat);
+wristJoint.castShadow = true;
+const wristMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 0.07, 14), darkMetal);
 wristMesh.rotation.x = Math.PI / 2;
-wrist.add(wristMesh);
+wristMesh.position.y = -0.01;
+wrist.add(wristJoint, wristMesh);
 
 // Continuous chain: tool is always a child of wrist for robot mode.
 wrist.add(tool);
-elbow.add(forearm, wrist);
-shoulder.add(upperArm, elbow);
+elbow.add(elbowJoint, forearm, wrist);
+shoulder.add(shoulderJoint, upperArm, elbow);
 baseYaw.add(shoulder);
-robot.add(pedestal, baseYaw);
+robot.add(pedestal, shoulderCap, baseYaw);
 root.add(robot);
 
 const machine = new THREE.Group();
@@ -244,7 +262,7 @@ root.add(machine);
 let stock = null;
 let grooveMeshes = [];
 let stockY = 0.5;
-const grooveCount = 96;
+const grooveCount = 160; // denser samples so corners fully fill
 
 function clearGroup(g) {
   while (g.children.length) {
@@ -290,16 +308,33 @@ function rebuildJob() {
     machine.add(j);
   }
 
+  // Continuous cut trail: short tubes between consecutive path samples (fills corners).
+  const grooveY = stockY + stockH / 2 - variant.targetDepth / 2;
+  const gRad = 0.01;
   for (let i = 0; i < grooveCount; i++) {
+    const [lx0, ly0] = pathPoint(shape, i / grooveCount, variant.pathHalf, variant.pathOffset);
+    const [lx1, ly1] = pathPoint(
+      shape,
+      (i + 1) / grooveCount,
+      variant.pathHalf,
+      variant.pathOffset,
+    );
+    const ax = stock.position.x + lx0;
+    const az = stock.position.z + ly0;
+    const bx = stock.position.x + lx1;
+    const bz = stock.position.z + ly1;
+    const dx = bx - ax;
+    const dz = bz - az;
+    const len = Math.hypot(dx, dz) || 0.001;
     const g = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.009, 0.009, variant.targetDepth * 1.35, 12),
+      new THREE.CylinderGeometry(gRad, gRad, len + gRad * 0.6, 10),
       grooveMat,
     );
-    const [lx, ly] = pathPoint(shape, i / grooveCount, variant.pathHalf, variant.pathOffset);
-    g.position.set(
-      stock.position.x + lx,
-      stockY + stockH / 2 - variant.targetDepth / 2,
-      stock.position.z + ly,
+    g.position.set((ax + bx) / 2, grooveY, (az + bz) / 2);
+    // Align cylinder +Y to segment in XZ plane
+    g.quaternion.setFromUnitVectors(
+      new THREE.Vector3(0, 1, 0),
+      new THREE.Vector3(dx, 0, dz).normalize(),
     );
     g.visible = false;
     root.add(g);
@@ -370,18 +405,6 @@ function paint(p) {
 
   const visible = Math.min(grooveCount, 1 + Math.floor(progress * grooveCount));
   for (let i = 0; i < grooveCount; i++) grooveMeshes[i].visible = i < visible;
-
-  for (let i = 0; i < chips.length; i++) {
-    const phase = (progress * 4 + i * 0.07) % 1;
-    const ang = phase * Math.PI * 2 + i;
-    const rad = 0.02 + 0.05 * phase;
-    chips[i].visible = progress > 0.05;
-    chips[i].position.set(
-      tipX + rad * Math.cos(ang),
-      tipY + 0.02 + 0.08 * Math.sin(phase * Math.PI),
-      tipZ + rad * Math.sin(ang),
-    );
-  }
 
   // World-space tip for tests / stills metadata
   const tipWorld = new THREE.Vector3(0, -TIP_OFFSET, 0);

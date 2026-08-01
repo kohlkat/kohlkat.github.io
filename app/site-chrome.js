@@ -33,7 +33,7 @@ export function SiteHeader() {
       <nav className="desktop-nav" aria-label="Main navigation">
         <a href="/#product">Product</a>
         <a href="/#simulation">Results</a>
-        <a href="/#use-cases">Use cases</a>
+        <a href="/distributed/">Distributed</a>
         <a href="/research/">Research</a>
         <a href="/evidence/">Evidence</a>
       </nav>
@@ -70,6 +70,7 @@ export function SiteFooter() {
         <a href="/research/">Research</a>
         <a href="/evidence/">Evidence</a>
         <a href="/simulation/">Simulation</a>
+        <a href="/distributed/">Distributed</a>
         <a href="/privacy/">Privacy &amp; crawler policy</a>
         <a href="https://github.com/kohlkat">GitHub</a>
         <span>© 2026 SAGE Suite</span>
