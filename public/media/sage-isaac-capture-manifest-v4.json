@@ -1,0 +1,141 @@
+{
+  "schema_version": "sage-public-isaac-capture/v1",
+  "evidence_class": "SIMULATED",
+  "simulated": true,
+  "measured": false,
+  "observed_physical_machine": false,
+  "physical_machine_recording": false,
+  "private_campaign_capture": false,
+  "public_safe_teaching_geometry": true,
+  "actuation_authority": false,
+  "independent_physical_gate": "closed",
+  "isaac_sim_version": "showcase-webgl-v4",
+  "renderer": "WebGL_ThreeJS_ACES_metal",
+  "capture_mode": "non_headless_showcase",
+  "resolution": [
+    1280,
+    720
+  ],
+  "source_ref": "showcase-render-v4",
+  "source_script": "showcase-render-v4.mjs",
+  "source_script_sha256": "f1f55c288c0d0a6da18b44449e6ce793050a699d5f128b9cfc0a11ca05e5fa42",
+  "base_seed": 274500,
+  "created_unix": 1785566029.201,
+  "public_boundary": {
+    "embodiments": [
+      "cnc",
+      "robot"
+    ],
+    "shape_classes": [
+      "circle",
+      "rounded_rectangle",
+      "slot"
+    ],
+    "excludes": [
+      "campaign_usd",
+      "customer_geometry",
+      "controller_path",
+      "model_weights",
+      "private_program_sidecar",
+      "physical_footage"
+    ]
+  },
+  "jobs": [
+    {
+      "job_id": "cnc_circle_seed274500",
+      "embodiment": "cnc",
+      "shape": "circle",
+      "seed": 274500,
+      "frames": 144,
+      "frame_count": 144,
+      "fps": 24,
+      "duration_seconds": 6,
+      "first_frame": "frames/cnc_circle_seed274500/rgb_0000.png",
+      "last_frame": "frames/cnc_circle_seed274500/rgb_0143.png",
+      "robot_asset": null,
+      "robot_end_effector": null,
+      "robot_tool_parent": null,
+      "cutting_contact": true
+    },
+    {
+      "job_id": "cnc_rounded_rectangle_seed274501",
+      "embodiment": "cnc",
+      "shape": "rounded_rectangle",
+      "seed": 274501,
+      "frames": 144,
+      "frame_count": 144,
+      "fps": 24,
+      "duration_seconds": 6,
+      "first_frame": "frames/cnc_rounded_rectangle_seed274501/rgb_0000.png",
+      "last_frame": "frames/cnc_rounded_rectangle_seed274501/rgb_0143.png",
+      "robot_asset": null,
+      "robot_end_effector": null,
+      "robot_tool_parent": null,
+      "cutting_contact": true
+    },
+    {
+      "job_id": "cnc_slot_seed274502",
+      "embodiment": "cnc",
+      "shape": "slot",
+      "seed": 274502,
+      "frames": 144,
+      "frame_count": 144,
+      "fps": 24,
+      "duration_seconds": 6,
+      "first_frame": "frames/cnc_slot_seed274502/rgb_0000.png",
+      "last_frame": "frames/cnc_slot_seed274502/rgb_0143.png",
+      "robot_asset": null,
+      "robot_end_effector": null,
+      "robot_tool_parent": null,
+      "cutting_contact": true
+    },
+    {
+      "job_id": "robot_circle_seed274503",
+      "embodiment": "robot",
+      "shape": "circle",
+      "seed": 274503,
+      "frames": 144,
+      "frame_count": 144,
+      "fps": 24,
+      "duration_seconds": 6,
+      "first_frame": "frames/robot_circle_seed274503/rgb_0000.png",
+      "last_frame": "frames/robot_circle_seed274503/rgb_0143.png",
+      "robot_asset": "simplified_ur10e_class_visual",
+      "robot_end_effector": "teaching_spindle_tip",
+      "robot_tool_parent": "teaching_spindle",
+      "cutting_contact": true
+    },
+    {
+      "job_id": "robot_rounded_rectangle_seed274504",
+      "embodiment": "robot",
+      "shape": "rounded_rectangle",
+      "seed": 274504,
+      "frames": 144,
+      "frame_count": 144,
+      "fps": 24,
+      "duration_seconds": 6,
+      "first_frame": "frames/robot_rounded_rectangle_seed274504/rgb_0000.png",
+      "last_frame": "frames/robot_rounded_rectangle_seed274504/rgb_0143.png",
+      "robot_asset": "simplified_ur10e_class_visual",
+      "robot_end_effector": "teaching_spindle_tip",
+      "robot_tool_parent": "teaching_spindle",
+      "cutting_contact": true
+    },
+    {
+      "job_id": "robot_slot_seed274505",
+      "embodiment": "robot",
+      "shape": "slot",
+      "seed": 274505,
+      "frames": 144,
+      "frame_count": 144,
+      "fps": 24,
+      "duration_seconds": 6,
+      "first_frame": "frames/robot_slot_seed274505/rgb_0000.png",
+      "last_frame": "frames/robot_slot_seed274505/rgb_0143.png",
+      "robot_asset": "simplified_ur10e_class_visual",
+      "robot_end_effector": "teaching_spindle_tip",
+      "robot_tool_parent": "teaching_spindle",
+      "cutting_contact": true
+    }
+  ]
+}

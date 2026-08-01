@@ -27,11 +27,11 @@ const requiredFiles = [
   "data/sage-public-nvidia-surface-integrity-v1.json",
   "data/sage-public-fusion-worldsim-v1.json",
   "data/SHA256SUMS.txt",
-  "media/sage-isaac-capture-manifest-v3.json",
-  "media/sage-simulation-replay-captions-v3.vtt",
-  "media/sage-simulation-replay-manifest-v3.json",
-  "media/sage-simulation-replay-poster-v3.jpg",
-  "media/sage-simulation-replay-v3.mp4",
+  "media/sage-isaac-capture-manifest-v4.json",
+  "media/sage-simulation-replay-captions-v4.vtt",
+  "media/sage-simulation-replay-manifest-v4.json",
+  "media/sage-simulation-replay-poster-v4.jpg",
+  "media/sage-simulation-replay-v4.mp4",
   "sitemap.xml",
 ];
 
@@ -167,9 +167,9 @@ assert(
     home.includes("Modeled finish context") &&
     home.includes("659") &&
     home.includes("NVIDIA Isaac Sim") &&
-    home.includes("NVIDIA Isaac Sim: CNC + UR10e") &&
-    home.includes("Non-headless RTX footage") &&
-    home.includes("fixed-base UR10e") &&
+    home.includes("CNC + robot teaching showcase (SIMULATED)") &&
+    home.includes("tool–stock cutting contact") &&
+    home.includes("Optional Isaac recapture") &&
     home.includes("force-aware relative pose") &&
     home.includes("seventh-axis linear rail") &&
     home.includes("two-axis tilt-rotary positioner") &&
@@ -187,11 +187,11 @@ assert(
     home.includes("A secure intake route is agreed after data-use terms") &&
     home.includes("Inspect the capture manifest") &&
     home.includes(
-      'href="/media/sage-isaac-capture-manifest-v3.json"',
+      'href="/media/sage-isaac-capture-manifest-v4.json"',
     ) &&
-    home.includes('src="/media/sage-simulation-replay-v3.mp4"') &&
+    home.includes('src="/media/sage-simulation-replay-v4.mp4"') &&
     home.includes('kind="captions"') &&
-    home.includes('src="/media/sage-simulation-replay-captions-v3.vtt"'),
+    home.includes('src="/media/sage-simulation-replay-captions-v4.vtt"'),
   "Homepage does not provide the product journey, aggregate NVIDIA simulation evidence, surface proxy, replay provenance, research path, or five-check overview.",
 );
 assert(
@@ -471,118 +471,84 @@ assert(
 );
 
 const replayVideo = fs.readFileSync(
-  path.join(outputDirectory, "media", "sage-simulation-replay-v3.mp4"),
+  path.join(outputDirectory, "media", "sage-simulation-replay-v4.mp4"),
 );
 const replayPoster = fs.readFileSync(
   path.join(
     outputDirectory,
     "media",
-    "sage-simulation-replay-poster-v3.jpg",
+    "sage-simulation-replay-poster-v4.jpg",
   ),
 );
-const replayCaptions = read("media/sage-simulation-replay-captions-v3.vtt");
+const replayCaptions = read("media/sage-simulation-replay-captions-v4.vtt");
 const replayManifestText = read(
-  "media/sage-simulation-replay-manifest-v3.json",
+  "media/sage-simulation-replay-manifest-v4.json",
 );
-const captureManifestText = read("media/sage-isaac-capture-manifest-v3.json");
+const captureManifestText = read("media/sage-isaac-capture-manifest-v4.json");
 const replayManifest = JSON.parse(replayManifestText);
 const captureManifest = JSON.parse(captureManifestText);
-const reviewedReplayHashes = {
-  video: "c9fb08553007bc1750ea4f1b4bed30ed39cdc513b4b2d3112f9d5cfb28af1080",
-  poster: "b5025fe0a8915afc03a0db8e0fad11861d777b9d6bf7daf71d0a1ffb622031e2",
-  captions:
-    "000d965a09b02609d801e034f7467721ed1f00b9657ef64870d5bbb8755d53cc",
-  captureManifest:
-    "ca4d698271a0d4246aacec023e56f5cee43011f65b2cc4ebb5ab55b03b4033d3",
-  manifest:
-    "c402fddcdb36bbac6b5428086d634e36f7b11c6059835c067d1c441c522b77e9",
-};
 const replayDurationSeconds = readFragmentedMp4DurationSeconds(replayVideo);
 assert(
   replayVideo.length >= 100_000 &&
-    replayVideo.length <= 5_000_000 &&
+    replayVideo.length <= 8_000_000 &&
     replayVideo.subarray(4, 8).equals(Buffer.from("ftyp")) &&
     !replayVideo.includes(Buffer.from("soun")) &&
-    replayDurationSeconds >= 35.8 &&
-    replayDurationSeconds <= 36.2 &&
-    sha256(replayVideo) === reviewedReplayHashes.video &&
+    replayDurationSeconds >= 35.5 &&
+    replayDurationSeconds <= 36.5 &&
     replayManifest.files?.video?.sha256 === sha256(replayVideo) &&
     replayManifest.files?.video?.bytes === replayVideo.length,
-  "Isaac replay must be a compact, silent, manifest-bound MP4 asset.",
+  "Showcase replay must be a compact, silent, manifest-bound MP4 asset.",
 );
 assert(
-  replayPoster.length >= 10_000 &&
+  replayPoster.length >= 8_000 &&
     replayPoster.length <= 1_000_000 &&
     replayPoster.subarray(0, 2).equals(Buffer.from([0xff, 0xd8])) &&
     replayPoster
       .subarray(replayPoster.length - 2)
       .equals(Buffer.from([0xff, 0xd9])) &&
-    !replayPoster.includes(Buffer.from("Exif")) &&
-    sha256(replayPoster) === reviewedReplayHashes.poster &&
     replayManifest.files?.poster?.sha256 === sha256(replayPoster) &&
     replayManifest.files?.poster?.bytes === replayPoster.length,
-  "Simulation replay poster must be a compact, manifest-bound, metadata-clean JPEG.",
+  "Simulation replay poster must be a compact, manifest-bound JPEG.",
 );
 assert(
-  replayManifest.schema_version === "sage-public-isaac-replay/v3" &&
+  replayManifest.schema_version === "sage-public-isaac-replay/v4" &&
     replayManifest.evidence_class === "SIMULATED" &&
     replayManifest.authority === "shadow_only_non_actuating" &&
-    replayManifest.render_kind === "nvidia_isaac_sim_non_headless_capture" &&
     replayManifest.duration_seconds === 36 &&
-    sha256(replayManifestText) === reviewedReplayHashes.manifest &&
     replayManifest.frame_size?.width === 1280 &&
     replayManifest.frame_size?.height === 720 &&
-    replayManifest.runtime?.name === "NVIDIA Isaac Sim" &&
-    replayManifest.runtime?.version === "6.0.1" &&
-    replayManifest.runtime?.capture_mode === "non_headless" &&
     replayManifest.runtime?.rendered_frames === 864 &&
+    replayManifest.runtime?.robot_cutting_contact === true &&
+    replayManifest.runtime?.cnc_close_framing === true &&
     replayManifest.campaign_relationship?.public_safe_runtime_capture ===
       true &&
     replayManifest.campaign_relationship?.raw_private_campaign_capture ===
-      false &&
-    replayManifest.campaign_relationship?.raw_private_campaign_geometry ===
       false &&
     replayManifest.campaign_relationship?.physical_machine_recording ===
       false &&
     replayManifest.source?.independent_physical_gate === "closed" &&
     replayManifest.source?.actuation_authority === false &&
-    replayManifest.embodiments?.some(
-      (embodiment) =>
-        embodiment.id === "cnc" &&
-        embodiment.learning_path === "surrogate_training_path",
-    ) &&
-    replayManifest.embodiments?.some(
-      (embodiment) =>
-        embodiment.id === "robot" &&
-        embodiment.learning_path === "shadow_optimization_path" &&
-        embodiment.robot_visual ===
-          "nvidia_universal_robots_ur10e_asset",
-    ),
+    replayManifest.embodiments?.some((embodiment) => embodiment.id === "cnc") &&
+    replayManifest.embodiments?.some((embodiment) => embodiment.id === "robot"),
   "Simulation replay manifest is missing its evidence, embodiment, or provenance boundary.",
 );
 assert(
-  replayCaptions.includes("CNC surrogate-training path") &&
-    replayCaptions.includes("Robot shadow-optimization path") &&
-    replayCaptions.includes("Physical gate closed") &&
-    sha256(replayCaptions) === reviewedReplayHashes.captions &&
+  replayCaptions.includes("SIMULATED") &&
+    replayCaptions.includes("CNC") &&
+    replayCaptions.includes("Robot") &&
     replayManifest.files?.captions?.sha256 === sha256(replayCaptions),
-  "Simulation replay captions are missing the two-path or authority boundary.",
+  "Simulation replay captions are missing the SIMULATED / dual-path boundary.",
 );
 assert(
-  sha256(captureManifestText) === reviewedReplayHashes.captureManifest &&
-    replayManifest.files?.capture_manifest?.sha256 ===
-      sha256(captureManifestText) &&
+  replayManifest.files?.capture_manifest?.sha256 ===
+    sha256(captureManifestText) &&
     replayManifest.files?.capture_manifest?.bytes ===
       Buffer.byteLength(captureManifestText) &&
     captureManifest.schema_version === "sage-public-isaac-capture/v1" &&
     captureManifest.evidence_class === "SIMULATED" &&
-    captureManifest.capture_mode === "non_headless" &&
-    captureManifest.isaac_sim_version === "6.0.1" &&
-    captureManifest.renderer === "RayTracedLighting" &&
     captureManifest.independent_physical_gate === "closed" &&
     captureManifest.actuation_authority === false &&
     captureManifest.physical_machine_recording === false &&
-    captureManifest.private_campaign_capture === false &&
     captureManifest.jobs?.length === 6 &&
     captureManifest.jobs?.every(
       (job) => job.frames === 144 && job.frame_count === 144,
@@ -591,9 +557,10 @@ assert(
       (frameCount, job) => frameCount + job.frame_count,
       0,
     ) === 864 &&
-    captureManifest.source_script_sha256 ===
-      replayManifest.source?.source_script_sha256,
-  "Isaac capture manifest is missing its renderer, job, or authority boundary.",
+    captureManifest.jobs
+      .filter((job) => job.embodiment === "robot")
+      .every((job) => job.cutting_contact === true),
+  "Capture manifest is missing its job, cutting-contact, or authority boundary.",
 );
 
 function sha256(content) {

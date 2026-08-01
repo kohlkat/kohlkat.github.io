@@ -66,13 +66,12 @@ demonstrates within-simulator shadow optimization and evidence capture; it is
 not held-out policy generalization, physical cutting, measured cycle time, part
 quality, or safety proof.
 
-The homepage also embeds `public/media/sage-simulation-replay-v3.mp4`, a silent
-36-second non-headless NVIDIA Isaac Sim 6.0.1 capture. It alternates three CNC
+The homepage also embeds `public/media/sage-simulation-replay-v4.mp4`, a silent
+36-second SIMULATED public showcase with tool-stock cutting contact (WebGL metal lighting; optional Isaac recapture path). It alternates three CNC
 surrogate-training scenes with three NVIDIA UR10e robot shadow-optimization
 scenes over the disclosed circle, rounded-rectangle, and slot classes.
 
-`public/media/sage-isaac-capture-manifest-v3.json` records the six jobs and 864
-RTX-rendered frames. The capture is newly generated and public-safe; it is not a
+`public/media/sage-isaac-capture-manifest-v4.json` records the six jobs and 864 showcase frames. The capture is newly generated and public-safe; it is not a
 private campaign USD, customer program, physical cutting, measured machine
 footage, or a hardware command stream.
 
