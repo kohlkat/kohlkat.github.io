@@ -1,0 +1,114 @@
+{
+  "schema": "sage-public-fusion-worldsim/v1",
+  "title": "SAGE multi-sensor digital-twin fusion stress campaign (public aggregate)",
+  "evidence_class": "SIMULATED",
+  "measurement_status": "modeled_not_measured",
+  "authority": "shadow_only_non_actuating",
+  "observed_count": 0,
+  "physical_cutting": false,
+  "physical_machine_validation": false,
+  "campaign": {
+    "completed_date": "2026-08-01",
+    "worker_runs": 53,
+    "stress_episodes": 497834,
+    "sensor_catalog_size": 26,
+    "latency_multipliers_tested": [2.0, 4.0],
+    "runtime_class": "unsupervised multi-sensor fusion world-sim with optional GPU reconstruction",
+    "purpose": "Exercise a multi-fidelity digital-twin sensor network under transport latency, dropout, and clock skew so sensor-suite decisions can be compared before hardware is committed."
+  },
+  "latency_stress": {
+    "x2": {
+      "ident_mean": 0.602,
+      "ident_p10": 0.406,
+      "frac_below_0_4": 0.093,
+      "n": 248917
+    },
+    "x4": {
+      "ident_mean": 0.548,
+      "ident_p10": 0.340,
+      "frac_below_0_4": 0.18,
+      "n": 248917
+    },
+    "knee_ident_below_0_4_reached": false
+  },
+  "top_suite_classes_high_latency": [
+    {
+      "suite_class": "vibro-acoustic + gap + coolant pressure + dynamometer family",
+      "n_suite_instances": 4,
+      "ident_overall": 0.883,
+      "ident_at_high_latency": 0.871,
+      "pred_rmse": 0.05
+    },
+    {
+      "suite_class": "accelerometer + eddy gap + rotary encoder + hall + thermal family",
+      "n_suite_instances": 4,
+      "ident_overall": 0.847,
+      "ident_at_high_latency": 0.844,
+      "pred_rmse": 0.056
+    },
+    {
+      "suite_class": "coolant flow + rotary encoder + hall + microphone + tachometer + thermal cam family",
+      "n_suite_instances": 4,
+      "ident_overall": 0.85,
+      "ident_at_high_latency": 0.832,
+      "pred_rmse": 0.155
+    }
+  ],
+  "sensor_marginal_ident_leaders": [
+    { "sensor_class": "thermocouple", "ident_mean_when_present": 0.635, "n": 182676 },
+    { "sensor_class": "ir_pyrometer", "ident_mean_when_present": 0.626, "n": 182104 },
+    { "sensor_class": "coolant_pressure", "ident_mean_when_present": 0.625, "n": 181932 },
+    { "sensor_class": "coolant_flow", "ident_mean_when_present": 0.625, "n": 182270 },
+    { "sensor_class": "encoder_rotary", "ident_mean_when_present": 0.621, "n": 181950 }
+  ],
+  "digital_twin_capability": {
+    "status": "implemented_software",
+    "what_is_real": [
+      "Executable multi-sensor world model with asynchronous event fusion",
+      "Declared latency, dropout, jitter, and multi-hop network stress",
+      "Comparable suite ranking under the same synthetic latent world",
+      "Hash-bound public aggregate and provenance labels for review"
+    ],
+    "what_transfers_today": [
+      "Method for ranking sensor suites under network latency before hardware spend",
+      "Practice of keeping SIMULATED evidence separate from OBSERVED measurements",
+      "Decision-support use of twin outputs behind a closed physical gate"
+    ],
+    "what_does_not_transfer_yet": [
+      "Field-validated accuracy on a specific customer machine",
+      "Certified safety or actuation authority",
+      "Guaranteed cycle-time, tool-life, or surface-quality improvement"
+    ]
+  },
+  "method_summary": {
+    "latent_world": "Coupled reduced-order machining state (force, wear, chatter, temperature, deflection, coolant) with regime switching",
+    "sensors": "Random suites of 3–16 sensor classes drawn from a 26-class catalog with rate, noise, dropout, and clock skew",
+    "network": "One to three hops from sensor to fusion node with queuing delay multiplied under stress",
+    "fusion": "Fixed-rate fusion ticks with last-value hold and explicit staleness features",
+    "scores": [
+      "Ridge next-tick prediction residual",
+      "Masked cross-modal reconstruction",
+      "Latent identifiability versus hidden truth (evaluation only)",
+      "Latency ×2 and ×4 degradation curves"
+    ]
+  },
+  "limitations": [
+    "Entire campaign is SIMULATED; observed physical samples equal zero",
+    "Suite ranking uses a small number of suite instances per class (n≈4 for leaders)",
+    "Identifiability is against the synthetic latent world, not shop-floor ground truth",
+    "Optional GPU reconstruction path is research-only and not a product authority model",
+    "Public JSON is aggregate-only; raw episode corpora and training recipes are not published"
+  ],
+  "nonclaims": [
+    "Not physical machine validation",
+    "Not material-removal or chip-formation validation",
+    "Not a certified digital twin",
+    "Not permission to actuate equipment",
+    "Not a customer performance guarantee"
+  ],
+  "related_public_evidence": [
+    "sage-public-nvidia-simulation-v1.json",
+    "sage-public-nvidia-surface-integrity-v1.json",
+    "sage-public-simulation-v1.json"
+  ]
+}

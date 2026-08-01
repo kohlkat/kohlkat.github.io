@@ -1,4 +1,6 @@
 import {
+  publicFusionDocumentDownload,
+  publicFusionSummary,
   publicSimulationSummary,
   publicSurfaceDocumentDownload,
   publicSurfaceSummary,
@@ -39,13 +41,13 @@ const researchTracks = [
     number: "02",
     title: "Digital-twin VVUQ",
     body:
-      "Determine which decisions can rely on reduced-order models, articulation simulation, higher-fidelity process models, or physical measurements.",
+      "Determine which decisions can rely on reduced-order models, articulation simulation, multi-sensor fusion under latency, higher-fidelity process models, or physical measurements—and keep each fidelity labeled.",
   },
   {
     number: "03",
     title: "Transfer and abstention",
     body:
-      "Evaluate by held-out machine, tool, material, geometry, pose, and time—and withdraw when the evidence does not support the new context.",
+      "Transfer the twin method and review packet across jobs first; evaluate by held-out machine, tool, material, geometry, pose, and time—and withdraw when the evidence does not support the new context.",
   },
   {
     number: "04",
@@ -154,6 +156,12 @@ export default function ResearchPage() {
           </div>
           <div>
             <strong>
+              {publicFusionSummary.stressEpisodes.toLocaleString()}
+            </strong>
+            <span>multi-sensor fusion twin episodes</span>
+          </div>
+          <div>
+            <strong>
               {publicSimulationSummary.medianReductionPercent.toFixed(1)}%
             </strong>
             <span>median same-simulator objective reduction</span>
@@ -201,24 +209,35 @@ export default function ResearchPage() {
           <div className="section-kicker section-kicker-light">
             Current public evidence
           </div>
-          <h2>A working simulation and evidence pipeline—not a slide-only concept.</h2>
+          <h2>Working digital-twin software—not a slide-only concept.</h2>
           <p>
-            The completed campaign reconciles{" "}
+            The NVIDIA campaign reconciles{" "}
             {publicSimulationSummary.archiveCount} verified archives and{" "}
             {publicSimulationSummary.programCount.toLocaleString()} unique
-            NVIDIA Isaac Sim robot programs across{" "}
+            Isaac Sim robot programs across{" "}
             {publicSimulationSummary.scenarioCellCount} shape/material cells.
             Every program lowered its own same-simulator composite synthetic
             objective.
           </p>
           <p>
-            The runtime combined NVIDIA robot articulation, mechanistic cutting
-            loads, and model-synthesized high-frequency vibration. It is labeled
-            SIMULATED and remains non-actuating.
+            The multi-sensor fusion twin adds{" "}
+            {publicFusionSummary.stressEpisodes.toLocaleString()} latency-stressed
+            episodes across {publicFusionSummary.workerRuns} GPU workers so
+            suite choices can be ranked before hardware is fixed. Methods
+            transfer as decision support; physical transfer remains unclaimed.
+          </p>
+          <p>
+            Runtimes combine NVIDIA robot articulation, mechanistic cutting
+            loads, synthesized vibration, and asynchronous sensor fusion. All
+            layers are labeled SIMULATED and remain non-actuating.
           </p>
           <a className="button button-light" href="/#simulation">
             See the campaign results
             <ArrowIcon />
+          </a>
+          {" "}
+          <a className="button button-secondary" href={publicFusionDocumentDownload} download>
+            Download fusion twin JSON
           </a>
         </div>
         <div className={styles.surfaceCard}>

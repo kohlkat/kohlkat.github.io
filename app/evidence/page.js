@@ -11,6 +11,9 @@ import {
   publicKernels,
 } from "../../lib/public-kernels";
 import {
+  publicFusionDescription,
+  publicFusionDocumentDownload,
+  publicFusionSummary,
   publicSimulationDocumentDownload,
   publicSimulationObjectiveDescription,
   publicSimulationRuntimeDescription,
@@ -27,21 +30,21 @@ import styles from "./evidence.module.css";
 export const metadata = {
   title: "Evidence Guide",
   description:
-    "Review SAGE Suite's verified NVIDIA Isaac Sim campaign, public replay, open-data evaluation, terminology, and measurement boundaries.",
+    "Review SAGE Suite's NVIDIA Isaac Sim campaign, multi-sensor digital-twin fusion aggregate, public replay, open-data evaluation, terminology, and measurement boundaries.",
   alternates: {
     canonical: "/evidence/",
   },
   openGraph: {
     title: "Evidence Guide | SAGE Suite",
     description:
-      "See the aggregate results from 2,542 NVIDIA simulation programs and understand exactly what the evidence does and does not establish.",
+      "See aggregate results from 2,542 NVIDIA programs and 497,834 multi-sensor twin episodes—and what they do and do not establish.",
     url: "/evidence/",
     type: "article",
   },
   twitter: {
     title: "Evidence Guide | SAGE Suite",
     description:
-      "A plain-language guide to SAGE's NVIDIA simulation campaign, public replay, open-data evaluation, and evidence boundaries.",
+      "A plain-language guide to SAGE's twin campaigns, public replay, open-data evaluation, and evidence boundaries.",
   },
 };
 
@@ -96,6 +99,11 @@ const evidenceClasses = [
     title: "NVIDIA shadow campaign",
     body:
       "Aggregate evidence from 2,542 shadow programs spanning nine shape/material cells. Useful for showing repeatable within-simulator optimization and evidence capture.",
+  },
+  {
+    label: "SIMULATED",
+    title: "Multi-sensor digital-twin fusion",
+    body: `Aggregate from ${publicFusionSummary.stressEpisodes.toLocaleString()} latency-stressed fusion episodes across ${publicFusionSummary.workerRuns} GPU workers and a ${publicFusionSummary.sensorCatalogSize}-class catalog. Demonstrates executable twin software for suite ranking under network stress—not field-validated machine accuracy.`,
   },
   {
     label: "SIMULATED · MODELED NOT MEASURED",
@@ -322,6 +330,10 @@ export default function EvidencePage() {
             <strong>What the surface-integrity interval means</strong>
             <p>{publicSurfaceDescription}</p>
           </div>
+          <div>
+            <strong>What the multi-sensor twin means</strong>
+            <p>{publicFusionDescription}</p>
+          </div>
         </div>
         <div className={styles.modelDecision}>
           <div>
@@ -331,7 +343,9 @@ export default function EvidencePage() {
           <p>
             Independent held-out and generated-boundary checks did not support
             authority for the saved surrogate, so SAGE withheld promotion. That
-            refusal is part of the evidence, not a hidden exception.
+            refusal is part of the evidence, not a hidden exception. The fusion
+            twin similarly ranks suites under latency without granting machine
+            authority.
           </p>
           <div className={styles.modelDownloads}>
             <a href={publicSimulationDocumentDownload} download>
@@ -339,6 +353,9 @@ export default function EvidencePage() {
             </a>
             <a href={publicSurfaceDocumentDownload} download>
               Surface aggregate JSON
+            </a>
+            <a href={publicFusionDocumentDownload} download>
+              Fusion twin aggregate JSON
             </a>
           </div>
         </div>

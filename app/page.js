@@ -4,8 +4,8 @@ import {
   publicKernels,
 } from "../lib/public-kernels";
 import {
+  publicFusionSummary,
   publicSimulationSummary,
-  publicSurfaceSummary,
 } from "../lib/public-results";
 import PilotReadiness from "./pilot-readiness";
 import RelativePoseStudy from "./relative-pose-study";
@@ -86,9 +86,9 @@ const platformCapabilities = [
   },
   {
     number: "02",
-    title: "Multi-fidelity comparison",
+    title: "Executable digital twin ladder",
     body:
-      "A declared ladder from lightweight process models to NVIDIA simulation and, when available, governed measurements.",
+      "Running multi-fidelity worlds—from reduced-order process models to NVIDIA articulation and multi-sensor fusion under network latency—so alternatives are exercised before machine time is spent.",
   },
   {
     number: "03",
@@ -185,7 +185,9 @@ const structuredData = {
       },
       featureList: [
         "Structured manufacturing job and process-plan context",
+        "Executable multi-fidelity digital twin ladder",
         "Simulation-backed candidate comparison",
+        "Multi-sensor fusion under latency stress",
         "Evidence-linked recommendation packets",
         "Five public-safe independent assurance checks",
         "Explicit simulated and observed evidence labels",
@@ -350,6 +352,84 @@ export default function Home() {
       </section>
 
       <SimulationPreview />
+
+      <section className="platform-section" id="digital-twin" aria-labelledby="digital-twin-heading">
+        <div className="section-heading">
+          <div>
+            <div className="section-kicker">Digital twin capability</div>
+            <h2 id="digital-twin-heading">
+              The twin is running software—not a slide deck.
+            </h2>
+          </div>
+          <p>
+            SAGE already exercises multi-sensor fusion, latency stress, and
+            NVIDIA shadow programs as one reviewable ladder. Methods transfer as
+            decision support; physical machine authority does not.
+          </p>
+        </div>
+        <div className="capability-grid">
+          <article className="capability-card">
+            <span className="card-number">01</span>
+            <div>
+              <h3>What is real today</h3>
+              <p>
+                {publicFusionSummary.stressEpisodes.toLocaleString()} SIMULATED
+                multi-sensor stress episodes across{" "}
+                {publicFusionSummary.workerRuns} GPU workers, plus{" "}
+                {publicSimulationSummary.programCount.toLocaleString()} NVIDIA
+                shadow programs with hash-bound provenance.
+              </p>
+            </div>
+          </article>
+          <article className="capability-card">
+            <span className="card-number">02</span>
+            <div>
+              <h3>What transfers</h3>
+              <p>
+                Suite ranking under network latency, explicit SIMULATED versus
+                OBSERVED labels, and non-actuating review packets that can move
+                across jobs without changing the closed physical gate.
+              </p>
+            </div>
+          </article>
+          <article className="capability-card">
+            <span className="card-number">03</span>
+            <div>
+              <h3>Latency robustness</h3>
+              <p>
+                At 4× transport latency, mean latent identifiability remains{" "}
+                {publicFusionSummary.x4IdentMean.toFixed(2)}; the cliff below
+                0.4 was not reached. Tail risk rises (
+                {publicFusionSummary.x2FracBelow04Percent.toFixed(1)}% →{" "}
+                {publicFusionSummary.x4FracBelow04Percent.toFixed(1)}% of
+                episodes)—still useful for sensor planning, still SIMULATED.
+              </p>
+            </div>
+          </article>
+          <article className="capability-card">
+            <span className="card-number">04</span>
+            <div>
+              <h3>What does not transfer yet</h3>
+              <p>
+                Field-validated accuracy on your machine, certified safety, or
+                guaranteed cycle-time and surface-quality improvement. Observed
+                physical samples in this twin campaign:{" "}
+                {publicFusionSummary.observedCount}.
+              </p>
+            </div>
+          </article>
+        </div>
+        <div className="plain-boundary">
+          Download the public fusion aggregate:{" "}
+          <a href="/data/sage-public-fusion-worldsim-v1.json">
+            sage-public-fusion-worldsim-v1.json
+          </a>
+          . Full campaign detail lives on{" "}
+          <a href="/simulation/#fusion-twin">Simulation</a> and{" "}
+          <a href="/evidence/">Evidence</a>.
+        </div>
+      </section>
+
       <RelativePoseStudy />
 
       <section className="audience-section" id="use-cases">
