@@ -7,6 +7,38 @@ import { pathToFileURL } from "node:url";
 
 export const SHAPES = ["circle", "rounded_rectangle", "slot"];
 
+/** Arc-length rounded rectangle: 4 straights + 4 corner arcs (closed pocket). */
+export function roundedRectPoint(progress, halfX, halfY, ox = 0, oy = 0) {
+  const r = Math.min(halfX, halfY) * 0.38;
+  const w = Math.max(halfX - r, 1e-6);
+  const h = Math.max(halfY - r, 1e-6);
+  const arc = (Math.PI / 2) * r;
+  const segs = [
+    { type: "line", len: 2 * h, x0: halfX, y0: -h, x1: halfX, y1: h },
+    { type: "arc", len: arc, cx: w, cy: h, a0: 0, a1: Math.PI / 2 },
+    { type: "line", len: 2 * w, x0: w, y0: halfY, x1: -w, y1: halfY },
+    { type: "arc", len: arc, cx: -w, cy: h, a0: Math.PI / 2, a1: Math.PI },
+    { type: "line", len: 2 * h, x0: -halfX, y0: h, x1: -halfX, y1: -h },
+    { type: "arc", len: arc, cx: -w, cy: -h, a0: Math.PI, a1: (3 * Math.PI) / 2 },
+    { type: "line", len: 2 * w, x0: -w, y0: -halfY, x1: w, y1: -halfY },
+    { type: "arc", len: arc, cx: w, cy: -h, a0: (3 * Math.PI) / 2, a1: 2 * Math.PI },
+  ];
+  const peri = segs.reduce((s, g) => s + g.len, 0);
+  let d = (((progress % 1) + 1) % 1) * peri;
+  for (const g of segs) {
+    if (d <= g.len + 1e-12) {
+      const t = g.len > 0 ? d / g.len : 0;
+      if (g.type === "line") {
+        return [ox + g.x0 + (g.x1 - g.x0) * t, oy + g.y0 + (g.y1 - g.y0) * t];
+      }
+      const ang = g.a0 + (g.a1 - g.a0) * t;
+      return [ox + g.cx + r * Math.cos(ang), oy + g.cy + r * Math.sin(ang)];
+    }
+    d -= g.len;
+  }
+  return [ox + halfX, oy];
+}
+
 export function pathPoint(shape, progress, halfExtents, offset = [0, 0]) {
   const [halfX, halfY] = halfExtents;
   const [ox, oy] = offset;
@@ -15,12 +47,7 @@ export function pathPoint(shape, progress, halfExtents, offset = [0, 0]) {
     return [ox + halfX * Math.cos(phase), oy + halfY * Math.sin(phase)];
   }
   if (shape === "rounded_rectangle") {
-    // Continuous superellipse (n=4) — matches showcase-scene-v4.html
-    const n = 4;
-    const c = Math.cos(phase), s = Math.sin(phase);
-    const ax = Math.pow(Math.abs(c), 2 / n) * Math.sign(c || 1);
-    const ay = Math.pow(Math.abs(s), 2 / n) * Math.sign(s || 1);
-    return [ox + halfX * ax, oy + halfY * ay];
+    return roundedRectPoint(progress, halfX, halfY, ox, oy);
   }
   // slot: elongated ellipse
   return [ox + halfX * Math.cos(phase), oy + halfY * Math.sin(phase)];

@@ -1,0 +1,31 @@
+{
+  "schema_version": "sage-public-distributed-learning/v1",
+  "evidence_class": "SIMULATED",
+  "authority": "shadow_only_non_actuating",
+  "physical_machine_validation": false,
+  "render_kind": "webgl_showcase_metal_lighting",
+  "duration_seconds": 6,
+  "workers_visualized": 40,
+  "note": "Teaching visualization of parallel randomized-stock cells. Not the private fleet corpus; not physical cutting. Aggregates for real multi-worker campaigns live under /data/.",
+  "related_public_evidence": [
+    "sage-public-fusion-worldsim-v1.json",
+    "sage-public-nvidia-simulation-v1.json"
+  ],
+  "files": {
+    "video": {
+      "path": "sage-distributed-learning-v1.mp4",
+      "bytes": 804767,
+      "sha256": "053545c0aed23c7975ae303822aa21b8b9d35872fc93c360bf04dd73552235c1"
+    },
+    "poster": {
+      "path": "sage-distributed-learning-poster-v1.jpg",
+      "bytes": 41821,
+      "sha256": "450ca4db73770004a451ec651cba8f95ac41969b2784c1cfbdc13fd857ee04dc"
+    },
+    "captions": {
+      "path": "sage-distributed-learning-captions-v1.vtt",
+      "bytes": 113,
+      "sha256": "836702cb7815b1784498db14d883b5462cc9313527d7b01680cab47174f8fc94"
+    }
+  }
+}
