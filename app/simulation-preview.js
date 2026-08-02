@@ -285,8 +285,8 @@ export default function SimulationPreview() {
             <span>
               Public-safe showcase with tool–stock cutting contact, progressive
               cut reveal, and metal lighting. Non-actuating; independent physical
-              gate closed. Not physical machine footage. Optional Isaac recapture
-              path remains available for higher-fidelity RTX re-renders.{" "}
+              gate closed. Public SIMULATED Isaac Sim capture; current-source
+              recapture remains available for visual review.{" "}
               <a
                 href="/media/sage-isaac-capture-manifest-v4.json"
                 download

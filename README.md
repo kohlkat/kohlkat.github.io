@@ -67,7 +67,7 @@ not held-out policy generalization, physical cutting, measured cycle time, part
 quality, or safety proof.
 
 The homepage also embeds `public/media/sage-simulation-replay-v4.mp4`, a silent
-36-second SIMULATED public showcase with tool-stock cutting contact (WebGL metal lighting; optional Isaac recapture path). It alternates three CNC
+36-second SIMULATED public Isaac Sim capture with tool-stock cutting contact. It alternates three CNC
 surrogate-training scenes with three NVIDIA UR10e robot shadow-optimization
 scenes over the disclosed circle, rounded-rectangle, and slot classes.
 

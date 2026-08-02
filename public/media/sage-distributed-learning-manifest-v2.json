@@ -1,0 +1,42 @@
+{
+  "schema_version": "sage-public-distributed-learning/v2",
+  "evidence_class": "SIMULATED",
+  "authority": "shadow_only_non_actuating",
+  "physical_machine_validation": false,
+  "render_kind": "webgl_showcase_metal_lighting",
+  "camera_path": "low_rail_dolly_to_close_overview",
+  "background": {
+    "kind": "equirectangular_machine_shop_panorama",
+    "path": "third-party/noirlab-machine-shop-360-4096.jpg",
+    "publicPath": "third-party/noirlab-machine-shop-360-4096.jpg",
+    "credit": "NOIRLab/NSF/AURA/T. Slovinský",
+    "license": "CC BY 4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:360-degree_Panorama_of_Machine_Shop_at_NOIRLab_(360Pano_Machine_room_2-CC).jpg",
+    "sha256": "81567867610c186e79157077c2e758cca109d3c5048882ebfc6e227f017bc76f",
+    "modified": "Resized from source for the 1280x720 teaching render."
+  },
+  "duration_seconds": 6,
+  "workers_visualized": 40,
+  "note": "Teaching visualization of parallel randomized-stock cells. Not the private fleet corpus; not physical cutting. Aggregates for real multi-worker campaigns live under /data/.",
+  "related_public_evidence": [
+    "sage-public-fusion-worldsim-v1.json",
+    "sage-public-nvidia-simulation-v1.json"
+  ],
+  "files": {
+    "video": {
+      "path": "sage-distributed-learning-v2.mp4",
+      "bytes": 2923412,
+      "sha256": "a7c9170e45b3688bfdc0da31b094a0a1cf3b9e18ad067d690cbc3f6fa5cd0cf4"
+    },
+    "poster": {
+      "path": "sage-distributed-learning-poster-v2.jpg",
+      "bytes": 174376,
+      "sha256": "490ecc0df9e347f59c8d1a558d71915e91b699e029924f30513212522310f40f"
+    },
+    "captions": {
+      "path": "sage-distributed-learning-captions-v2.vtt",
+      "bytes": 113,
+      "sha256": "836702cb7815b1784498db14d883b5462cc9313527d7b01680cab47174f8fc94"
+    }
+  }
+}

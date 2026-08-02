@@ -1,4 +1,4 @@
-import distributedDoc from "../../public/data/sage-public-distributed-learning-v1.json";
+import distributedDoc from "../../public/data/sage-public-distributed-learning-v2.json";
 import {
   publicFusionSummary,
   publicFusionDocumentDownload,
@@ -59,7 +59,7 @@ export default function DistributedPage() {
           <div className={styles.heroActions}>
             <a
               className="button button-primary"
-              href="/data/sage-public-distributed-learning-v1.json"
+              href="/data/sage-public-distributed-learning-v2.json"
               download
             >
               Download distributed JSON
@@ -107,18 +107,18 @@ export default function DistributedPage() {
             controls
             playsInline
             preload="metadata"
-            poster="/media/sage-distributed-learning-poster-v1.jpg"
+            poster="/media/sage-distributed-learning-poster-v2.jpg"
             width={1280}
             height={720}
             style={{ width: "100%", height: "auto", display: "block" }}
           >
             <source
-              src="/media/sage-distributed-learning-v1.mp4"
+              src="/media/sage-distributed-learning-v2.mp4"
               type="video/mp4"
             />
             <track
               kind="captions"
-              src="/media/sage-distributed-learning-captions-v1.vtt"
+              src="/media/sage-distributed-learning-captions-v2.vtt"
               srcLang="en"
               label="English"
               default
@@ -128,6 +128,13 @@ export default function DistributedPage() {
         <p className={styles.heroBoundary} style={{ marginTop: 12 }}>
           SIMULATED distributed teaching grid · not 1000 physical robots · not
           measured material removal
+        </p>
+        <p className={styles.heroBoundary} style={{ marginTop: 8 }}>
+          Background photo: {" "}
+          <a href="https://commons.wikimedia.org/wiki/File:360-degree_Panorama_of_Machine_Shop_at_NOIRLab_(360Pano_Machine_room_2-CC).jpg">
+            NOIRLab/NSF/AURA/T. Slovinský
+          </a>{" "}
+          · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
         </p>
       </section>
 
@@ -171,7 +178,7 @@ export default function DistributedPage() {
           </a>
           <a
             className="button button-secondary"
-            href="/media/sage-distributed-learning-manifest-v1.json"
+            href="/media/sage-distributed-learning-manifest-v2.json"
           >
             Media manifest
           </a>

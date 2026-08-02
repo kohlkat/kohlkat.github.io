@@ -21,12 +21,20 @@ const WIDTH = 1280;
 const HEIGHT = 720;
 const FPS = 24;
 const FRAMES = 144; // 6s
+const VERSION = "v2";
+const BACKGROUND = {
+  path: path.join(mediaDir, "third-party", "noirlab-machine-shop-360-4096.jpg"),
+  publicPath: "third-party/noirlab-machine-shop-360-4096.jpg",
+  credit: "NOIRLab/NSF/AURA/T. Slovinský",
+  license: "CC BY 4.0",
+  sourceUrl: "https://commons.wikimedia.org/wiki/File:360-degree_Panorama_of_Machine_Shop_at_NOIRLab_(360Pano_Machine_room_2-CC).jpg",
+};
 
 const OUT = {
-  video: path.join(mediaDir, "sage-distributed-learning-v1.mp4"),
-  poster: path.join(mediaDir, "sage-distributed-learning-poster-v1.jpg"),
-  captions: path.join(mediaDir, "sage-distributed-learning-captions-v1.vtt"),
-  manifest: path.join(mediaDir, "sage-distributed-learning-manifest-v1.json"),
+  video: path.join(mediaDir, `sage-distributed-learning-${VERSION}.mp4`),
+  poster: path.join(mediaDir, `sage-distributed-learning-poster-${VERSION}.jpg`),
+  captions: path.join(mediaDir, `sage-distributed-learning-captions-${VERSION}.vtt`),
+  manifest: path.join(mediaDir, `sage-distributed-learning-manifest-${VERSION}.json`),
 };
 
 function sha256File(p) {
@@ -52,7 +60,7 @@ async function main() {
   fs.rmSync(frameRoot, { recursive: true, force: true });
   fs.mkdirSync(frameRoot, { recursive: true });
 
-  const browser = await chromium.launch({ headless: true });
+  const browser = await chromium.launch({ headless: true, args: ["--allow-file-access-from-files"] });
   try {
     const page = await browser.newPage({ viewport: { width: WIDTH, height: HEIGHT } });
     const url = pathToFileURL(sceneHtml).href + `?progress=0&w=${WIDTH}&h=${HEIGHT}`;
@@ -60,13 +68,30 @@ async function main() {
     await page.waitForFunction(() => window.__SAGE_SHOWCASE_READY__ === true, null, {
       timeout: 120000,
     });
+    let firstCamera;
+    let lastCamera;
+    const cameraPhases = new Set();
     for (let f = 0; f < FRAMES; f++) {
       const p = f / Math.max(FRAMES - 1, 1);
-      await page.evaluate((prog) => window.__SAGE_SET_PROGRESS__(prog), p);
+      const camera = await page.evaluate((prog) => {
+        window.__SAGE_SET_PROGRESS__(prog);
+        return window.__SAGE_SHOWCASE_META__.camera;
+      }, p);
+      if (f === 0) firstCamera = camera;
+      if (f === FRAMES - 1) lastCamera = camera;
+      cameraPhases.add(camera.phase);
       await page.screenshot({
         path: path.join(frameRoot, `seq_${String(f).padStart(5, "0")}.png`),
         type: "png",
       });
+    }
+    if (
+      firstCamera?.phase !== "low_rail" ||
+      lastCamera?.phase !== "close_overview" ||
+      !cameraPhases.has("lift") ||
+      !(lastCamera.position[1] > firstCamera.position[1] + 2)
+    ) {
+      throw new Error("fleet camera path did not complete the low-rail-to-overview sweep");
     }
   } finally {
     await browser.close();
@@ -103,11 +128,19 @@ Distributed multi-worker teaching grid · 40 randomized stock cells · SIMULATED
   );
 
   const manifest = {
-    schema_version: "sage-public-distributed-learning/v1",
+    schema_version: `sage-public-distributed-learning/${VERSION}`,
     evidence_class: "SIMULATED",
     authority: "shadow_only_non_actuating",
     physical_machine_validation: false,
     render_kind: "webgl_showcase_metal_lighting",
+    camera_path: "low_rail_dolly_to_close_overview",
+    background: {
+      kind: "equirectangular_machine_shop_panorama",
+      ...BACKGROUND,
+      path: BACKGROUND.publicPath,
+      sha256: sha256File(BACKGROUND.path),
+      modified: "Resized from source for the 1280x720 teaching render.",
+    },
     duration_seconds: 6,
     workers_visualized: 40,
     note:
@@ -118,17 +151,17 @@ Distributed multi-worker teaching grid · 40 randomized stock cells · SIMULATED
     ],
     files: {
       video: {
-        path: "sage-distributed-learning-v1.mp4",
+        path: `sage-distributed-learning-${VERSION}.mp4`,
         bytes: fs.statSync(OUT.video).size,
         sha256: sha256File(OUT.video),
       },
       poster: {
-        path: "sage-distributed-learning-poster-v1.jpg",
+        path: `sage-distributed-learning-poster-${VERSION}.jpg`,
         bytes: fs.statSync(OUT.poster).size,
         sha256: sha256File(OUT.poster),
       },
       captions: {
-        path: "sage-distributed-learning-captions-v1.vtt",
+        path: `sage-distributed-learning-captions-${VERSION}.vtt`,
         bytes: fs.statSync(OUT.captions).size,
         sha256: sha256File(OUT.captions),
       },

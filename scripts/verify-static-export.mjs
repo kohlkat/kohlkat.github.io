@@ -27,6 +27,7 @@ const requiredFiles = [
   "data/sage-public-nvidia-surface-integrity-v1.json",
   "data/sage-public-fusion-worldsim-v1.json",
   "data/sage-public-distributed-learning-v1.json",
+  "data/sage-public-distributed-learning-v2.json",
   "data/SHA256SUMS.txt",
   "media/sage-isaac-capture-manifest-v4.json",
   "media/sage-simulation-replay-captions-v4.vtt",
@@ -37,6 +38,12 @@ const requiredFiles = [
   "media/sage-distributed-learning-poster-v1.jpg",
   "media/sage-distributed-learning-captions-v1.vtt",
   "media/sage-distributed-learning-manifest-v1.json",
+  "media/sage-distributed-learning-v2.mp4",
+  "media/sage-distributed-learning-poster-v2.jpg",
+  "media/sage-distributed-learning-captions-v2.vtt",
+  "media/sage-distributed-learning-manifest-v2.json",
+  "media/third-party/noirlab-machine-shop-360-4096.jpg",
+  "media/third-party/noirlab-machine-shop-credit.md",
   "sitemap.xml",
 ];
 
@@ -97,6 +104,7 @@ const home = read("index.html");
 const evidence = read("evidence/index.html");
 const research = read("research/index.html");
 const simulation = read("simulation/index.html");
+const distributed = read("distributed/index.html");
 const privacy = read("privacy/index.html");
 const robots = read("robots.txt");
 const sitemap = read("sitemap.xml");
@@ -129,6 +137,10 @@ assert(
 assert(
   simulation.includes(`rel="canonical" href="${siteOrigin}/simulation/"`),
   "Simulation canonical does not match NEXT_PUBLIC_SITE_URL.",
+);
+assert(
+  distributed.includes(`rel="canonical" href="${siteOrigin}/distributed/"`),
+  "Distributed canonical does not match NEXT_PUBLIC_SITE_URL.",
 );
 assert(
   home.includes('http-equiv="Content-Security-Policy"') &&
@@ -184,7 +196,7 @@ assert(
     home.includes("NVIDIA Isaac Sim") &&
     home.includes("CNC + robot teaching showcase (SIMULATED)") &&
     home.includes("tool–stock cutting contact") &&
-    home.includes("Optional Isaac recapture") &&
+    home.includes("Public SIMULATED Isaac Sim capture") &&
     home.includes("force-aware relative pose") &&
     home.includes("seventh-axis linear rail") &&
     home.includes("two-axis tilt-rotary positioner") &&
@@ -519,6 +531,64 @@ assert(
       .filter((job) => job.embodiment === "robot")
       .every((job) => job.cutting_contact === true),
   "Capture manifest is missing its job, cutting-contact, or authority boundary.",
+);
+
+const distributedVideo = fs.readFileSync(
+  path.join(outputDirectory, "media", "sage-distributed-learning-v2.mp4"),
+);
+const distributedPoster = fs.readFileSync(
+  path.join(outputDirectory, "media", "sage-distributed-learning-poster-v2.jpg"),
+);
+const distributedCaptions = read("media/sage-distributed-learning-captions-v2.vtt");
+const distributedManifest = JSON.parse(
+  read("media/sage-distributed-learning-manifest-v2.json"),
+);
+const distributedBackground = fs.readFileSync(
+  path.join(outputDirectory, "media", "third-party", "noirlab-machine-shop-360-4096.jpg"),
+);
+const distributedDurationSeconds = readFragmentedMp4DurationSeconds(distributedVideo);
+assert(
+  distributedVideo.length >= 100_000 &&
+    distributedVideo.length <= 8_000_000 &&
+    distributedVideo.subarray(4, 8).equals(Buffer.from("ftyp")) &&
+    !distributedVideo.includes(Buffer.from("soun")) &&
+    distributedDurationSeconds >= 5.5 &&
+    distributedDurationSeconds <= 6.5 &&
+    distributedManifest.files?.video?.sha256 === sha256(distributedVideo) &&
+    distributedManifest.files?.video?.bytes === distributedVideo.length,
+  "Distributed v2 must be a compact, silent, manifest-bound MP4 asset.",
+);
+assert(
+  distributedPoster.subarray(0, 2).equals(Buffer.from([0xff, 0xd8])) &&
+    distributedPoster
+      .subarray(distributedPoster.length - 2)
+      .equals(Buffer.from([0xff, 0xd9])) &&
+    distributedManifest.files?.poster?.sha256 === sha256(distributedPoster) &&
+    distributedManifest.files?.poster?.bytes === distributedPoster.length &&
+    distributedCaptions.includes("40 randomized stock cells") &&
+    distributedCaptions.includes("SIMULATED") &&
+    distributedManifest.files?.captions?.sha256 === sha256(distributedCaptions),
+  "Distributed v2 poster, captions, or manifest binding is invalid.",
+);
+assert(
+  distributedManifest.schema_version === "sage-public-distributed-learning/v2" &&
+    distributedManifest.evidence_class === "SIMULATED" &&
+    distributedManifest.authority === "shadow_only_non_actuating" &&
+    distributedManifest.physical_machine_validation === false &&
+    distributedManifest.camera_path === "low_rail_dolly_to_close_overview" &&
+    distributedManifest.duration_seconds === 6 &&
+    distributedManifest.workers_visualized === 40 &&
+    distributedManifest.background?.kind ===
+      "equirectangular_machine_shop_panorama" &&
+    distributedManifest.background?.license === "CC BY 4.0" &&
+    distributedManifest.background?.sha256 === sha256(distributedBackground),
+  "Distributed v2 evidence, camera, or credited shop background is invalid.",
+);
+assert(
+  distributed.includes('src="/media/sage-distributed-learning-v2.mp4"') &&
+    distributed.includes("NOIRLab/NSF/AURA/T. Slovinský") &&
+    distributed.includes("CC BY 4.0"),
+  "Distributed page does not expose v2 media and its required background credit.",
 );
 
 function sha256(content) {

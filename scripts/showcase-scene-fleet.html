@@ -70,13 +70,18 @@ document.body.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x0c1218);
-scene.fog = new THREE.Fog(0x0c1218, 6, 18);
+scene.fog = new THREE.Fog(0x0c1218, 13, 26);
 const pmrem = new THREE.PMREMGenerator(renderer);
 scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
 
 const camera = new THREE.PerspectiveCamera(38, width / height, 0.05, 40);
-camera.position.set(0.2, 5.2, 6.4);
-camera.lookAt(0.2, 0, 0.1);
+const cameraTarget = new THREE.Vector3();
+const lowRailStart = new THREE.Vector3(-2.15, 0.32, 2.35);
+const lowRailEnd = new THREE.Vector3(1.75, 0.48, 2.05);
+const closeOverview = new THREE.Vector3(0.18, 3.25, 3.9);
+const lowTargetStart = new THREE.Vector3(-0.50, 0.08, 0.35);
+const lowTargetEnd = new THREE.Vector3(0.52, 0.08, 0.18);
+const overviewTarget = new THREE.Vector3(0.15, 0.7, 0.0);
 
 const metal = new THREE.MeshStandardMaterial({
   color: 0x9aa3ab, metalness: 0.78, roughness: 0.38, envMapIntensity: 0.95,
@@ -104,11 +109,23 @@ scene.add(new THREE.DirectionalLight(0xc5d8f0, 1.0).translateX(-4).translateY(3)
 scene.add(new THREE.AmbientLight(0x6a7a88, 0.4));
 scene.add(new THREE.HemisphereLight(0xd0e0f0, 0x1a2026, 0.5));
 
-const floor = new THREE.Mesh(new THREE.BoxGeometry(14, 0.06, 10), new THREE.MeshStandardMaterial({
+// 5.6 × 4.2 m work bay around a 3.3 × 2.1 m grid.
+const floor = new THREE.Mesh(new THREE.BoxGeometry(5.6, 0.06, 4.2), new THREE.MeshStandardMaterial({
   color: 0x0d1216, metalness: 0.25, roughness: 0.65,
 }));
 floor.position.y = -0.03;
 scene.add(floor);
+
+const shopTexture = await new THREE.TextureLoader().loadAsync(
+  new URL("../public/media/third-party/noirlab-machine-shop-360-4096.jpg", import.meta.url).href,
+);
+shopTexture.colorSpace = THREE.SRGBColorSpace;
+const shopBackground = new THREE.Mesh(
+  new THREE.SphereGeometry(9, 64, 32),
+  new THREE.MeshBasicMaterial({ map: shopTexture, side: THREE.BackSide }),
+);
+shopBackground.rotation.y = -0.35;
+scene.add(shopBackground);
 
 const workers = [];
 const originX = -((COLS - 1) * CELL) / 2;
@@ -161,6 +178,27 @@ for (let row = 0; row < ROWS; row++) {
   }
 }
 
+function smoothstep01(value) {
+  const t = Math.min(1, Math.max(0, value));
+  return t * t * (3 - 2 * t);
+}
+
+function setCameraPath(p) {
+  const rail = smoothstep01(p / 0.47);
+  const lift = smoothstep01((p - 0.38) / 0.62);
+  camera.position.copy(lowRailStart).lerp(lowRailEnd, rail).lerp(closeOverview, lift);
+  cameraTarget.copy(lowTargetStart).lerp(lowTargetEnd, rail).lerp(overviewTarget, lift);
+  camera.fov = 32 + lift * 4;
+  camera.updateProjectionMatrix();
+  camera.lookAt(cameraTarget);
+  return {
+    path: "low_rail_dolly_to_close_overview",
+    phase: lift >= 0.99 ? "close_overview" : rail >= 0.99 ? "lift" : "low_rail",
+    position: camera.position.toArray(),
+    target: cameraTarget.toArray(),
+  };
+}
+
 function paint(p) {
   progress = p;
   for (const w of workers) {
@@ -179,16 +217,15 @@ function paint(p) {
     }
     w.badge.material = local > 0.05 && local < 0.95 ? activeMat : accent;
   }
-  // Slow orbit for "fleet" feel
-  const ang = progress * Math.PI * 0.35;
-  camera.position.set(Math.sin(ang) * 6.2 + 0.2, 5.0, Math.cos(ang) * 6.0);
-  camera.lookAt(0.15, 0.05, 0);
+  // Ground-level rail pass through the active cells, then rise to a closer overview.
+  const cameraPath = setCameraPath(progress);
   renderer.render(scene, camera);
   window.__SAGE_SHOWCASE_META__ = {
     mode: "fleet",
     workers: COLS * ROWS,
     progress,
     evidence_class: "SIMULATED",
+    camera: cameraPath,
   };
 }
 

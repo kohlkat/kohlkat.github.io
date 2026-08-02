@@ -1,0 +1,51 @@
+{
+  "schema": "sage-public-distributed-learning/v2",
+  "title": "SAGE distributed multi-worker learning exhibit (public aggregate, v2 visual)",
+  "evidence_class": "SIMULATED",
+  "measurement_status": "modeled_not_measured",
+  "authority": "shadow_only_non_actuating",
+  "observed_count": 0,
+  "physical_cutting": false,
+  "physical_machine_validation": false,
+  "exhibit": {
+    "visual_workers": 40,
+    "visual_layout": "8x5 randomized-stock teaching grid",
+    "render_kind": "webgl_showcase_machine_shop_360_background",
+    "purpose": "Show parallel unsupervised-style workers exploring randomized stock geometry — a public-safe teaching analogue of large multi-bot simulation fleets, not a claim of 1000 physical robots.",
+    "background": {
+      "kind": "equirectangular machine-shop panorama",
+      "credit": "NOIRLab/NSF/AURA/T. Slovinský",
+      "license": "CC BY 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:360-degree_Panorama_of_Machine_Shop_at_NOIRLab_(360Pano_Machine_room_2-CC).jpg"
+    }
+  },
+  "campaign_aggregates_referenced": {
+    "nvidia_shadow_robot_programs": 2542,
+    "nvidia_verified_shard_archives": 659,
+    "fusion_worldsim_worker_runs": 53,
+    "fusion_stress_episodes": 497834
+  },
+  "what_is_shown": [
+    "Many independent cells with seed-bound stock dimensions and shape classes",
+    "Staggered progress so the grid reads as concurrent learning, not a single path",
+    "WebGL metal teaching render with a CC BY 4.0 machine-shop panorama background"
+  ],
+  "what_is_not_shown": [
+    "Private fleet weights, training recipes, or raw episode corpora",
+    "Customer geometry or controller paths",
+    "Physical multi-robot shop footage",
+    "Guaranteed transfer of synthetic gains to a specific machine"
+  ],
+  "related_public_evidence": [
+    "sage-public-fusion-worldsim-v1.json",
+    "sage-public-nvidia-simulation-v1.json",
+    "sage-public-nvidia-surface-integrity-v1.json",
+    "sage-distributed-learning-manifest-v2.json"
+  ],
+  "nonclaims": [
+    "Not physical machine validation",
+    "Not a thousand-bot NVIDIA marketing claim of identical scale",
+    "Not permission to actuate equipment",
+    "Not measured material removal"
+  ]
+}
