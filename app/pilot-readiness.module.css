@@ -95,7 +95,7 @@
 }
 
 .exchange > div:not(.exchangeArrow) > span {
-  color: var(--cyan-dark);
+  color: var(--ink-soft);
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 0.11em;

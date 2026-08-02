@@ -20,10 +20,22 @@ export function ArrowIcon() {
   );
 }
 
+function MenuIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 20 20" fill="none">
+      <path d="M3 5h14M3 10h14M3 15h14" />
+    </svg>
+  );
+}
+
 export function SiteHeader() {
   return (
     <header className="site-header">
-      <a className="brand" href="/#top" aria-label="SAGE Suite home">
+      <a
+        className="brand"
+        href="/#top"
+        aria-label="SAGE Suite — Software-Aware G-code Extension home"
+      >
         <SageMark />
         <span>
           SAGE
@@ -32,15 +44,28 @@ export function SiteHeader() {
       </a>
       <nav className="desktop-nav" aria-label="Main navigation">
         <a href="/#product">Product</a>
-        <a href="/#simulation">Results</a>
+        <a href="/#how-it-works">How it works</a>
+        <a href="/#simulation">Proof</a>
         <a href="/distributed/">Distributed</a>
         <a href="/research/">Research</a>
         <a href="/evidence/">Evidence</a>
       </nav>
-      <nav className="mobile-nav" aria-label="Compact navigation">
-        <a href="/#top">Home</a>
-        <a href="/research/">Research</a>
-      </nav>
+      <details className="mobile-menu">
+        <summary aria-label="Navigation menu">
+          <span>Menu</span>
+          <MenuIcon />
+        </summary>
+        <nav aria-label="Mobile navigation">
+          <a href="/#top">Home</a>
+          <a href="/#product">What SAGE does</a>
+          <a href="/#how-it-works">How it works</a>
+          <a href="/#simulation">Simulation proof</a>
+          <a href="/distributed/">Distributed studies</a>
+          <a href="/research/">Research</a>
+          <a href="/evidence/">Evidence</a>
+          <a href="/#pilot">Discuss a pilot</a>
+        </nav>
+      </details>
       <a className="header-cta" href="/#pilot">
         Pilot SAGE
         <ArrowIcon />
@@ -60,9 +85,9 @@ export function SiteFooter() {
         </span>
       </div>
       <p>
-        Make difficult machining decisions defensible with structured planning,
-        simulation-backed comparison, evidence-linked review, and qualified
-        human approval.
+        SAGE means Software-Aware G-code Extension. It adds reviewable planning
+        context around machining programs while qualified people retain every
+        approval and machine decision.
       </p>
       <div className="footer-links">
         <a href="/#product">Product</a>

@@ -133,9 +133,10 @@ export default function ResearchPage() {
             <span>trustworthy machining decisions.</span>
           </h1>
           <p>
-            SAGE research connects manufacturing context, multi-fidelity
-            simulation, uncertainty and abstention, traceable surface
-            measurements, interoperable evidence, and qualified human review.
+            SAGE research asks how software results become useful engineering
+            evidence: connect simulation to measurements, show uncertainty and
+            missing information, test whether a result carries to another job,
+            and keep the final decision with a qualified person.
           </p>
           <div className={styles.heroActions}>
             <a className="button button-light" href="#program">
@@ -152,26 +153,26 @@ export default function ResearchPage() {
             <strong>
               {publicSimulationSummary.programCount.toLocaleString()}
             </strong>
-            <span>NVIDIA simulation programs</span>
+            <span>SIMULATED NVIDIA programs</span>
           </div>
           <div>
             <strong>
               {publicFusionSummary.stressEpisodes.toLocaleString()}
             </strong>
-            <span>multi-sensor fusion twin episodes</span>
+            <span>SIMULATED sensor-delay episodes</span>
           </div>
           <div>
             <strong>
               {publicSimulationSummary.medianReductionPercent.toFixed(1)}%
             </strong>
-            <span>median same-simulator objective reduction</span>
+            <span>median modeled score reduction vs. baseline</span>
           </div>
           <div>
             <strong className={styles.surfaceRange}>
               {publicSurfaceSummary.lowerMedianUm.toFixed(2)}–
               {publicSurfaceSummary.upperMedianUm.toFixed(2)}
             </strong>
-            <span>µm median modeled finish-proxy interval</span>
+            <span>µm modeled finish range · not measured</span>
           </div>
           <div>
             <strong>0</strong>
@@ -187,10 +188,10 @@ export default function ResearchPage() {
             <h2>One question: when should a machining recommendation be trusted?</h2>
           </div>
           <p>
-            The answer requires more than model accuracy. It requires traceable
-            measurements, declared simulation fidelity, transfer tests,
-            calibrated uncertainty, independent checks, and a workflow that can
-            abstain.
+            Accuracy in one software test is not enough. Trust also requires
+            traceable measurements, clear simulation limits, tests on new jobs,
+            honest uncertainty, separate checks, and the ability to say “there
+            is not enough evidence.”
           </p>
         </div>
         <div className={styles.trackGrid}>
@@ -209,7 +210,7 @@ export default function ResearchPage() {
           <div className="section-kicker section-kicker-light">
             Current public evidence
           </div>
-          <h2>Working digital-twin software—not a slide-only concept.</h2>
+          <h2>Working simulation software—with its limits still attached.</h2>
           <p>
             The NVIDIA campaign reconciles{" "}
             {publicSimulationSummary.archiveCount} verified archives and{" "}

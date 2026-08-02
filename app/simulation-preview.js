@@ -30,30 +30,30 @@ const campaignSteps = [
     number: "01",
     label: "What ran",
     body:
-      "Robot articulation ran in NVIDIA Isaac Sim across three pocket shapes and three material models.",
+      "NVIDIA Isaac Sim moved a virtual robot through three pocket shapes and three material models.",
   },
   {
     number: "02",
     label: "What SAGE compared",
     body:
-      "Each shadow program was scored against its own baseline using the same bounded synthetic objective.",
+      "A shadow program is a software-only candidate. Each one was compared with its own starting version using the same combined modeled score.",
   },
   {
     number: "03",
     label: "What passed",
     body:
-      "All program, provenance, policy, and shard records reconciled across 659 verified archives.",
+      "All program and source records matched across 659 verified result archives, also called shards.",
   },
   {
     number: "04",
     label: "What the surface layer adds",
     body:
-      "A retrospective finish-pass proxy connects simulated feed, force, vibration, and temperature context without calling it measured Ra.",
+      "A modeled finish estimate connects simulated feed, force, vibration, and temperature. It is not a physical roughness measurement (Ra).",
   },
   {
     number: "05",
     label: "What the fusion twin adds",
-    body: `A multi-sensor network twin stressed ${publicFusionSummary.stressEpisodes.toLocaleString()} episodes under 2× and 4× latency so suite choices can be ranked before hardware is fixed.`,
+    body: `A virtual sensor study delayed combined data streams by 2× and 4× across ${publicFusionSummary.stressEpisodes.toLocaleString()} SIMULATED episodes to test whether conditions remained distinguishable.`,
   },
 ];
 
@@ -72,16 +72,16 @@ export default function SimulationPreview() {
     >
       <div className={styles.heading}>
         <div>
-          <div className="section-kicker">Verified multi-fidelity twin evidence</div>
+          <div className="section-kicker">Public evidence · SIMULATED</div>
           <h2 id="simulation-results-heading">
-            Real twin software. Thousands of traceable comparisons.
+            What the software has tested so far.
           </h2>
         </div>
         <p>
-          NVIDIA shadow programs and multi-sensor fusion stress runs are
-          executable digital-twin evidence—not screenshots. Every number below is
-          SIMULATED, baseline-relative or latent-world-relative, and non-actuating.
-          Methods transfer as planning support; physical validation is separate.
+          Two software campaigns compare candidate machining plans and delayed
+          virtual sensor data. They are runnable, traceable experiments—not
+          physical machining results. Every number below is SIMULATED and
+          non-actuating; physical validation is separate.
         </p>
       </div>
 
@@ -94,15 +94,16 @@ export default function SimulationPreview() {
           <strong>
             {publicSimulationSummary.medianReductionPercent.toFixed(1)}%
           </strong>
-          <h3>lower composite synthetic objective</h3>
+          <h3>lower modeled score than baseline</h3>
           <p>
-            Middle result across all{" "}
+            The middle result across all{" "}
             {publicSimulationSummary.programCount.toLocaleString()} program
-            comparisons.
+            comparisons. Lower is better only within this declared simulator
+            scoring method.
           </p>
           <div className={styles.distribution}>
             <span>
-              Typical 80%:{" "}
+              Middle 80%:{" "}
               {publicSimulationSummary.p10ReductionPercent.toFixed(1)}% to{" "}
               {publicSimulationSummary.p90ReductionPercent.toFixed(1)}%
             </span>
@@ -124,10 +125,11 @@ export default function SimulationPreview() {
             <span>Campaign scale</span>
           </div>
           <strong>{publicSimulationSummary.programCount.toLocaleString()}</strong>
-          <h3>shadow programs compared</h3>
+          <h3>software-only shadow programs</h3>
           <p>
             {publicSimulationSummary.programsWithLowerObjective.toLocaleString()}{" "}
-            scored below their own same-simulator baselines.
+            candidates scored below their own starting versions in the same
+            simulator.
           </p>
         </article>
 
@@ -136,9 +138,10 @@ export default function SimulationPreview() {
             <span>Evidence integrity</span>
           </div>
           <strong>{publicSimulationSummary.archiveCount}</strong>
-          <h3>verified shard archives</h3>
+          <h3>verified result archives (shards)</h3>
           <p>
-            Matching program and provenance counts; postflight status{" "}
+            A shard is one packaged batch of results. Program and source-record
+            counts matched; final integrity status{" "}
             {publicSimulationSummary.integrityStatus}.
           </p>
         </article>
@@ -149,7 +152,7 @@ export default function SimulationPreview() {
             <i>{publicSurfaceSummary.evidenceLabel}</i>
           </div>
           <strong>{publicSurfaceSummary.midpointMedianUm.toFixed(2)}</strong>
-          <h3>µm median proxy midpoint</h3>
+          <h3>modeled finish midpoint (µm)</h3>
           <p>
             Median assumption-bounded interval:{" "}
             {publicSurfaceSummary.lowerMedianUm.toFixed(2)}–
@@ -166,12 +169,13 @@ export default function SimulationPreview() {
           <strong>
             {publicFusionSummary.stressEpisodes.toLocaleString()}
           </strong>
-          <h3>latency-stressed fusion episodes</h3>
+          <h3>SIMULATED sensor-delay episodes</h3>
           <p>
-            {publicFusionSummary.workerRuns} GPU workers ·{" "}
-            {publicFusionSummary.sensorCatalogSize}-class catalog · mean
-            identifiability {publicFusionSummary.x4IdentMean.toFixed(2)} at 4×
-            latency.{" "}
+            Each episode combines virtual sensor streams. Across{" "}
+            {publicFusionSummary.workerRuns} GPU workers and{" "}
+            {publicFusionSummary.sensorCatalogSize} sensor categories, the mean
+            identification score was {publicFusionSummary.x4IdentMean.toFixed(2)}
+            at 4× modeled delay.{" "}
             <a href={publicFusionDocumentDownload} download>
               Download aggregate
             </a>

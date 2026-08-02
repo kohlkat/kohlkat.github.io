@@ -1,24 +1,30 @@
 import { ArrowIcon } from "./site-chrome";
 import styles from "./relative-pose-study.module.css";
 
-const studyChecks = [
+const studyPlan = [
   {
     number: "01",
-    title: "Align the contact",
+    title: "Hold the job constant",
     body:
-      "Keep the cutter orientation appropriate to the local surface instead of forcing one arm posture across the entire part.",
+      "Use the same synthetic part, tool, operation, process limits, and evidence labels for the fixed-base, rail, and positioner layouts.",
   },
   {
     number: "02",
-    title: "Protect directional stiffness",
+    title: "Move either side",
     body:
-      "Use the rail or positioner to avoid long-reach, near-singular, or highly compliant robot configurations under the expected cutting load.",
+      "Generate candidate cutter-to-part relationships by leaving the cell fixed, moving the robot base, or tilting and rotating the workpiece.",
   },
   {
     number: "03",
-    title: "Preserve the decision boundary",
+    title: "Screen before ranking",
     body:
-      "Simulation compares candidate relative poses; independent feasibility checks and a qualified person still decide what advances.",
+      "Check declared reach, joint, collision, process, surface-orientation, and cutting-load concerns before comparing the surviving options.",
+  },
+  {
+    number: "04",
+    title: "Explain or decline",
+    body:
+      "Return the alternatives, rejected cases, assumptions, and evidence limits for human review—or make no recommendation when support is insufficient.",
   },
 ];
 
@@ -196,23 +202,24 @@ export default function RelativePoseStudy() {
       <div className={styles.heading}>
         <div>
           <div className="section-kicker">
-            Robotic machining research · force-aware relative pose
+            Proposed robotic machining study · planning only
           </div>
           <h2 id="relative-pose-heading">
-            Move the robot or move the part—
-            <span>keep the cut in a stronger pose.</span>
+            Treat the robot and workholding
+            <span>as one positioning problem.</span>
           </h2>
         </div>
         <div className={styles.intro}>
           <p>
-            Industrial robot arms are not equally stiff in every direction or
-            joint configuration. The same cut can load the arm very differently
-            as reach, tool orientation, and the expected cutting-force direction
-            change.
+            “Relative pose” simply means where the cutter and part are in
+            relation to each other. That relationship can change by moving the
+            robot base, moving the workpiece, or both. Engineers call this a
+            force-aware relative pose when the expected cutting-load direction
+            is part of the comparison.
           </p>
           <p>
-            SAGE&apos;s proposed study treats the robot, external axis,
-            workpiece, and cut as one relative-pose problem.
+            The study asks whether either choice can keep the same cut away from
+            hard-to-reach, collision-prone, or less-stiff robot postures.
           </p>
         </div>
       </div>
@@ -220,7 +227,7 @@ export default function RelativePoseStudy() {
       <div className={styles.studyFrame}>
         <div className={styles.frameHeader}>
           <div>
-            <span>Two candidate cell topologies</span>
+            <span>Two ways to change the cutter-to-part relationship</span>
             <strong>One engineering question: which side should move?</strong>
           </div>
           <span className={styles.proposedBadge}>Proposed · not current replay</span>
@@ -254,17 +261,29 @@ export default function RelativePoseStudy() {
       </div>
 
       <div className={styles.translation}>
-        <strong>What “head-on” means here</strong>
+        <strong>Why the direction matters</strong>
         <p>
-          Not blindly pointing straight into the metal. It means selecting a
-          relative orientation that respects the local surface, tool axis, and
-          expected cutting-load direction while avoiding weak poses,
-          singularities, collisions, and process-limit violations.
+          Robot arms resist force differently as their joints and reach change.
+          The aim is not to point straight into the metal; it is to keep the
+          cutter suitable for the local surface while seeking a reachable,
+          collision-free pose that better supports the expected cutting load.
+        </p>
+      </div>
+
+      <div className={styles.planIntro}>
+        <div>
+          <span>Proposed study sequence</span>
+          <h3>Same synthetic job. Three cell layouts. One review packet.</h3>
+        </div>
+        <p>
+          Compare the current fixed-base reference with the rail-assisted robot
+          and articulated workholding concepts on one declared modeled basis.
+          Keep every result SIMULATED and non-actuating.
         </p>
       </div>
 
       <div className={styles.checkGrid}>
-        {studyChecks.map((check) => (
+        {studyPlan.map((check) => (
           <article key={check.number}>
             <span>{check.number}</span>
             <h3>{check.title}</h3>
@@ -277,14 +296,14 @@ export default function RelativePoseStudy() {
         <div>
           <strong>Current status</strong>
           <p>
-            The v3 video above is a fixed-base UR10e simulation capture. The
-            rail and positioner comparison is a proposed next study, not a live
-            ROS command path, physical-machining result, or measured efficiency
-            claim.
+            The current v4 video above is a fixed-base UR10e simulation capture.
+            The rail and positioner comparison is a proposed next study, not a
+            live ROS command path, physical-machining result, or measured
+            efficiency claim.
           </p>
         </div>
         <a className="button button-light" href="/research/#relative-pose-study">
-          See the proposed study
+          Read the research boundary
           <ArrowIcon />
         </a>
       </div>

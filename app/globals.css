@@ -117,8 +117,66 @@ nav a:hover {
   color: var(--ink);
 }
 
-.mobile-nav {
+.mobile-menu {
   display: none;
+  position: relative;
+}
+
+.mobile-menu summary {
+  display: flex;
+  padding: 10px 12px;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid var(--line);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  list-style: none;
+  text-transform: uppercase;
+}
+
+.mobile-menu summary::-webkit-details-marker {
+  display: none;
+}
+
+.mobile-menu summary:focus-visible {
+  outline: 2px solid var(--cyan-dark);
+  outline-offset: 3px;
+}
+
+.mobile-menu summary svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  stroke-width: 1.6;
+}
+
+.mobile-menu nav {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  display: flex;
+  width: min(300px, calc(100vw - 36px));
+  padding: 10px;
+  align-items: stretch;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  background: var(--paper);
+  box-shadow: 0 22px 54px rgba(6, 20, 24, 0.18);
+}
+
+.mobile-menu nav a {
+  padding: 13px 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.mobile-menu nav a:last-child {
+  border-bottom: 0;
+  color: var(--cyan-dark);
+  font-weight: 750;
 }
 
 .header-cta {
@@ -1613,11 +1671,9 @@ footer p {
     display: none;
   }
 
-  .site-header .mobile-nav {
-    display: flex;
-    gap: 18px;
-    font-size: 11px;
-    font-weight: 700;
+  .site-header .mobile-menu {
+    display: block;
+    margin-left: auto;
   }
 
   .header-cta {
@@ -1694,19 +1750,10 @@ footer p {
     min-height: 78px;
   }
 
-  .site-header .mobile-nav {
-    gap: 12px;
-    font-size: 10px;
-  }
-
   .site-header .brand,
-  .site-header .mobile-nav {
+  .site-header .mobile-menu {
     min-width: 0;
     flex: 0 0 auto;
-  }
-
-  .site-header .mobile-nav {
-    margin-left: auto;
   }
 
   .hero {

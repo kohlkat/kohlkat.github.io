@@ -15,21 +15,21 @@ import { ArrowIcon, SiteFooter, SiteHeader } from "./site-chrome";
 const deliverables = [
   {
     number: "01",
-    title: "A structured job model",
+    title: "The whole job in one place",
     body:
-      "Part intent, setup, machine, tooling, material, operations, constraints, and available evidence in one reviewable record.",
+      "Part intent, setup, machine, tooling, material, operations, constraints, and available evidence in one record your team can inspect.",
   },
   {
     number: "02",
-    title: "Ranked process-plan alternatives",
+    title: "Alternatives compared fairly",
     body:
-      "Candidate approaches compared on a consistent modeled basis, with the baseline and tradeoffs kept visible.",
+      "Candidate manufacturing approaches tested on the same modeled basis, with the current plan and tradeoffs kept visible.",
   },
   {
     number: "03",
-    title: "An evidence-linked review packet",
+    title: "A review record with evidence",
     body:
-      "Sources, assumptions, applicability, independent-check results, and unresolved questions attached to the recommendation.",
+      "Sources, assumptions, separate check results, limits, and unresolved questions stay attached to every recommendation.",
   },
 ];
 
@@ -80,27 +80,27 @@ const useCases = [
 const platformCapabilities = [
   {
     number: "01",
-    title: "Manufacturing context",
+    title: "Job context",
     body:
-      "A vendor-neutral representation of the job, setup, machine, tooling, operations, and evidence.",
+      "A common description of the job, setup, machine, tooling, operations, constraints, and evidence.",
   },
   {
     number: "02",
-    title: "Executable digital twin ladder",
+    title: "Software test environments",
     body:
-      "Running multi-fidelity worlds—from reduced-order process models to NVIDIA articulation and multi-sensor fusion under network latency—so alternatives are exercised before machine time is spent.",
+      "The same plan can move from fast engineering models to more detailed NVIDIA simulated cells, so alternatives are exercised before machine time is spent.",
   },
   {
     number: "03",
-    title: "Advisory intelligence",
+    title: "Decision support, not machine control",
     body:
-      "Deterministic engineering logic, constrained search, and learned ranking used as decision support—not machine authority.",
+      "Engineering rules, bounded search, and learned ranking help a person compare choices; they never receive machine authority.",
   },
   {
     number: "04",
-    title: "Independent assurance",
+    title: "Separate stop checks",
     body:
-      "Separate checks challenge the evidence, applicability, uncertainty, and approval state before export.",
+      "Independent checks challenge the evidence, fit, uncertainty, and approval state before anything can be exported for review.",
   },
 ];
 
@@ -269,17 +269,17 @@ export default function Home() {
         <div className="hero-copy">
           <div className="eyebrow">
             <span className="eyebrow-dot" />
-            Manufacturing decision intelligence · Pittsburgh
+            SAGE · Software-Aware G-code Extension
           </div>
           <h1>
             Make every difficult cut
             <span>a decision you can defend.</span>
           </h1>
           <p className="hero-lead">
-            Before scarce machine time is committed, SAGE compares candidate
-            process plans in simulation and returns the evidence, tradeoffs,
-            limits, and independent-check disposition a qualified engineer
-            needs—not just an answer.
+            G-code is the instruction language that tells a CNC machine how to move.
+            SAGE adds the job context that file leaves out, compares candidate
+            plans in SIMULATED trials, and returns evidence, tradeoffs, and
+            limits for qualified human review. It does not command equipment.
           </p>
           <div className="hero-actions">
             <a className="button button-primary" href="#how-it-works">
@@ -310,8 +310,8 @@ export default function Home() {
           </div>
           <p>
             A process plan is the manufacturing recipe for making a part. SAGE
-            turns the recipe and its context into an object your team can
-            compare, challenge, and approve.
+            connects that recipe to the machine, tools, material, constraints,
+            and evidence your team needs to compare, challenge, and approve it.
           </p>
         </div>
         <div className="start-grid">
@@ -356,53 +356,57 @@ export default function Home() {
       <section className="platform-section" id="digital-twin" aria-labelledby="digital-twin-heading">
         <div className="section-heading">
           <div>
-            <div className="section-kicker">Digital twin capability</div>
+            <div className="section-kicker">Software test environments</div>
             <h2 id="digital-twin-heading">
-              The twin is running software—not a slide deck.
+              Test the plan in software before spending machine time.
             </h2>
           </div>
           <p>
-            SAGE already exercises multi-sensor fusion, latency stress, and
-            NVIDIA shadow programs as one reviewable ladder. Methods transfer as
-            decision support; physical machine authority does not.
+            A digital twin is a software test environment for a real process.
+            SAGE uses several levels of simulation to expose weak assumptions
+            and compare plans. The results support review; they do not control a
+            physical machine.
           </p>
         </div>
         <div className="capability-grid">
           <article className="capability-card">
             <span className="card-number">01</span>
             <div>
-              <h3>What is real today</h3>
+              <h3>What has been run</h3>
               <p>
                 {publicFusionSummary.stressEpisodes.toLocaleString()} SIMULATED
-                multi-sensor stress episodes across{" "}
+                sensor-and-network stress episodes across{" "}
                 {publicFusionSummary.workerRuns} GPU workers, plus{" "}
                 {publicSimulationSummary.programCount.toLocaleString()} NVIDIA
-                shadow programs with hash-bound provenance.
+                shadow programs—software-only trials of candidate machining
+                plans—with files and results tied together by recorded hashes.
               </p>
             </div>
           </article>
           <article className="capability-card">
             <span className="card-number">02</span>
             <div>
-              <h3>What transfers</h3>
+              <h3>What the tests can teach us</h3>
               <p>
-                Suite ranking under network latency, explicit SIMULATED versus
-                OBSERVED labels, and non-actuating review packets that can move
-                across jobs without changing the closed physical gate.
+                They show how plan rankings react to delayed sensor data and
+                produce review packets that keep SIMULATED and OBSERVED evidence
+                distinct. The physical safety gate stays closed.
               </p>
             </div>
           </article>
           <article className="capability-card">
             <span className="card-number">03</span>
             <div>
-              <h3>Latency robustness</h3>
+              <h3>What happened when data was delayed</h3>
               <p>
-                At 4× transport latency, mean latent identifiability remains{" "}
-                {publicFusionSummary.x4IdentMean.toFixed(2)}; the cliff below
-                0.4 was not reached. Tail risk rises (
+                At 4× modeled transport latency, the mean identification score
+                was {publicFusionSummary.x4IdentMean.toFixed(2)} and did not fall
+                below the declared 0.4 comparison level. Low-scoring episodes
+                still rose from{" "}
                 {publicFusionSummary.x2FracBelow04Percent.toFixed(1)}% →{" "}
-                {publicFusionSummary.x4FracBelow04Percent.toFixed(1)}% of
-                episodes)—still useful for sensor planning, still SIMULATED.
+                {publicFusionSummary.x4FracBelow04Percent.toFixed(1)}%. That is a
+                useful warning for future sensor planning, and it remains
+                SIMULATED.
               </p>
             </div>
           </article>
@@ -461,11 +465,11 @@ export default function Home() {
         <div className="section-heading">
           <div>
             <div className="section-kicker">One product platform</div>
-            <h2>Planning, simulation, intelligence, and assurance stay connected.</h2>
+            <h2>One job stays connected from first question to human review.</h2>
           </div>
           <p>
-            SAGE is broader than one model or dataset. Each layer contributes to
-            the same reviewable manufacturing decision.
+            Planning context, software tests, ranked alternatives, and separate
+            checks all contribute to the same reviewable manufacturing decision.
           </p>
         </div>
         <div className="capability-grid">
@@ -547,13 +551,13 @@ export default function Home() {
         </div>
         <div className="roadmap-content">
           <div>
-            <h2>Build the measurement science behind trustworthy machining intelligence.</h2>
+            <h2>Turn promising software results into evidence people can trust.</h2>
             <p>
-              SAGE&apos;s research program connects simulation fidelity,
-              machine/tool/material transfer, uncertainty and abstention,
-              traceable surface texture, interoperable evidence, and human
-              review. A current public prospectus and NIST collaboration path
-              are summarized in the research hub.
+              The research program asks where simulation matches reality, where
+              a result transfers to another job, and when SAGE should decline to
+              recommend anything. The research hub summarizes the measurement
+              plan, proposed robot/workholding study, and NIST collaboration
+              path.
             </p>
             <div className="hero-actions">
               <a className="button button-primary" href="/research/">

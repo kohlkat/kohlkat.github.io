@@ -162,6 +162,9 @@ assert(
 assert(
   home.includes('href="/evidence/"') &&
     home.includes('href="/research/"') &&
+    home.includes("Software-Aware G-code Extension") &&
+    home.includes('aria-label="Navigation menu"') &&
+    home.includes('aria-label="Mobile navigation"') &&
     home.includes("What your team receives") &&
     home.includes("Five focused checks") &&
     home.includes("Make every difficult cut") &&
@@ -181,6 +184,9 @@ assert(
     home.includes("two-axis tilt-rotary positioner") &&
     home.includes("Force-aware relative pose for robotic machining") &&
     home.includes("Proposed · not current replay") &&
+    home.includes("Proposed study sequence") &&
+    home.includes("Hold the job constant") &&
+    home.includes("Explain or decline") &&
     home.includes("not a live ROS command path") &&
     home.includes("Shadow pilot · offline and non-actuating") &&
     home.includes("Prove the decision workflow before touching the machine") &&
@@ -198,7 +204,7 @@ assert(
     home.includes('src="/media/sage-simulation-replay-v4.mp4"') &&
     home.includes('kind="captions"') &&
     home.includes('src="/media/sage-simulation-replay-captions-v4.vtt"'),
-  "Homepage does not provide the product journey, aggregate NVIDIA simulation evidence, surface proxy, replay provenance, research path, or five-check overview.",
+  "Homepage does not provide the product journey, mobile navigation, acronym definition, aggregate simulation evidence, relative-pose plan, research path, or five-check overview.",
 );
 assert(
   evidence.includes("Five assurance kernels") &&
