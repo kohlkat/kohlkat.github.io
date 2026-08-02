@@ -143,11 +143,11 @@ preparation lives in `docs/CUSTOM_DOMAIN_CUTOVER.md`.
 
 ## Search, privacy, and crawler policy
 
-- Conventional search and social-preview crawlers are permitted.
-- Named AI-training and archive crawlers are denied in `app/robots.js`.
-- `public/.well-known/tdmrep.json` reserves site-wide text-and-data-mining
-  rights.
-- Global metadata requests indexing without cached copies.
+- All cooperative crawlers, including AI and archive agents, are permitted by
+  `app/robots.js`.
+- Global metadata requests indexing and following without cache/archive limits.
+- `app/llms.txt/route.js` provides an AI-readable public site index and keeps
+  the SIMULATED, modeled-not-measured, and non-actuating boundaries visible.
 - `app/sitemap.js` publishes the search sitemap.
 - Visible-content-matched JSON-LD describes the product and public datasets.
 - Google Analytics loads only after visitor consent when configured.

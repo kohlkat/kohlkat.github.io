@@ -33,10 +33,6 @@
           "value": "none"
         },
         {
-          "key": "X-Robots-Tag",
-          "value": "noarchive"
-        },
-        {
           "key": "X-XSS-Protection",
           "value": "0"
         }

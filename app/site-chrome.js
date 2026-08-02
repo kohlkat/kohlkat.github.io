@@ -96,7 +96,7 @@ export function SiteFooter() {
         <a href="/evidence/">Evidence</a>
         <a href="/simulation/">Simulation</a>
         <a href="/distributed/">Distributed</a>
-        <a href="/privacy/">Privacy &amp; crawler policy</a>
+        <a href="/privacy/">Privacy &amp; access</a>
         <a href="https://github.com/kohlkat">GitHub</a>
         <span>© 2026 SAGE Suite</span>
       </div>

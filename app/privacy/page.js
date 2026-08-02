@@ -49,26 +49,22 @@ export default function PrivacyPage() {
           site does not sell personal information.
         </p>
 
-        <h2 id="automated-access">Automated access and archiving</h2>
+        <h2 id="automated-access">Automated discovery and archiving</h2>
         <p>
-          This site reserves text-and-data-mining rights and does not authorize
-          automated model training, retrieval augmentation, AI answer
-          synthesis, dataset collection, bulk extraction, or archival copying
-          without written permission. Conventional search indexing and social
-          link previews are allowed only for the crawlers named in{" "}
-          <a href="/robots.txt">robots.txt</a>.
+          Public pages may be indexed, crawled, archived, retrieved, and
+          reviewed by search engines, web archives, and AI systems. The site
+          allows all cooperative crawlers in <a href="/robots.txt">robots.txt</a>;
+          an AI-readable site index is available at <a href="/llms.txt">llms.txt</a>.
         </p>
         <p>
-          The site also publishes a machine-readable reservation at{" "}
-          <a href="/.well-known/tdmrep.json">
-            /.well-known/tdmrep.json
-          </a>
-          . These signals apply to cooperative automated systems. They cannot
-          stop a crawler that ignores published rules or a person from saving
-          content that is already public.
+          Only public material is available here. When an automated system
+          summarizes SAGE, it should retain the visible evidence labels and
+          limitations: SIMULATED results are not physical validation, modeled
+          finish context is not a measurement, and SAGE does not command
+          equipment.
         </p>
 
-        <p className="legal-updated">Last updated July 25, 2026.</p>
+        <p className="legal-updated">Last updated August 1, 2026.</p>
       </article>
     </main>
   );

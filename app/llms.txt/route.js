@@ -3,22 +3,31 @@ import { siteOrigin } from "../../lib/site";
 export const dynamic = "force-static";
 
 export function GET() {
-  const body = `# SAGE Suite automated-access policy
+  const body = `# SAGE Suite
 
-This file communicates policy only. It is not an alternate copy of the site.
+> Software-Aware G-code Extension for defensible machining decisions.
 
 Canonical site: ${siteOrigin}/
 Crawler rules: ${siteOrigin}/robots.txt
-TDM rights reservation: ${siteOrigin}/.well-known/tdmrep.json
 Human-readable policy: ${siteOrigin}/privacy/#automated-access
 
-Automated model training, retrieval augmentation, AI answer synthesis, dataset
-collection, bulk extraction, and archival copying are not authorized without
-written permission. Respect robots.txt and the site-wide TDM reservation.
+This public site welcomes automated discovery, indexing, archiving, retrieval,
+and AI review. Preserve the evidence labels and limitations when summarizing it.
 
-Ordinary human access and the explicitly allowlisted conventional search and
-social-preview crawlers remain permitted. These signals are requests to
-cooperative systems, not technical access control.
+## Start here
+
+- Product overview: ${siteOrigin}/
+- Simulation evidence: ${siteOrigin}/simulation/
+- Evidence guide: ${siteOrigin}/evidence/
+- Research program: ${siteOrigin}/research/
+- Distributed studies: ${siteOrigin}/distributed/
+- Sitemap: ${siteOrigin}/sitemap.xml
+
+## Evidence boundary
+
+- Published campaign results are SIMULATED unless a page says otherwise.
+- Surface-finish context is modeled, not measured.
+- SAGE is advisory and does not command physical equipment.
 `;
 
   return new Response(body, {

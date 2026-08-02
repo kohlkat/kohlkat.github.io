@@ -16,7 +16,6 @@ const requiredFiles = [
   "distributed/index.html",
   "privacy/index.html",
   "404.html",
-  ".well-known/tdmrep.json",
   "icon.svg",
   "llms.txt",
   "manifest.webmanifest",
@@ -89,6 +88,10 @@ for (const relativePath of requiredFiles) {
     `Missing static export asset: ${relativePath}`,
   );
 }
+assert(
+  !fs.existsSync(path.join(outputDirectory, ".well-known/tdmrep.json")),
+  "The retired text-and-data-mining reservation remains in the static export.",
+);
 
 const home = read("index.html");
 const evidence = read("evidence/index.html");
@@ -98,7 +101,6 @@ const privacy = read("privacy/index.html");
 const robots = read("robots.txt");
 const sitemap = read("sitemap.xml");
 const llms = read("llms.txt");
-const tdmReservation = JSON.parse(read(".well-known/tdmrep.json"));
 const vercelConfiguration = JSON.parse(
   fs.readFileSync(path.resolve("vercel.json"), "utf8"),
 );
@@ -146,6 +148,10 @@ assert(
     vercelGlobalHeaders.get("Permissions-Policy")?.includes("camera=()") &&
     vercelGlobalHeaders.get("Permissions-Policy")?.includes("microphone=()"),
   "Vercel media, framing, autoplay, camera, or microphone policy is not fail-closed.",
+);
+assert(
+  !vercelGlobalHeaders.has("X-Robots-Tag"),
+  "Vercel headers must not restrict crawler archiving or discovery.",
 );
 assert(
   home.includes("application/ld+json") &&
@@ -280,88 +286,28 @@ assert(
   robots.includes(`Sitemap: ${siteOrigin}/sitemap.xml`),
   "robots.txt sitemap URL does not match the canonical origin.",
 );
-const robotsGroups = robots
-  .trim()
-  .split(/\r?\n\r?\n/)
-  .map((group) => group.split(/\r?\n/).map((line) => line.trim()));
-const robotsGroupFor = (userAgent) =>
-  robotsGroups.find((group) =>
-    group.includes(`User-Agent: ${userAgent}`),
-  );
-const policyAllows = [
-  "Allow: /robots.txt",
-  "Allow: /.well-known/tdmrep.json",
-  "Allow: /llms.txt",
-];
-
-for (const userAgent of [
-  "Googlebot",
-  "Google-InspectionTool",
-  "Bingbot",
-  "DuckDuckBot",
-  "facebookexternalhit",
-  "Twitterbot",
-  "LinkedInBot",
-]) {
-  const group = robotsGroupFor(userAgent);
-  assert(
-    group?.includes("Allow: /") && !group.includes("Disallow: /"),
-    `Conventional crawler is not explicitly allowed: ${userAgent}.`,
-  );
-}
-
-for (const userAgent of [
-  "GPTBot",
-  "OAI-SearchBot",
-  "ChatGPT-User",
-  "ClaudeBot",
-  "Claude-SearchBot",
-  "Claude-User",
-  "Google-Extended",
-  "Applebot-Extended",
-  "PerplexityBot",
-  "CCBot",
-  "Meta-ExternalAgent",
-  "Bytespider",
-  "ia_archiver",
-  "archive.org_bot",
-  "ArchiveBot",
-  "Heritrix",
-]) {
-  const group = robotsGroupFor(userAgent);
-  assert(
-    group?.includes("Disallow: /") &&
-      policyAllows.every((directive) => group.includes(directive)),
-    `AI/archive crawler is not explicitly denied: ${userAgent}.`,
-  );
-}
-
-const wildcardGroup = robotsGroupFor("*");
 assert(
-  wildcardGroup?.includes("Disallow: /") &&
-    policyAllows.every((directive) => wildcardGroup.includes(directive)),
-  "robots.txt must deny unknown cooperative crawlers while exposing policy files.",
-);
-assert(
-  Array.isArray(tdmReservation) &&
-    tdmReservation.length === 1 &&
-    tdmReservation[0]?.location === "/" &&
-    tdmReservation[0]?.["tdm-reservation"] === 1 &&
-    Object.keys(tdmReservation[0]).length === 2,
-  "The site-wide TDM rights reservation is missing or malformed.",
+  robots.includes("User-Agent: *") &&
+    robots.includes("Allow: /") &&
+    !robots.includes("Disallow:") &&
+    !robots.includes("tdmrep"),
+  "robots.txt must allow cooperative search, archive, and AI crawlers site-wide.",
 );
 for (const page of [home, evidence, research, simulation, privacy]) {
   assert(
-    page.includes("index, follow, noarchive, nocache"),
-    "A public page is missing the no-cache/no-archive indexing directive.",
+    page.includes("index, follow") &&
+      !page.includes("noarchive") &&
+      !page.includes("nocache"),
+    "A public page still limits crawler archiving or cacheability.",
   );
 }
 assert(
   privacy.includes('id="automated-access"') &&
-    privacy.includes("reserves text-and-data-mining rights") &&
-    privacy.includes("/.well-known/tdmrep.json") &&
-    privacy.includes("cannot stop a crawler that ignores published rules"),
-  "The visible automated-access policy is missing or overstates enforcement.",
+    privacy.includes("may be indexed, crawled, archived, retrieved, and") &&
+    privacy.includes("reviewed by search engines, web archives, and AI systems") &&
+    !privacy.includes("text-and-data-mining rights") &&
+    !privacy.includes("tdmrep"),
+  "The visible automated-access policy does not clearly permit discovery.",
 );
 assert(
   sitemap.includes(`<loc>${siteOrigin}/</loc>`) &&
@@ -377,13 +323,13 @@ assert(
 );
 assert(
   llms.includes(`${siteOrigin}/robots.txt`) &&
-    llms.includes(`${siteOrigin}/.well-known/tdmrep.json`) &&
     llms.includes(`${siteOrigin}/privacy/#automated-access`) &&
-    llms.includes("not authorized without") &&
-    llms.includes("not an alternate copy of the site") &&
-    !llms.includes("Five assurance kernels") &&
-    !llms.includes("120 one-second SIMULATED"),
-  "llms.txt must remain a minimal automated-access policy rather than a site mirror.",
+    llms.includes("welcomes automated discovery, indexing, archiving, retrieval") &&
+    llms.includes(`${siteOrigin}/research/`) &&
+    llms.includes("SIMULATED") &&
+    !llms.includes("not authorized without") &&
+    !llms.includes("TDM rights reservation"),
+  "llms.txt must provide an open, evidence-bounded AI-readable site index.",
 );
 assert(
   !home.includes("\uFFFD") &&
@@ -898,7 +844,6 @@ const publicText = [
   robots,
   sitemap,
   llms,
-  JSON.stringify(tdmReservation),
   simulationJsonText,
   simulationCsvText,
   nvidiaResultsText,
