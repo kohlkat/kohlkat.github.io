@@ -2,15 +2,9 @@ import {
   publicFusionDocumentDownload,
   publicFusionSummary,
   publicSimulationCells,
-  publicSimulationDocumentDownload,
-  publicSimulationObjectiveDescription,
-  publicSimulationRuntimeDescription,
   publicSimulationSummary,
-  publicSurfaceDescription,
-  publicSurfaceDocumentDownload,
   publicSurfaceSummary,
 } from "../lib/public-results";
-import { ArrowIcon } from "./site-chrome";
 import styles from "./simulation-preview.module.css";
 
 const shapes = [
@@ -60,6 +54,54 @@ const campaignSteps = [
 function findCell(shape, material) {
   return publicSimulationCells.find(
     (cell) => cell.shape === shape && cell.material === material,
+  );
+}
+
+export function ReplayHero() {
+  return (
+    <figure className={styles.videoCard}>
+      <span className={styles.videoBadge}>SIMULATED / NVIDIA Isaac Sim</span>
+      <video
+        autoPlay
+        controls
+        loop
+        muted
+        playsInline
+        poster="/media/sage-simulation-replay-poster-v4.jpg"
+        preload="metadata"
+        aria-label="SIMULATED CNC and robot teaching replay"
+        aria-describedby="simulation-replay-caption"
+      >
+        <source
+          src="/media/sage-simulation-replay-v4.mp4"
+          type="video/mp4"
+        />
+        <track
+          default
+          kind="captions"
+          src="/media/sage-simulation-replay-captions-v4.vtt"
+          srcLang="en"
+          label="English"
+        />
+        Your browser cannot play the simulation replay.{" "}
+        <a href="/media/sage-simulation-replay-v4.mp4">
+          Open the MP4 directly.
+        </a>
+      </video>
+      <figcaption id="simulation-replay-caption">
+        <strong>CNC + robot teaching showcase (SIMULATED)</strong>
+        <span>
+          Public SIMULATED Isaac Sim capture using generic teaching geometry. A
+          virtual CNC path and virtual robot path show tool-stock cutting
+          contact: the simulated tool touching simulated material. The cut is
+          revealed over time. No physical footage or machine control;
+          independent physical gate closed.{" "}
+          <a href="/media/sage-isaac-capture-manifest-v4.json" download>
+            Inspect the capture manifest.
+          </a>
+        </span>
+      </figcaption>
+    </figure>
   );
 }
 
@@ -250,87 +292,6 @@ export default function SimulationPreview() {
             </article>
           ))}
         </div>
-      </div>
-
-      <div className={styles.showcaseGrid}>
-        <figure className={styles.videoCard}>
-          <video
-            autoPlay
-            controls
-            loop
-            muted
-            playsInline
-            poster="/media/sage-simulation-replay-poster-v4.jpg"
-            preload="metadata"
-            aria-describedby="simulation-replay-caption"
-          >
-            <source
-              src="/media/sage-simulation-replay-v4.mp4"
-              type="video/mp4"
-            />
-            <track
-              default
-              kind="captions"
-              src="/media/sage-simulation-replay-captions-v4.vtt"
-              srcLang="en"
-              label="English"
-            />
-            Your browser cannot play the simulation replay.{" "}
-            <a href="/media/sage-simulation-replay-v4.mp4">
-              Open the MP4 directly.
-            </a>
-          </video>
-          <figcaption id="simulation-replay-caption">
-            <strong>CNC + robot teaching showcase (SIMULATED)</strong>
-            <span>
-              Public-safe showcase with tool–stock cutting contact, progressive
-              cut reveal, and metal lighting. Non-actuating; independent physical
-              gate closed. Public SIMULATED Isaac Sim capture; current-source
-              recapture remains available for visual review.{" "}
-              <a
-                href="/media/sage-isaac-capture-manifest-v4.json"
-                download
-              >
-                Inspect the capture manifest.
-              </a>
-            </span>
-          </figcaption>
-        </figure>
-
-        <aside className={styles.explainer}>
-          <span className={styles.explainerLabel}>How to read the result</span>
-          <h3>Modeled progress with the evidence attached.</h3>
-          <p>{publicSimulationObjectiveDescription}</p>
-          <p>{publicSimulationRuntimeDescription}</p>
-          <div className={styles.decision}>
-            <span>Surface-integrity layer</span>
-            <strong>
-              {publicSurfaceSummary.lowerMedianUm.toFixed(2)}–
-              {publicSurfaceSummary.upperMedianUm.toFixed(2)} µm median interval
-            </strong>
-            <p>{publicSurfaceDescription}</p>
-          </div>
-          <div className={styles.actions}>
-            <a className="button button-primary" href="/evidence/">
-              Read the evidence guide
-              <ArrowIcon />
-            </a>
-            <a
-              className="button button-secondary"
-              href={publicSimulationDocumentDownload}
-              download
-            >
-              Download campaign JSON
-            </a>
-            <a
-              className="button button-secondary"
-              href={publicSurfaceDocumentDownload}
-              download
-            >
-              Download surface JSON
-            </a>
-          </div>
-        </aside>
       </div>
 
       <p className={styles.methodNote}>

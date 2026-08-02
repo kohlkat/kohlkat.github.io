@@ -195,7 +195,8 @@ assert(
     home.includes("659") &&
     home.includes("NVIDIA Isaac Sim") &&
     home.includes("CNC + robot teaching showcase (SIMULATED)") &&
-    home.includes("tool–stock cutting contact") &&
+    home.includes("SIMULATED / NVIDIA Isaac Sim") &&
+    home.includes("tool-stock cutting contact") &&
     home.includes("Public SIMULATED Isaac Sim capture") &&
     home.includes("force-aware relative pose") &&
     home.includes("seventh-axis linear rail") &&
@@ -219,10 +220,16 @@ assert(
     home.includes(
       'href="/media/sage-isaac-capture-manifest-v4.json"',
     ) &&
+    home.includes('aria-label="SIMULATED CNC and robot teaching replay"') &&
     home.includes('src="/media/sage-simulation-replay-v4.mp4"') &&
     home.includes('kind="captions"') &&
     home.includes('src="/media/sage-simulation-replay-captions-v4.vtt"'),
   "Homepage does not provide the product journey, mobile navigation, acronym definition, aggregate simulation evidence, relative-pose plan, research path, or five-check overview.",
+);
+assert(
+  home.indexOf('src="/media/sage-simulation-replay-v4.mp4"') <
+    home.indexOf("What your team receives"),
+  "Homepage simulation replay must remain in the above-fold hero before product detail.",
 );
 assert(
   evidence.includes("Five assurance kernels") &&

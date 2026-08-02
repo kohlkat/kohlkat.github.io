@@ -9,7 +9,7 @@ import {
 } from "../lib/public-results";
 import PilotReadiness from "./pilot-readiness";
 import RelativePoseStudy from "./relative-pose-study";
-import SimulationPreview from "./simulation-preview";
+import SimulationPreview, { ReplayHero } from "./simulation-preview";
 import { ArrowIcon, SiteFooter, SiteHeader } from "./site-chrome";
 
 const deliverables = [
@@ -204,56 +204,6 @@ const structuredDataJson = JSON.stringify(structuredData).replace(
   "\\u003c",
 );
 
-function DecisionPacket() {
-  return (
-    <div
-      className="decision-packet"
-      role="group"
-      aria-label="Illustrative SAGE engineering decision packet"
-    >
-      <div className="decision-packet-grid" aria-hidden="true" />
-      <div className="decision-packet-header">
-        <span>SAGE engineering decision packet</span>
-        <span className="decision-packet-status">
-          <i />
-          Review ready
-        </span>
-      </div>
-      <div className="decision-packet-title">
-        <small>Representative planning question</small>
-        <h2>Which candidate plan deserves engineering review?</h2>
-        <p>
-          SAGE keeps the recommendation, alternatives, evidence, and limits in
-          one accountable object.
-        </p>
-      </div>
-      <div className="decision-packet-options">
-        <div>
-          <span>Candidate A</span>
-          <strong>Baseline</strong>
-          <small>Known reference</small>
-        </div>
-        <div className="decision-packet-selected">
-          <span>Candidate B</span>
-          <strong>Recommended for review</strong>
-          <small>Modeled tradeoffs attached</small>
-        </div>
-        <div>
-          <span>Candidate C</span>
-          <strong>Withheld</strong>
-          <small>Evidence boundary reached</small>
-        </div>
-      </div>
-      <div className="decision-packet-footer">
-        <span>Inputs bound</span>
-        <span>Evidence attached</span>
-        <span>Independent check</span>
-        <span>Human decision</span>
-      </div>
-    </div>
-  );
-}
-
 export default function Home() {
   return (
     <main>
@@ -298,7 +248,7 @@ export default function Home() {
           </div>
         </div>
         <div className="hero-visual">
-          <DecisionPacket />
+          <ReplayHero />
         </div>
       </section>
 
