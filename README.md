@@ -66,16 +66,16 @@ demonstrates within-simulator shadow optimization and evidence capture; it is
 not held-out policy generalization, physical cutting, measured cycle time, part
 quality, or safety proof.
 
-The homepage also embeds `public/media/sage-simulation-replay-v4.mp4`, a silent
-36-second SIMULATED public Isaac Sim capture with tool-stock cutting contact. It alternates three CNC
+The homepage also embeds `public/media/sage-simulation-replay-v5.mp4`, a silent
+120-second SIMULATED public Isaac Sim capture with tool-stock cutting contact. It alternates three CNC
 surrogate-training scenes with three NVIDIA UR10e robot shadow-optimization
 scenes over the disclosed circle, rounded-rectangle, and slot classes.
 
-`public/media/sage-isaac-capture-manifest-v4.json` records the six jobs and 864 showcase frames. The capture is newly generated and public-safe; it is not a
+`public/media/sage-isaac-capture-manifest-v5.json` records the six jobs and 2,880 showcase frames. The capture is newly generated and public-safe; it is not a
 private campaign USD, customer program, physical cutting, measured machine
 footage, or a hardware command stream.
 
-The v3 robot scenes use a fixed-base UR10e. A separate public engineering
+The current robot scenes use a fixed-base UR10e. A separate public engineering
 schematic introduces a proposed force-aware relative-pose study comparing the
 same synthetic job across a fixed-base cell, a robot on a seventh-axis linear
 rail, and a part on a two-axis tilt-rotary positioner. That comparison is not in

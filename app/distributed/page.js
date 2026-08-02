@@ -1,4 +1,4 @@
-import distributedDoc from "../../public/data/sage-public-distributed-learning-v2.json";
+import distributedDoc from "../../public/data/sage-public-distributed-learning-v3.json";
 import {
   publicFusionSummary,
   publicFusionDocumentDownload,
@@ -51,15 +51,16 @@ export default function DistributedPage() {
             <span>Randomized stock.</span>
           </h1>
           <p>
-            A public teaching view of parallel unsupervised-style simulation:
-            dozens of seed-bound stock cells learning side by side — same metal
-            ACES materials as the CNC/robot showcase, without claiming a
-            physical robot army or open actuation.
+            This six-second SIMULATED NVIDIA Isaac Sim view shows 40 independent
+            software workers exploring public randomized stock—the virtual
+            starting block of material—in parallel. Each worker is one virtual
+            cell, not a physical robot. The replay is non-actuating and sent no
+            physical-machine commands.
           </p>
           <div className={styles.heroActions}>
             <a
               className="button button-primary"
-              href="/data/sage-public-distributed-learning-v2.json"
+              href="/data/sage-public-distributed-learning-v3.json"
               download
             >
               Download distributed JSON
@@ -97,28 +98,30 @@ export default function DistributedPage() {
         <div className="section-kicker">Teaching grid</div>
         <h2>Multi-worker randomized stock</h2>
         <p>
-          {distributedDoc.exhibit.visual_workers} cells with staggered progress.
-          Each cell uses a deterministic public stock seed and shape class
-          (circle, rounded rectangle, slot). WebGL metal showcase — not private
-          campaign Isaac footage.
+          {distributedDoc.exhibit.visual_workers} virtual cells progress at
+          different times using deterministic public stock seeds and circle,
+          rounded-rectangle, or slot teaching shapes. This is a public-safe
+          NVIDIA Isaac Sim capture, not private campaign footage and not
+          measured cutting.
         </p>
         <div style={{ marginTop: 28, borderRadius: 16, overflow: "hidden" }}>
           <video
             controls
             playsInline
             preload="metadata"
-            poster="/media/sage-distributed-learning-poster-v2.jpg"
+            poster="/media/sage-distributed-learning-poster-v3.jpg"
             width={1280}
             height={720}
             style={{ width: "100%", height: "auto", display: "block" }}
+            aria-label="SIMULATED distributed NVIDIA Isaac Sim teaching grid"
           >
             <source
-              src="/media/sage-distributed-learning-v2.mp4"
+              src="/media/sage-distributed-learning-v3.mp4"
               type="video/mp4"
             />
             <track
               kind="captions"
-              src="/media/sage-distributed-learning-captions-v2.vtt"
+              src="/media/sage-distributed-learning-captions-v3.vtt"
               srcLang="en"
               label="English"
               default
@@ -126,7 +129,7 @@ export default function DistributedPage() {
           </video>
         </div>
         <p className={styles.heroBoundary} style={{ marginTop: 12 }}>
-          SIMULATED distributed teaching grid · not 1000 physical robots · not
+          SIMULATED distributed teaching grid · not 40 physical robots · not
           measured material removal
         </p>
         <p className={styles.heroBoundary} style={{ marginTop: 8 }}>
@@ -178,7 +181,7 @@ export default function DistributedPage() {
           </a>
           <a
             className="button button-secondary"
-            href="/media/sage-distributed-learning-manifest-v2.json"
+            href="/media/sage-distributed-learning-manifest-v3.json"
           >
             Media manifest
           </a>

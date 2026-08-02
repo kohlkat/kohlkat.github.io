@@ -1,0 +1,144 @@
+{
+  "actuation_authority": false,
+  "base_seed": 274600,
+  "capture_mode": "non_headless",
+  "created_unix": 1785699927.801911,
+  "evidence_class": "SIMULATED",
+  "independent_physical_gate": "closed",
+  "isaac_sim_version": "6.0.1",
+  "jobs": [
+    {
+      "camera_profile": "low_rail_dolly_to_close_overview",
+      "cutting_contact": false,
+      "cutting_contact_evidence": {
+        "evidence_class": "SIMULATED",
+        "measured_physical_contact": false,
+        "method": "modeled_not_measured_multi_cell_teaching_visualization"
+      },
+      "duration_seconds": 6.0,
+      "embodiment": "distributed",
+      "first_frame": "frames/distributed_40_cells_seed274600/rgb_0000.png",
+      "fps": 24,
+      "frame_count": 144,
+      "frames": 144,
+      "job_id": "distributed_40_cells_seed274600",
+      "last_frame": "frames/distributed_40_cells_seed274600/rgb_0143.png",
+      "layout": [
+        8,
+        5
+      ],
+      "render_seconds": 9.970402559265494,
+      "robot_asset": null,
+      "robot_end_effector": null,
+      "robot_tool_parent": null,
+      "robot_tool_prim": null,
+      "seed": 274600,
+      "shape": "fleet",
+      "training_distribution_match": false,
+      "worker_count": 40,
+      "worker_seeds": [
+        274600,
+        274617,
+        274634,
+        274651,
+        274668,
+        274685,
+        274702,
+        274719,
+        274736,
+        274753,
+        274770,
+        274787,
+        274804,
+        274821,
+        274838,
+        274855,
+        274872,
+        274889,
+        274906,
+        274923,
+        274940,
+        274957,
+        274974,
+        274991,
+        275008,
+        275025,
+        275042,
+        275059,
+        275076,
+        275093,
+        275110,
+        275127,
+        275144,
+        275161,
+        275178,
+        275195,
+        275212,
+        275229,
+        275246,
+        275263
+      ]
+    }
+  ],
+  "measured": false,
+  "observed_physical_machine": false,
+  "physical_machine_recording": false,
+  "private_campaign_capture": false,
+  "public_boundary": {
+    "distributed_worker_count": 40,
+    "embodiments": [
+      "distributed"
+    ],
+    "excludes": [
+      "campaign_usd",
+      "customer_geometry",
+      "controller_path",
+      "model_weights",
+      "private_program_sidecar",
+      "physical_footage"
+    ],
+    "shape_classes": [
+      "circle",
+      "rounded_rectangle",
+      "slot"
+    ]
+  },
+  "public_safe_teaching_geometry": true,
+  "renderer": "RayTracedLighting",
+  "resolution": [
+    1280,
+    720
+  ],
+  "scene_randomization": {
+    "mode": "seeded_bounded_public_teaching_variation",
+    "per_job_seeded": true,
+    "training_distribution_match": false,
+    "varied": [
+      "stock_dimensions",
+      "path_scale",
+      "path_offset",
+      "target_depth",
+      "fixture_dimensions",
+      "visual_stock_finish"
+    ]
+  },
+  "schema_version": "sage-public-isaac-capture/v1",
+  "shop_panorama": {
+    "credit": "NOIRLab/NSF/AURA/T. Slovinsk\u00fd",
+    "file": "noirlab-machine-shop-360-4096.jpg",
+    "license": "CC BY 4.0",
+    "metric_scale_source": "authored_USD_geometry_at_one_meter_per_unit",
+    "modification": "resized to 4096x2048; used as environment backdrop only",
+    "sha256": "81567867610c186e79157077c2e758cca109d3c5048882ebfc6e227f017bc76f",
+    "source": "https://commons.wikimedia.org/wiki/File:360-degree_Panorama_of_Machine_Shop_at_NOIRLab_(360Pano_Machine_room_2-CC).jpg"
+  },
+  "showcase": "distributed",
+  "simulated": true,
+  "source_ref": "91bd01b802092356868d22c14839eb5f8c9bad69",
+  "source_script": "isaacsim_capture_public_replay.py",
+  "source_script_sha256": "ca25460496fbb9d6eabdcb0d49d2289443e7b0f5619e81a75c803f040033edc5",
+  "stitch_order": [
+    "distributed_40_cells_seed274600"
+  ],
+  "total_duration_seconds": 6.0
+}

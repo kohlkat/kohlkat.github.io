@@ -1,0 +1,54 @@
+{
+  "schema_version": "sage-public-distributed-learning/v3",
+  "evidence_class": "SIMULATED",
+  "authority": "shadow_only_non_actuating",
+  "physical_machine_validation": false,
+  "render_kind": "nvidia_isaac_sim_6_0_1_rtx_public_teaching_capture",
+  "camera_path": "low_rail_dolly_to_close_overview",
+  "duration_seconds": 6,
+  "workers_visualized": 40,
+  "plain_language": "The camera moves beside and above 40 independent virtual work cells. Each cell is software, not a physical robot.",
+  "runtime": {
+    "renderer": "RayTracedLighting",
+    "gpu_class": "RTX_5090",
+    "rendered_frames": 144,
+    "frame_size": [1280, 720],
+    "frames_per_second": 24
+  },
+  "background": {
+    "kind": "equirectangular_machine_shop_panorama",
+    "credit": "NOIRLab/NSF/AURA/T. Slovinský",
+    "license": "CC BY 4.0",
+    "source_url": "https://commons.wikimedia.org/wiki/File:360-degree_Panorama_of_Machine_Shop_at_NOIRLab_(360Pano_Machine_room_2-CC).jpg",
+    "sha256": "81567867610c186e79157077c2e758cca109d3c5048882ebfc6e227f017bc76f",
+    "role": "environment backdrop only; metric scale comes from authored USD geometry"
+  },
+  "source": {
+    "source_ref": "91bd01b802092356868d22c14839eb5f8c9bad69",
+    "independent_physical_gate": "closed",
+    "actuation_authority": false,
+    "measured": false
+  },
+  "files": {
+    "video": {
+      "path": "sage-distributed-learning-v3.mp4",
+      "bytes": 4248566,
+      "sha256": "d47e04587dd4252dc20ced3f78a2431d12b164624e4bcbdff9af07e8e33e8ca0"
+    },
+    "poster": {
+      "path": "sage-distributed-learning-poster-v3.jpg",
+      "bytes": 150189,
+      "sha256": "84a05fd60dd436d598535872d0ea9a775738a89768beaf9fe147c8ebf3c51396"
+    },
+    "captions": {
+      "path": "sage-distributed-learning-captions-v3.vtt",
+      "bytes": 161,
+      "sha256": "2ac169080783f7d8e55531c2e4cb722306f9d939a1fdaee4ec12aaf104b7361a"
+    },
+    "capture_manifest": {
+      "path": "sage-isaac-distributed-capture-manifest-v3.json",
+      "bytes": 3781,
+      "sha256": "1004acb9c305a7926637f0cb485accdc02e706686f9a49ecd94768f54db4e76e"
+    }
+  }
+}
