@@ -851,7 +851,7 @@ assert(
     fusionResultsDocument.digital_twin_capability?.status ===
       "implemented_software" &&
     sha256(fusionResultsText) ===
-      "49abb1cf65239082d9fc18ffc874b819e6cfcfb07dbb93b78fac7d6215764c7a",
+      "60c4ee7f4fd7d94b7a28fab1ca02962a90d7ad404da61acc2673cf1ad86c9e10",
   "Public fusion world-sim aggregate schema, labels, or reviewed counts are invalid.",
 );
 
