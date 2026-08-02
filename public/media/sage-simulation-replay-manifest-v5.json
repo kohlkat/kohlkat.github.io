@@ -1,0 +1,83 @@
+{
+  "schema_version": "sage-public-isaac-replay/v5",
+  "evidence_class": "SIMULATED",
+  "authority": "shadow_only_non_actuating",
+  "render_kind": "nvidia_isaac_sim_6_0_1_rtx_public_teaching_capture",
+  "duration_seconds": 120,
+  "frame_size": {
+    "width": 1280,
+    "height": 720
+  },
+  "runtime": {
+    "name": "NVIDIA Isaac Sim public capture",
+    "version": "6.0.1",
+    "renderer": "RayTracedLighting",
+    "capture_mode": "non_headless_xorg",
+    "gpu_class": "RTX_5090",
+    "rendered_frames": 2880,
+    "simulated_robot_contact_gate_passed": true,
+    "cnc_stock_and_cutter_visible": true,
+    "shop_floor_backdrop": true
+  },
+  "plain_language": "Six virtual jobs show three CNC paths and three six-axis robot paths cutting generic teaching shapes. This is software simulation, not physical footage or permission to control a machine.",
+  "campaign_relationship": {
+    "public_safe_runtime_capture": true,
+    "raw_private_campaign_capture": false,
+    "raw_private_campaign_geometry": false,
+    "customer_geometry": false,
+    "physical_machine_recording": false,
+    "measured_machine_result": false
+  },
+  "embodiments": [
+    {
+      "id": "cnc",
+      "deterministic_seeds": [274500, 274501, 274502],
+      "shape_classes": ["circle", "rounded_rectangle", "slot"],
+      "frames_each": 480
+    },
+    {
+      "id": "robot",
+      "deterministic_seeds": [274503, 274504, 274505],
+      "robot_visual": "NVIDIA UR10e asset with attached teaching spindle",
+      "shape_classes": ["circle", "rounded_rectangle", "slot"],
+      "frames_each": 480
+    }
+  ],
+  "background": {
+    "kind": "equirectangular_machine_shop_panorama",
+    "credit": "NOIRLab/NSF/AURA/T. Slovinský",
+    "license": "CC BY 4.0",
+    "source_url": "https://commons.wikimedia.org/wiki/File:360-degree_Panorama_of_Machine_Shop_at_NOIRLab_(360Pano_Machine_room_2-CC).jpg",
+    "sha256": "81567867610c186e79157077c2e758cca109d3c5048882ebfc6e227f017bc76f",
+    "role": "environment backdrop only; metric scale comes from authored USD geometry"
+  },
+  "source": {
+    "source_script": "isaacsim_capture_public_replay.py",
+    "source_ref": "91bd01b802092356868d22c14839eb5f8c9bad69",
+    "independent_physical_gate": "closed",
+    "actuation_authority": false,
+    "measured": false
+  },
+  "files": {
+    "video": {
+      "path": "sage-simulation-replay-v5.mp4",
+      "bytes": 13676049,
+      "sha256": "ad17b9a8e649cdc82fb2db0f6cb1491b37a32d0aa4e9ee8efa89b24f134f9918"
+    },
+    "poster": {
+      "path": "sage-simulation-replay-poster-v5.jpg",
+      "bytes": 109011,
+      "sha256": "75b3ce478c57d61b5fcb8dbe973d1021f56e3be446106bb95b69d3bd991a8ad7"
+    },
+    "captions": {
+      "path": "sage-simulation-replay-captions-v5.vtt",
+      "bytes": 716,
+      "sha256": "e7d0156c73be807436eb7f3587a7ee0ebd6d49fd4be319caef3a95ab93e071da"
+    },
+    "capture_manifest": {
+      "path": "sage-isaac-capture-manifest-v5.json",
+      "bytes": 11346,
+      "sha256": "65f5b9d8e927063060e1e5a436c90b542307f743e5acb8962d9fc44062c1c965"
+    }
+  }
+}

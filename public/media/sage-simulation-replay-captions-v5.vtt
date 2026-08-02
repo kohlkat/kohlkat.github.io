@@ -1,0 +1,19 @@
+WEBVTT
+
+00:00.000 --> 00:20.000
+Virtual CNC path: circle on generic teaching stock. SIMULATED in NVIDIA Isaac Sim; no machine control.
+
+00:20.000 --> 00:40.000
+Virtual CNC path: rounded rectangle. The dark line shows modeled cutting progress, not measured material removal.
+
+00:40.000 --> 01:00.000
+Virtual CNC path: slot. Independent physical safety gate closed.
+
+01:00.000 --> 01:20.000
+Virtual six-axis robot path: circle. Simulated tool contact stays checked against the virtual stock surface.
+
+01:20.000 --> 01:40.000
+Virtual six-axis robot path: rounded rectangle on public teaching geometry.
+
+01:40.000 --> 02:00.000
+Virtual six-axis robot path: slot. SIMULATED, non-actuating, and not physical shop footage.

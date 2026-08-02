@@ -1,0 +1,53 @@
+{
+  "schema": "sage-public-distributed-learning/v3",
+  "title": "SAGE distributed virtual work-cell exhibit",
+  "evidence_class": "SIMULATED",
+  "measurement_status": "modeled_not_measured",
+  "authority": "shadow_only_non_actuating",
+  "observed_count": 0,
+  "physical_cutting": false,
+  "physical_machine_validation": false,
+  "exhibit": {
+    "visual_workers": 40,
+    "visual_layout": "8 by 5 virtual teaching grid",
+    "render_kind": "NVIDIA Isaac Sim 6.0.1 RTX capture",
+    "camera_path": "close floor-level rail move rising to an overview",
+    "purpose": "Show many independent software workers exploring generic stock shapes at the same time. A worker is a virtual work cell, not a physical robot.",
+    "background": {
+      "kind": "equirectangular machine-shop panorama",
+      "credit": "NOIRLab/NSF/AURA/T. Slovinský",
+      "license": "CC BY 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:360-degree_Panorama_of_Machine_Shop_at_NOIRLab_(360Pano_Machine_room_2-CC).jpg"
+    }
+  },
+  "campaign_aggregates_referenced": {
+    "nvidia_shadow_robot_programs": 2542,
+    "nvidia_verified_shard_archives": 659,
+    "fusion_worldsim_worker_runs": 53,
+    "fusion_stress_episodes": 497834
+  },
+  "what_is_shown": [
+    "Forty independent virtual cells with seed-bound stock dimensions and public shape classes",
+    "Staggered progress so the grid reads as concurrent software exploration",
+    "A six-second NVIDIA Isaac Sim render with a credited CC BY 4.0 machine-shop backdrop"
+  ],
+  "what_is_not_shown": [
+    "Private model weights, training recipes, or raw episode corpora",
+    "Customer geometry or controller paths",
+    "Physical multi-robot shop footage",
+    "Guaranteed transfer of simulated results to a specific machine"
+  ],
+  "related_public_evidence": [
+    "sage-public-fusion-worldsim-v1.json",
+    "sage-public-nvidia-simulation-v1.json",
+    "sage-public-nvidia-surface-integrity-v1.json",
+    "sage-distributed-learning-manifest-v3.json",
+    "sage-isaac-distributed-capture-manifest-v3.json"
+  ],
+  "nonclaims": [
+    "Not physical machine validation",
+    "Not 40 physical robots",
+    "Not permission to actuate equipment",
+    "Not measured material removal"
+  ]
+}

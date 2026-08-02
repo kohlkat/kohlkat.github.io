@@ -67,38 +67,48 @@ export function ReplayHero() {
         loop
         muted
         playsInline
-        poster="/media/sage-simulation-replay-poster-v4.jpg"
+        poster="/media/sage-simulation-replay-poster-v5.jpg"
         preload="metadata"
         aria-label="SIMULATED CNC and robot teaching replay"
         aria-describedby="simulation-replay-caption"
       >
         <source
-          src="/media/sage-simulation-replay-v4.mp4"
+          src="/media/sage-simulation-replay-v5.mp4"
           type="video/mp4"
         />
         <track
           default
           kind="captions"
-          src="/media/sage-simulation-replay-captions-v4.vtt"
+          src="/media/sage-simulation-replay-captions-v5.vtt"
           srcLang="en"
           label="English"
         />
         Your browser cannot play the simulation replay.{" "}
-        <a href="/media/sage-simulation-replay-v4.mp4">
+        <a href="/media/sage-simulation-replay-v5.mp4">
           Open the MP4 directly.
         </a>
       </video>
       <figcaption id="simulation-replay-caption">
         <strong>CNC + robot teaching showcase (SIMULATED)</strong>
         <span>
-          Public SIMULATED Isaac Sim capture using generic teaching geometry. A
-          virtual CNC path and virtual robot path show tool-stock cutting
-          contact: the simulated tool touching simulated material. The cut is
-          revealed over time. No physical footage or machine control;
-          independent physical gate closed.{" "}
-          <a href="/media/sage-isaac-capture-manifest-v4.json" download>
+          Public-safe 120-second NVIDIA Isaac Sim replay: three virtual CNC
+          paths and three virtual robot paths cut generic circle,
+          rounded-rectangle, and slot teaching shapes. Simulated contact means
+          the virtual tool remains at the virtual stock surface. No physical
+          footage or machine control; independent physical gate closed.{" "}
+          <a href="/media/sage-isaac-capture-manifest-v5.json" download>
             Inspect the capture manifest.
           </a>
+          <br />
+          Shop-floor backdrop: {" "}
+          <a href="https://commons.wikimedia.org/wiki/File:360-degree_Panorama_of_Machine_Shop_at_NOIRLab_(360Pano_Machine_room_2-CC).jpg">
+            NOIRLab/NSF/AURA/T. Slovinský
+          </a>{" "}
+          · {" "}
+          <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">
+            CC BY 4.0
+          </a>
+          .
         </span>
       </figcaption>
     </figure>
