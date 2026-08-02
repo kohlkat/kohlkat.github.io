@@ -1,35 +1,249 @@
 {
-  "schema_version": "sage-public-isaac-capture/v1",
+  "actuation_authority": false,
+  "base_seed": 274500,
+  "capture_mode": "non_headless",
+  "created_unix": 1785592767.1171477,
   "evidence_class": "SIMULATED",
-  "simulated": true,
+  "independent_physical_gate": "closed",
+  "isaac_sim_version": "6.0.1",
+  "jobs": [
+    {
+      "duration_seconds": 6.0,
+      "embodiment": "cnc",
+      "first_frame": "frames/cnc_circle_seed274500/rgb_0000.png",
+      "fps": 24,
+      "frame_count": 144,
+      "frames": 144,
+      "job_id": "cnc_circle_seed274500",
+      "last_frame": "frames/cnc_circle_seed274500/rgb_0143.png",
+      "render_seconds": 8.541377112000191,
+      "robot_asset": null,
+      "robot_end_effector": null,
+      "robot_tool_parent": null,
+      "robot_tool_prim": null,
+      "scene_variant": {
+        "fixture_jaw_depth_m": 0.043611,
+        "fixture_jaw_height_m": 0.033671,
+        "fixture_jaw_overhang_m": 0.046441,
+        "path_half_extents_m": [
+          0.071555,
+          0.071555
+        ],
+        "path_offset_m": [
+          0.001875,
+          0.012939
+        ],
+        "stock_size_m": [
+          0.300329,
+          0.238633,
+          0.046765
+        ],
+        "stock_visual": "warm_machined",
+        "target_depth_m": 0.004285
+      },
+      "seed": 274500,
+      "shape": "circle",
+      "cutting_contact": true
+    },
+    {
+      "duration_seconds": 6.0,
+      "embodiment": "cnc",
+      "first_frame": "frames/cnc_rounded_rectangle_seed274501/rgb_0000.png",
+      "fps": 24,
+      "frame_count": 144,
+      "frames": 144,
+      "job_id": "cnc_rounded_rectangle_seed274501",
+      "last_frame": "frames/cnc_rounded_rectangle_seed274501/rgb_0143.png",
+      "render_seconds": 6.972184404003201,
+      "robot_asset": null,
+      "robot_end_effector": null,
+      "robot_tool_parent": null,
+      "robot_tool_prim": null,
+      "scene_variant": {
+        "fixture_jaw_depth_m": 0.044387,
+        "fixture_jaw_height_m": 0.034889,
+        "fixture_jaw_overhang_m": 0.044791,
+        "path_half_extents_m": [
+          0.077059,
+          0.078923
+        ],
+        "path_offset_m": [
+          0.021625,
+          0.013226
+        ],
+        "stock_size_m": [
+          0.307031,
+          0.267637,
+          0.070907
+        ],
+        "stock_visual": "dark_satin",
+        "target_depth_m": 0.013674
+      },
+      "seed": 274501,
+      "shape": "rounded_rectangle",
+      "cutting_contact": true
+    },
+    {
+      "duration_seconds": 6.0,
+      "embodiment": "cnc",
+      "first_frame": "frames/cnc_slot_seed274502/rgb_0000.png",
+      "fps": 24,
+      "frame_count": 144,
+      "frames": 144,
+      "job_id": "cnc_slot_seed274502",
+      "last_frame": "frames/cnc_slot_seed274502/rgb_0143.png",
+      "render_seconds": 7.30966547099888,
+      "robot_asset": null,
+      "robot_end_effector": null,
+      "robot_tool_parent": null,
+      "robot_tool_prim": null,
+      "scene_variant": {
+        "fixture_jaw_depth_m": 0.044147,
+        "fixture_jaw_height_m": 0.03687,
+        "fixture_jaw_overhang_m": 0.047946,
+        "path_half_extents_m": [
+          0.107983,
+          0.030562
+        ],
+        "path_offset_m": [
+          -0.011157,
+          0.021503
+        ],
+        "stock_size_m": [
+          0.358604,
+          0.284397,
+          0.051209
+        ],
+        "stock_visual": "dark_satin",
+        "target_depth_m": 0.009708
+      },
+      "seed": 274502,
+      "shape": "slot",
+      "cutting_contact": true
+    },
+    {
+      "duration_seconds": 6.0,
+      "embodiment": "robot",
+      "first_frame": "frames/robot_circle_seed274503/rgb_0000.png",
+      "fps": 24,
+      "frame_count": 144,
+      "frames": 144,
+      "job_id": "robot_circle_seed274503",
+      "last_frame": "frames/robot_circle_seed274503/rgb_0143.png",
+      "render_seconds": 7.200124819999473,
+      "robot_asset": "/Isaac/Robots/UniversalRobots/ur10e/ur10e.usd",
+      "robot_end_effector": "/World/RobotMount/Robot/ee_link",
+      "robot_tool_parent": "/World/RobotMount/Robot/ee_link",
+      "robot_tool_prim": "/World/RobotMount/Robot/ee_link/SageTeachingSpindle",
+      "scene_variant": {
+        "fixture_jaw_depth_m": 0.043452,
+        "fixture_jaw_height_m": 0.043822,
+        "fixture_jaw_overhang_m": 0.030363,
+        "path_half_extents_m": [
+          0.059321,
+          0.059321
+        ],
+        "path_offset_m": [
+          -0.031149,
+          -0.015245
+        ],
+        "stock_size_m": [
+          0.270138,
+          0.220941,
+          0.060863
+        ],
+        "stock_visual": "cool_brushed",
+        "target_depth_m": 0.006347
+      },
+      "seed": 274503,
+      "shape": "circle",
+      "cutting_contact": true
+    },
+    {
+      "duration_seconds": 6.0,
+      "embodiment": "robot",
+      "first_frame": "frames/robot_rounded_rectangle_seed274504/rgb_0000.png",
+      "fps": 24,
+      "frame_count": 144,
+      "frames": 144,
+      "job_id": "robot_rounded_rectangle_seed274504",
+      "last_frame": "frames/robot_rounded_rectangle_seed274504/rgb_0143.png",
+      "render_seconds": 8.114424005001638,
+      "robot_asset": "/Isaac/Robots/UniversalRobots/ur10e/ur10e.usd",
+      "robot_end_effector": "/World/RobotMount/Robot/ee_link",
+      "robot_tool_parent": "/World/RobotMount/Robot/ee_link",
+      "robot_tool_prim": "/World/RobotMount/Robot/ee_link/SageTeachingSpindle",
+      "scene_variant": {
+        "fixture_jaw_depth_m": 0.035833,
+        "fixture_jaw_height_m": 0.047309,
+        "fixture_jaw_overhang_m": 0.027526,
+        "path_half_extents_m": [
+          0.086972,
+          0.076123
+        ],
+        "path_offset_m": [
+          -0.007681,
+          0.002407
+        ],
+        "stock_size_m": [
+          0.349716,
+          0.274532,
+          0.071046
+        ],
+        "stock_visual": "dark_satin",
+        "target_depth_m": 0.012698
+      },
+      "seed": 274504,
+      "shape": "rounded_rectangle",
+      "cutting_contact": true
+    },
+    {
+      "duration_seconds": 6.0,
+      "embodiment": "robot",
+      "first_frame": "frames/robot_slot_seed274505/rgb_0000.png",
+      "fps": 24,
+      "frame_count": 144,
+      "frames": 144,
+      "job_id": "robot_slot_seed274505",
+      "last_frame": "frames/robot_slot_seed274505/rgb_0143.png",
+      "render_seconds": 8.055337713998597,
+      "robot_asset": "/Isaac/Robots/UniversalRobots/ur10e/ur10e.usd",
+      "robot_end_effector": "/World/RobotMount/Robot/ee_link",
+      "robot_tool_parent": "/World/RobotMount/Robot/ee_link",
+      "robot_tool_prim": "/World/RobotMount/Robot/ee_link/SageTeachingSpindle",
+      "scene_variant": {
+        "fixture_jaw_depth_m": 0.033662,
+        "fixture_jaw_height_m": 0.048388,
+        "fixture_jaw_overhang_m": 0.029525,
+        "path_half_extents_m": [
+          0.102164,
+          0.029919
+        ],
+        "path_offset_m": [
+          0.003165,
+          0.036025
+        ],
+        "stock_size_m": [
+          0.379243,
+          0.281692,
+          0.075535
+        ],
+        "stock_visual": "dark_satin",
+        "target_depth_m": 0.009162
+      },
+      "seed": 274505,
+      "shape": "slot",
+      "cutting_contact": true
+    }
+  ],
   "measured": false,
   "observed_physical_machine": false,
   "physical_machine_recording": false,
   "private_campaign_capture": false,
-  "public_safe_teaching_geometry": true,
-  "actuation_authority": false,
-  "independent_physical_gate": "closed",
-  "isaac_sim_version": "showcase-webgl-v4",
-  "renderer": "WebGL_ThreeJS_ACES_metal",
-  "capture_mode": "non_headless_showcase",
-  "resolution": [
-    1280,
-    720
-  ],
-  "source_ref": "showcase-render-v4",
-  "source_script": "showcase-render-v4.mjs",
-  "source_script_sha256": "ce4d833e259dcbc9274087dc64283103d55817c758da10f9128ce9781eaade56",
-  "base_seed": 274500,
-  "created_unix": 1785569515.007,
   "public_boundary": {
     "embodiments": [
       "cnc",
       "robot"
-    ],
-    "shape_classes": [
-      "circle",
-      "rounded_rectangle",
-      "slot"
     ],
     "excludes": [
       "campaign_usd",
@@ -38,104 +252,35 @@
       "model_weights",
       "private_program_sidecar",
       "physical_footage"
+    ],
+    "shape_classes": [
+      "circle",
+      "rounded_rectangle",
+      "slot"
     ]
   },
-  "jobs": [
-    {
-      "job_id": "cnc_circle_seed274500",
-      "embodiment": "cnc",
-      "shape": "circle",
-      "seed": 274500,
-      "frames": 144,
-      "frame_count": 144,
-      "fps": 24,
-      "duration_seconds": 6,
-      "first_frame": "frames/cnc_circle_seed274500/rgb_0000.png",
-      "last_frame": "frames/cnc_circle_seed274500/rgb_0143.png",
-      "robot_asset": null,
-      "robot_end_effector": null,
-      "robot_tool_parent": null,
-      "cutting_contact": true
-    },
-    {
-      "job_id": "cnc_rounded_rectangle_seed274501",
-      "embodiment": "cnc",
-      "shape": "rounded_rectangle",
-      "seed": 274501,
-      "frames": 144,
-      "frame_count": 144,
-      "fps": 24,
-      "duration_seconds": 6,
-      "first_frame": "frames/cnc_rounded_rectangle_seed274501/rgb_0000.png",
-      "last_frame": "frames/cnc_rounded_rectangle_seed274501/rgb_0143.png",
-      "robot_asset": null,
-      "robot_end_effector": null,
-      "robot_tool_parent": null,
-      "cutting_contact": true
-    },
-    {
-      "job_id": "cnc_slot_seed274502",
-      "embodiment": "cnc",
-      "shape": "slot",
-      "seed": 274502,
-      "frames": 144,
-      "frame_count": 144,
-      "fps": 24,
-      "duration_seconds": 6,
-      "first_frame": "frames/cnc_slot_seed274502/rgb_0000.png",
-      "last_frame": "frames/cnc_slot_seed274502/rgb_0143.png",
-      "robot_asset": null,
-      "robot_end_effector": null,
-      "robot_tool_parent": null,
-      "cutting_contact": true
-    },
-    {
-      "job_id": "robot_circle_seed274503",
-      "embodiment": "robot",
-      "shape": "circle",
-      "seed": 274503,
-      "frames": 144,
-      "frame_count": 144,
-      "fps": 24,
-      "duration_seconds": 6,
-      "first_frame": "frames/robot_circle_seed274503/rgb_0000.png",
-      "last_frame": "frames/robot_circle_seed274503/rgb_0143.png",
-      "robot_asset": "simplified_ur10e_class_visual",
-      "robot_end_effector": "teaching_spindle_tip",
-      "robot_tool_parent": "teaching_spindle",
-      "cutting_contact": true
-    },
-    {
-      "job_id": "robot_rounded_rectangle_seed274504",
-      "embodiment": "robot",
-      "shape": "rounded_rectangle",
-      "seed": 274504,
-      "frames": 144,
-      "frame_count": 144,
-      "fps": 24,
-      "duration_seconds": 6,
-      "first_frame": "frames/robot_rounded_rectangle_seed274504/rgb_0000.png",
-      "last_frame": "frames/robot_rounded_rectangle_seed274504/rgb_0143.png",
-      "robot_asset": "simplified_ur10e_class_visual",
-      "robot_end_effector": "teaching_spindle_tip",
-      "robot_tool_parent": "teaching_spindle",
-      "cutting_contact": true
-    },
-    {
-      "job_id": "robot_slot_seed274505",
-      "embodiment": "robot",
-      "shape": "slot",
-      "seed": 274505,
-      "frames": 144,
-      "frame_count": 144,
-      "fps": 24,
-      "duration_seconds": 6,
-      "first_frame": "frames/robot_slot_seed274505/rgb_0000.png",
-      "last_frame": "frames/robot_slot_seed274505/rgb_0143.png",
-      "robot_asset": "simplified_ur10e_class_visual",
-      "robot_end_effector": "teaching_spindle_tip",
-      "robot_tool_parent": "teaching_spindle",
-      "cutting_contact": true
-    }
-  ]
+  "public_safe_teaching_geometry": true,
+  "renderer": "RayTracedLighting",
+  "resolution": [
+    1280,
+    720
+  ],
+  "scene_randomization": {
+    "mode": "seeded_bounded_public_teaching_variation",
+    "per_job_seeded": true,
+    "training_distribution_match": false,
+    "varied": [
+      "stock_dimensions",
+      "path_scale",
+      "path_offset",
+      "target_depth",
+      "fixture_dimensions",
+      "visual_stock_finish"
+    ]
+  },
+  "schema_version": "sage-public-isaac-capture/v1",
+  "simulated": true,
+  "source_ref": "8cb73a9a46b11484a09a380c7e53a2d7941303f8",
+  "source_script": "isaacsim_capture_public_replay.py",
+  "source_script_sha256": "8f6b0b7c1750841f5c000ddf9e7d80cb2eac0c9f47f4002ebf4936c5300f9ff3"
 }

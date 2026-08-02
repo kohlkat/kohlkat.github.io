@@ -2,21 +2,22 @@
   "schema_version": "sage-public-isaac-replay/v4",
   "evidence_class": "SIMULATED",
   "authority": "shadow_only_non_actuating",
-  "render_kind": "webgl_showcase_metal_lighting",
+  "render_kind": "isaac_sim_6_0_1_rtx_randomized_stock",
   "duration_seconds": 36,
   "frame_size": {
     "width": 1280,
     "height": 720
   },
   "runtime": {
-    "name": "SAGE public showcase renderer",
-    "version": "v4",
-    "renderer": "Three.js WebGL + ACES + metal materials",
-    "capture_mode": "non_headless_showcase",
-    "gpu_class": "local_or_ci_webgl",
+    "name": "NVIDIA Isaac Sim public capture",
+    "version": "6.0.1",
+    "renderer": "RayTracedLighting",
+    "capture_mode": "non_headless_xorg",
+    "gpu_class": "RTX_4090",
     "rendered_frames": 864,
     "robot_cutting_contact": true,
-    "cnc_close_framing": true
+    "cnc_close_framing": true,
+    "randomized_stock": true
   },
   "campaign_relationship": {
     "public_safe_runtime_capture": true,
@@ -59,33 +60,32 @@
     }
   ],
   "source": {
-    "source_script": "showcase-render-v4.mjs",
-    "source_script_sha256": "ce4d833e259dcbc9274087dc64283103d55817c758da10f9128ce9781eaade56",
+    "source_script": "isaacsim_capture_public_replay.py",
+    "source_ref": "8cb73a9a46b11484a09a380c7e53a2d7941303f8",
     "independent_physical_gate": "closed",
     "actuation_authority": false,
-    "isaac_capture_script": "isaacsim_capture_public_replay.py",
-    "isaac_capture_note": "Optional Isaac recapture path updated for tip-tracking; public v4 bytes from WebGL showcase for framing/lighting control"
+    "capture_note": "Vast RTX 4090 Isaac Sim 6.0.1 non-headless randomized-stock public teaching capture"
   },
   "files": {
     "video": {
       "path": "sage-simulation-replay-v4.mp4",
-      "bytes": 1142236,
-      "sha256": "4cce935b7c07fa726541d22388a329ace9c3cf73873d756fed8ab32253d831b9"
+      "bytes": 5213016,
+      "sha256": "603d63ba31a67646bfa9c7339435ce4fdccae65da30f03f8b0590e4e2c683839"
     },
     "poster": {
       "path": "sage-simulation-replay-poster-v4.jpg",
-      "bytes": 54381,
-      "sha256": "3190109dc143b92c0a881e153962bc9a33025f9dd74476142e756c8e5653e0d0"
+      "bytes": 45255,
+      "sha256": "9315e1aeaaabfe341134e5e4b6363f2e9ee13627a8d24a796397fa10737bbfec"
     },
     "captions": {
       "path": "sage-simulation-replay-captions-v4.vtt",
-      "bytes": 575,
-      "sha256": "6acec1fa4a0d4272fdc7baf75920e4d977948ceba4493ae35b32d0ee42831085"
+      "bytes": 559,
+      "sha256": "ad0ca19bd4becfdeaadff0874aba8ca73d568824f5e49763787d166e501a2157"
     },
     "capture_manifest": {
       "path": "sage-isaac-capture-manifest-v4.json",
-      "bytes": 4255,
-      "sha256": "37cfcae281b069ef440b09aff5ba17c5e6ee7e3476974b3a8e02d1eb0099165a"
+      "bytes": 8551,
+      "sha256": "7c6f3341578fa07baacb613fabd6ef8bf358109f3871612ef2d8280b6bdd1f4c"
     }
   }
 }
