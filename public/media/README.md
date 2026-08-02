@@ -2,12 +2,10 @@
 
 ## Replay v4
 
-- `sage-simulation-replay-v4.mp4` â€” 36 s silent showcase (1280Ã—720, 24 fps)
-- CNC and robot teaching clips with **toolâ€“stock contact** and progressive cut reveal
-- Rendered via local WebGL showcase path (Three.js) for readable framing and metal lighting;
-  Isaac Sim capture script remains available for optional non-headless recapture
-- Evidence class: **SIMULATED**
-- Non-actuating; independent physical gate closed
-- Not physical machine recording, not measured material removal
+- `sage-simulation-replay-v4.mp4` — 36 s silent (1280×720, 24 fps)
+- CNC + robot teaching clips with **pulled-back framing** (full stock + tool + path)
+- Continuous robot arm?wrist?tool; no chip particles
+- Rendered WebGL showcase (Three.js ACES metal); Isaac capture package retained separately as evidence
+- Evidence class: **SIMULATED** · non-actuating · gate closed
 
-See `sage-simulation-replay-manifest-v4.json` for hashes and provenance.
+See `sage-simulation-replay-manifest-v4.json` for hashes.

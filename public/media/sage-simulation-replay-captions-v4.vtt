@@ -1,19 +1,19 @@
-WEBVTT
+﻿WEBVTT
 
 00:00.000 --> 00:06.000
-CNC surrogate path · circle pocket · SIMULATED teaching cut
+CNC path · circle · NVIDIA Isaac Sim 6.0.1 · SIMULATED · randomized stock
 
 00:06.000 --> 00:12.000
-CNC surrogate path · rounded rectangle · tool and stock framed
+CNC path · rounded rectangle · RTX non-headless capture · non-actuating
 
 00:12.000 --> 00:18.000
-CNC surrogate path · slot · non-actuating showcase
+CNC path · slot · closed physical gate · not machine footage
 
 00:18.000 --> 00:24.000
-Robot shadow path · UR10e-class visual with spindle on stock · SIMULATED cut contact
+Robot path · UR10e-class · Isaac Sim shadow · SIMULATED
 
 00:24.000 --> 00:30.000
-Robot shadow path · rounded rectangle · progressive material-removal reveal
+Robot path · rounded rectangle · public teaching geometry
 
 00:30.000 --> 00:36.000
-Robot shadow path · slot · closed physical gate · not machine footage
+Robot path · slot · Vast RTX 4090 capture · SIMULATED only

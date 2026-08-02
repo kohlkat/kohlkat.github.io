@@ -351,11 +351,11 @@ function rebuildJob() {
     const riser = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.35, 0.5), darkMetal);
     riser.position.set(0, 0.2, 0);
     machine.add(table, riser);
-    // Close framing so tool + stock + cut path read clearly on video.
-    camera.position.set(0.38, 0.78, 0.52);
+    // Pull back so full stock + vise + spindle stay in frame (not cropped).
+    camera.position.set(0.72, 1.05, 0.88);
     camera.up.set(0, 1, 0);
-    camera.lookAt(0, stockY + 0.02, 0);
-    camera.fov = 32;
+    camera.lookAt(0, stockY + 0.01, 0);
+    camera.fov = 38;
     camera.updateProjectionMatrix();
   } else {
     // Robot: continuous chain — tool must stay under wrist.
@@ -366,10 +366,11 @@ function rebuildJob() {
     table.position.set(0.35, 0.87, 0);
     table.receiveShadow = true;
     machine.add(table);
-    camera.position.set(0.95, 1.22, 0.88);
+    // Wider robot shot: full arm + pedestal + stock + cut path.
+    camera.position.set(1.55, 1.55, 1.40);
     camera.up.set(0, 1, 0);
-    camera.lookAt(stock.position.x, stockY + 0.04, stock.position.z);
-    camera.fov = 34;
+    camera.lookAt(stock.position.x * 0.55, stockY + 0.06, stock.position.z);
+    camera.fov = 40;
     camera.updateProjectionMatrix();
   }
 
