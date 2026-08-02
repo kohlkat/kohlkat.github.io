@@ -79,13 +79,13 @@
     },
     "captions": {
       "path": "sage-simulation-replay-captions-v4.vtt",
-      "bytes": 559,
-      "sha256": "ad0ca19bd4becfdeaadff0874aba8ca73d568824f5e49763787d166e501a2157"
+      "bytes": 558,
+      "sha256": "f87685098c89127f974d376ef22d9426e99296a1991239e49a6691970e6ea2d8"
     },
     "capture_manifest": {
       "path": "sage-isaac-capture-manifest-v4.json",
-      "bytes": 8551,
-      "sha256": "7c6f3341578fa07baacb613fabd6ef8bf358109f3871612ef2d8280b6bdd1f4c"
+      "bytes": 8265,
+      "sha256": "d1e4327585d9c4004038ef12732ae8b23da0cd3efe55b3c2b598f77722e6682d"
     }
   }
 }
