@@ -266,7 +266,8 @@ export default function RelativePoseStudy() {
           Robot arms resist force differently as their joints and reach change.
           The aim is not to point straight into the metal; it is to keep the
           cutter suitable for the local surface while seeking a reachable,
-          collision-free pose that better supports the expected cutting load.
+          pose that passes simulated geometry checks and better supports the
+          expected cutting-load direction.
         </p>
       </div>
 
@@ -300,6 +301,8 @@ export default function RelativePoseStudy() {
             The rail and positioner comparison is a proposed next study, not a
             live ROS command path, physical-machining result, or measured
             efficiency claim.
+            Camera and learned scene views may flag obstruction or uncertainty,
+            but they cannot approve a pose.
           </p>
         </div>
         <a className="button button-light" href="/research/#relative-pose-study">

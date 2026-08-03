@@ -325,7 +325,8 @@ export default function ResearchPage() {
             <ul>
               <li>Local surface orientation and tool-axis suitability</li>
               <li>
-                Predicted cutting-load direction and pose-dependent stiffness
+                Modeled cutting-load direction; stiffness or holding capacity
+                remains unavailable unless supporting evidence exists
               </li>
               <li>
                 Reach, joint limits, singularity distance, and collision margin
