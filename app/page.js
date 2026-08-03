@@ -225,6 +225,9 @@ export default function Home() {
             Make every difficult cut
             <span>a decision you can defend.</span>
           </h1>
+          <div className="hero-visual">
+            <ReplayHero />
+          </div>
           <p className="hero-lead">
             G-code is the instruction language that tells a CNC machine how to move.
             SAGE adds the job context that file leaves out, compares candidate
@@ -246,9 +249,6 @@ export default function Home() {
             <span>Evidence-linked review</span>
             <span>Non-actuating</span>
           </div>
-        </div>
-        <div className="hero-visual">
-          <ReplayHero />
         </div>
       </section>
 

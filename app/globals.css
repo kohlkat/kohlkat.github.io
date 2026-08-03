@@ -211,8 +211,15 @@ nav a:hover {
   margin: 0 auto;
   padding: 94px 0 84px;
   grid-template-columns: minmax(0, 1.05fr) minmax(440px, 0.95fr);
+  grid-template-areas:
+    "eyebrow visual"
+    "title visual"
+    "lead visual"
+    "actions visual"
+    "boundary visual";
   align-items: center;
-  gap: clamp(48px, 7vw, 120px);
+  column-gap: clamp(48px, 7vw, 120px);
+  row-gap: 0;
 }
 
 .ambient {
@@ -240,9 +247,27 @@ nav a:hover {
 }
 
 .hero-copy {
-  position: relative;
-  z-index: 2;
-  min-width: 0;
+  display: contents;
+}
+
+.hero-copy > .eyebrow {
+  grid-area: eyebrow;
+}
+
+.hero-copy > h1 {
+  grid-area: title;
+}
+
+.hero-copy > .hero-lead {
+  grid-area: lead;
+}
+
+.hero-copy > .hero-actions {
+  grid-area: actions;
+}
+
+.hero-copy > .boundary-strip {
+  grid-area: boundary;
 }
 
 .eyebrow,
@@ -360,6 +385,8 @@ h1 span {
 
 .hero-visual {
   position: relative;
+  grid-area: visual;
+  align-self: center;
   min-width: 0;
 }
 
@@ -1529,14 +1556,18 @@ footer p {
   .hero {
     padding-top: 70px;
     grid-template-columns: 1fr;
-  }
-
-  .hero-copy {
-    max-width: 850px;
+    grid-template-areas:
+      "eyebrow"
+      "title"
+      "visual"
+      "lead"
+      "actions"
+      "boundary";
   }
 
   .hero-visual {
     width: min(680px, 100%);
+    margin-bottom: 30px;
   }
 
   .problem-layout,
