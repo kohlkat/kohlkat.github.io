@@ -224,10 +224,12 @@ export default function SimulationPreview() {
           <h3>SIMULATED sensor-delay episodes</h3>
           <p>
             Each episode combines virtual sensor streams. Across{" "}
-            {publicFusionSummary.workerRuns} GPU workers and{" "}
+            {publicFusionSummary.workerRuns} recorded worker runs and{" "}
             {publicFusionSummary.sensorCatalogSize} sensor categories, the mean
             identification score was {publicFusionSummary.x4IdentMean.toFixed(2)}
-            at 4× modeled delay.{" "}
+            at 4× modeled delay. That score asks how well combined virtual
+            sensors distinguish the hidden condition inside the simulation;
+            higher is better.{" "}
             <a href={publicFusionDocumentDownload} download>
               Download aggregate
             </a>
@@ -308,7 +310,9 @@ export default function SimulationPreview() {
         Result boundary: the campaign shows repeatable within-simulator shadow
         optimization and evidence capture. It does not establish held-out policy
         generalization, measured cycle time, part quality, physical cutting, or
-        safety performance.
+        safety performance. The public replay did not run simulated
+        research-camera capture, camera-built 3D reconstruction (Gaussian
+        splatting), or the neural scene branch.
       </p>
     </section>
   );

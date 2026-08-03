@@ -50,7 +50,7 @@ const workflow = [
     number: "03",
     title: "Review the decision packet",
     body:
-      "A qualified person receives the alternatives, modeled tradeoffs, limits, and independent-check disposition—not a black-box command.",
+      "A qualified person receives the alternatives, modeled tradeoffs, limits, and each independent check's outcome and reason—not a black-box command.",
   },
 ];
 
@@ -71,7 +71,7 @@ const useCases = [
       "Give manufacturing, applications, tooling, and quality teams one traceable record to challenge together.",
   },
   {
-    title: "Non-actuating shadow pilots",
+    title: "Non-actuating offline pilots",
     body:
       "Run beside the existing workflow, compare recommendations, and measure review value without commanding equipment.",
   },
@@ -113,7 +113,7 @@ const principles = [
   {
     label: "Evidence attached",
     text:
-      "Recommendations retain their sources, assumptions, evidence class, and independent disposition.",
+      "Recommendations retain their sources, assumptions, evidence class, and the outcome and reason from each independent check.",
   },
   {
     label: "Unknown stays unknown",
@@ -237,7 +237,7 @@ export default function Home() {
               <ArrowIcon />
             </a>
             <a className="button button-secondary" href="#pilot">
-              Discuss a shadow pilot
+              Discuss an offline pilot
             </a>
           </div>
           <div className="boundary-strip">
@@ -326,7 +326,7 @@ export default function Home() {
               <p>
                 {publicFusionSummary.stressEpisodes.toLocaleString()} SIMULATED
                 sensor-and-network stress episodes across{" "}
-                {publicFusionSummary.workerRuns} GPU workers, plus{" "}
+                {publicFusionSummary.workerRuns} recorded worker runs, plus{" "}
                 {publicSimulationSummary.programCount.toLocaleString()} NVIDIA
                 shadow programs—software-only trials of candidate machining
                 plans—with files and results tied together by recorded hashes.
@@ -349,10 +349,12 @@ export default function Home() {
             <div>
               <h3>What happened when data was delayed</h3>
               <p>
-                At 4× modeled transport latency, the mean identification score
-                was {publicFusionSummary.x4IdentMean.toFixed(2)} and did not fall
-                below the declared 0.4 comparison level. Low-scoring episodes
-                still rose from{" "}
+                The identification score asks how well combined virtual sensors
+                distinguish the hidden condition inside the simulation; higher
+                is better, and 0.4 is a study comparison line, not a physical
+                safety limit. At 4× modeled transport latency, the mean score
+                was {publicFusionSummary.x4IdentMean.toFixed(2)}. Low-scoring
+                episodes still rose from{" "}
                 {publicFusionSummary.x2FracBelow04Percent.toFixed(1)}% →{" "}
                 {publicFusionSummary.x4FracBelow04Percent.toFixed(1)}%. That is a
                 useful warning for future sensor planning, and it remains
@@ -538,7 +540,7 @@ export default function Home() {
             </li>
             <li>
               <span>05</span>
-              Evidence exchange and non-actuating shadow pilots
+              Evidence exchange and non-actuating offline pilots
             </li>
           </ol>
         </div>
@@ -554,14 +556,14 @@ export default function Home() {
           <p>
             SAGE is seeking precision manufacturers, CNC programmers,
             applications engineers, research partners, and technical teams who
-            want to evaluate an evidence-linked planning workflow in shadow
-            mode.
+            want to evaluate an evidence-linked planning workflow offline,
+            without connecting it to equipment.
           </p>
         </div>
         <div className="partner-actions">
           <a
             className="button button-light"
-            href="mailto:dkohlkat@gmail.com?subject=SAGE%20Suite%20shadow%20pilot"
+            href="mailto:dkohlkat@gmail.com?subject=SAGE%20Suite%20offline%20pilot"
           >
             Start a conversation
             <ArrowIcon />

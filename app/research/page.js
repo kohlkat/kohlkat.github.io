@@ -223,7 +223,7 @@ export default function ResearchPage() {
           <p>
             The multi-sensor fusion twin adds{" "}
             {publicFusionSummary.stressEpisodes.toLocaleString()} latency-stressed
-            episodes across {publicFusionSummary.workerRuns} GPU workers so
+            episodes across {publicFusionSummary.workerRuns} recorded worker runs so
             suite choices can be ranked before hardware is fixed. Methods
             transfer as decision support; physical transfer remains unclaimed.
           </p>

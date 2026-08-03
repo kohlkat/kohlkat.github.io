@@ -120,6 +120,15 @@ const privacy = read("privacy/index.html");
 const robots = read("robots.txt");
 const sitemap = read("sitemap.xml");
 const llms = read("llms.txt");
+const gitAttributes = fs
+  .readFileSync(path.resolve(".gitattributes"), "utf8")
+  .split(/\r?\n/);
+assert(
+  gitAttributes.includes(
+    "/public/data/sage-public-nvidia-surface-integrity-v1.json text eol=lf",
+  ),
+  "Surface-integrity evidence must have an explicit LF checkout contract.",
+);
 const vercelConfiguration = JSON.parse(
   fs.readFileSync(path.resolve("vercel.json"), "utf8"),
 );
@@ -194,6 +203,7 @@ assert(
     home.includes("Software-Aware G-code Extension") &&
     home.includes('aria-label="Navigation menu"') &&
     home.includes('aria-label="Mobile navigation"') &&
+    home.includes("Simulation evidence") &&
     home.includes("What your team receives") &&
     home.includes("Five focused checks") &&
     home.includes("Make every difficult cut") &&
@@ -211,6 +221,9 @@ assert(
     home.includes("three virtual robot paths") &&
     home.includes("Simulated contact means") &&
     home.includes("No physical footage or machine control") &&
+    home.includes("recorded worker runs") &&
+    home.includes("study comparison line, not a physical") &&
+    home.includes("each independent check's outcome and reason") &&
     home.includes("force-aware relative pose") &&
     home.includes("seventh-axis linear rail") &&
     home.includes("two-axis tilt-rotary positioner") &&
@@ -220,11 +233,11 @@ assert(
     home.includes("Hold the job constant") &&
     home.includes("Explain or decline") &&
     home.includes("not a live ROS command path") &&
-    home.includes("Shadow pilot · offline and non-actuating") &&
+    home.includes("Offline pilot · non-actuating") &&
     home.includes("Prove the decision workflow before touching the machine") &&
     home.includes("Scope one representative job") &&
-    home.includes("Compare in shadow") &&
-    home.includes("Disposition log and pilot report") &&
+    home.includes("Compare offline") &&
+    home.includes("Independent-check outcome log and pilot report") &&
     home.includes("No cross-customer training") &&
     home.includes("Any physical trial is a separate protocol") &&
     home.includes("do not attach controlled production files") &&
@@ -239,13 +252,20 @@ assert(
     home.includes("creativecommons.org/licenses/by/4.0/") &&
     home.includes('src="/media/sage-simulation-replay-v5.mp4"') &&
     home.includes('kind="captions"') &&
-    home.includes('src="/media/sage-simulation-replay-captions-v5.vtt"'),
+    home.includes('src="/media/sage-simulation-replay-captions-v5.vtt"') &&
+    home.includes(
+      "The public replay did not run simulated research-camera capture, camera-built 3D reconstruction (Gaussian splatting), or the neural scene branch.",
+    ),
   "Homepage does not provide the product journey, mobile navigation, acronym definition, aggregate simulation evidence, relative-pose plan, research path, or five-check overview.",
 );
 assert(
   home.indexOf('src="/media/sage-simulation-replay-v5.mp4"') <
     home.indexOf("What your team receives"),
   "Homepage simulation replay must remain in the above-fold hero before product detail.",
+);
+assert(
+  !home.includes("current v4 video"),
+  "Homepage must not describe a superseded replay as the current v4 video.",
 );
 assert(
   evidence.includes("Five assurance kernels") &&
@@ -328,7 +348,7 @@ assert(
     !robots.includes("tdmrep"),
   "robots.txt must allow cooperative search, archive, and AI crawlers site-wide.",
 );
-for (const page of [home, evidence, research, simulation, privacy]) {
+for (const page of [home, evidence, research, simulation, distributed, privacy]) {
   assert(
     page.includes("index, follow") &&
       !page.includes("noarchive") &&
@@ -349,7 +369,8 @@ assert(
     sitemap.includes(`<loc>${siteOrigin}/evidence/</loc>`) &&
     sitemap.includes(`<loc>${siteOrigin}/research/</loc>`) &&
     sitemap.includes(`<loc>${siteOrigin}/privacy/</loc>`) &&
-    sitemap.includes(`<loc>${siteOrigin}/simulation/</loc>`),
+    sitemap.includes(`<loc>${siteOrigin}/simulation/</loc>`) &&
+    sitemap.includes(`<loc>${siteOrigin}/distributed/</loc>`),
   "sitemap.xml URLs do not match the canonical origin.",
 );
 assert(

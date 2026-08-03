@@ -296,7 +296,7 @@ export default function RelativePoseStudy() {
         <div>
           <strong>Current status</strong>
           <p>
-            The current v4 video above is a fixed-base UR10e simulation capture.
+            The current replay above is a fixed-base UR10e simulation capture.
             The rail and positioner comparison is a proposed next study, not a
             live ROS command path, physical-machining result, or measured
             efficiency claim.

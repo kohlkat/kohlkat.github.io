@@ -10,7 +10,7 @@ const pilotSteps = [
   },
   {
     number: "02",
-    title: "Compare in shadow",
+    title: "Compare offline",
     body:
       "SAGE structures the context and compares candidate plans on a declared modeled basis. Rejected options and evidence limits stay visible.",
   },
@@ -18,7 +18,7 @@ const pilotSteps = [
     number: "03",
     title: "Review together",
     body:
-      "A qualified engineer receives the alternatives, evidence, assumptions, limits, and independent-check disposition in one packet.",
+      "A qualified engineer receives the alternatives, evidence, assumptions, limits, and each independent check's outcome and reason in one packet.",
   },
   {
     number: "04",
@@ -39,7 +39,7 @@ const sageOutputs = [
   "Structured baseline record",
   "Ranked candidate alternatives",
   "Evidence-linked review packet",
-  "Disposition log and pilot report",
+  "Independent-check outcome log and pilot report",
 ];
 
 export default function PilotReadiness() {
@@ -52,7 +52,7 @@ export default function PilotReadiness() {
       <div className={styles.heading}>
         <div>
           <div className="section-kicker section-kicker-light">
-            Shadow pilot · offline and non-actuating
+            Offline pilot · non-actuating
           </div>
           <h2 id="pilot-heading">
             Start with one difficult job.
@@ -91,7 +91,7 @@ export default function PilotReadiness() {
           </ul>
         </div>
         <div className={styles.exchangeArrow} aria-hidden="true">
-          <span>Shadow review</span>
+          <span>Offline review</span>
           <ArrowIcon />
         </div>
         <div>
@@ -118,9 +118,9 @@ export default function PilotReadiness() {
         </div>
         <a
           className="button button-light"
-          href="mailto:dkohlkat@gmail.com?subject=SAGE%20shadow%20pilot"
+          href="mailto:dkohlkat@gmail.com?subject=SAGE%20offline%20pilot"
         >
-          Scope a shadow pilot
+          Scope an offline pilot
           <ArrowIcon />
         </a>
       </div>

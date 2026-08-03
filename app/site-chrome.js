@@ -45,7 +45,7 @@ export function SiteHeader() {
       <nav className="desktop-nav" aria-label="Main navigation">
         <a href="/#product">Product</a>
         <a href="/#how-it-works">How it works</a>
-        <a href="/#simulation">Proof</a>
+        <a href="/#simulation">Simulation evidence</a>
         <a href="/distributed/">Distributed</a>
         <a href="/research/">Research</a>
         <a href="/evidence/">Evidence</a>
@@ -59,7 +59,7 @@ export function SiteHeader() {
           <a href="/#top">Home</a>
           <a href="/#product">What SAGE does</a>
           <a href="/#how-it-works">How it works</a>
-          <a href="/#simulation">Simulation proof</a>
+          <a href="/#simulation">Simulation evidence</a>
           <a href="/distributed/">Distributed studies</a>
           <a href="/research/">Research</a>
           <a href="/evidence/">Evidence</a>

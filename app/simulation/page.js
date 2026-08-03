@@ -179,7 +179,7 @@ export default function SimulationPage() {
               {publicFusionSummary.stressEpisodes.toLocaleString()}
             </strong>
             <small>
-              {publicFusionSummary.workerRuns} GPU workers · latency stress
+              {publicFusionSummary.workerRuns} recorded worker runs · latency stress
             </small>
           </div>
           <div>
@@ -282,7 +282,7 @@ export default function SimulationPage() {
             <span>01</span>
             <h3>Scale</h3>
             <p>
-              {publicFusionSummary.workerRuns} GPU workers produced{" "}
+              {publicFusionSummary.workerRuns} recorded worker runs produced{" "}
               {publicFusionSummary.stressEpisodes.toLocaleString()} stress
               episodes over a {publicFusionSummary.sensorCatalogSize}-class
               sensor catalog (completed {publicFusionSummary.completedDate}).

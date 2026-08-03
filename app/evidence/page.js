@@ -103,7 +103,7 @@ const evidenceClasses = [
   {
     label: "SIMULATED",
     title: "Multi-sensor digital-twin fusion",
-    body: `Aggregate from ${publicFusionSummary.stressEpisodes.toLocaleString()} latency-stressed fusion episodes across ${publicFusionSummary.workerRuns} GPU workers and a ${publicFusionSummary.sensorCatalogSize}-class catalog. Demonstrates executable twin software for suite ranking under network stress—not field-validated machine accuracy.`,
+    body: `Aggregate from ${publicFusionSummary.stressEpisodes.toLocaleString()} latency-stressed fusion episodes across ${publicFusionSummary.workerRuns} recorded worker runs and a ${publicFusionSummary.sensorCatalogSize}-class catalog. Demonstrates executable twin software for suite ranking under network stress—not field-validated machine accuracy.`,
   },
   {
     label: "SIMULATED · MODELED NOT MEASURED",
